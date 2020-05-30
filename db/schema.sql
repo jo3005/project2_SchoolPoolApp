@@ -9,6 +9,7 @@ CREATE TABLE `members` (
   `memEmail` varchar(45) NOT NULL,
   `credits` int DEFAULT '0',
   `memMobile` varchar(16) NOT NULL DEFAULT '0061 000 000 000',
+  `password` varchar(45) NOT NULL,
   PRIMARY KEY (`memId`)
 ) ;
 
@@ -36,11 +37,7 @@ CREATE TABLE `schoolpool`.`passengersminors` (
   `passRequiresEscortToClass` TINYINT NULL DEFAULT 0 COMMENT '0=no, 1=yes',
   PRIMARY KEY (`passMinId`));
   
-  CREATE 
-    ALGORITHM = UNDEFINED 
-    DEFINER = `root`@`localhost` 
-    SQL SECURITY DEFINER
-VIEW `schoolpool`.`v_passengers` AS
+CREATE VIEW `schoolpool`.`v_passengers` AS
     SELECT 
         `schoolpool`.`passengers`.`passId` AS `passId`,
         `schoolpool`.`passengers`.`passFirstname` AS `passFirstname`,
@@ -61,7 +58,8 @@ VIEW `schoolpool`.`v_passengers` AS
         `schoolpool`.`passengersminors`.`passRequiresEscortToClass` AS `passRequiresEscortToClass`
     FROM
         (`schoolpool`.`passengers`
-        LEFT JOIN `schoolpool`.`passengersminors` ON ((`schoolpool`.`passengers`.`passId` = `schoolpool`.`passengersminors`.`passId`)))
+        LEFT JOIN `schoolpool`.`passengersminors` ON ((`schoolpool`.`passengers`.`passId` = `schoolpool`.`passengersminors`.`passId`)));
+        
     
 CREATE TABLE `childseattype` (
   `childseattypeId` int NOT NULL AUTO_INCREMENT,
@@ -117,7 +115,7 @@ CREATE TABLE `australiastates` (
   `stateAbbr` varchar(3) DEFAULT NULL,
   `stateName` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`idStates`)
-) ;
+);
 
 CREATE TABLE `drivers` (
   `driverId` int NOT NULL AUTO_INCREMENT,
@@ -214,8 +212,8 @@ CREATE TABLE `schoolpool`.`routes` (
   `routesId` INT NOT NULL AUTO_INCREMENT,
   `startLocnId` INT NULL,
   `endLocnId` INT NULL,
-  `routeDistance` DECIMAL NULL,
-  `routeTotalTime` DECIMAL NULL,
+  `routeDistance` DECIMAL(10,2) NULL,
+  `routeTotalTime` DECIMAL(10,2) NULL,
   `routeStartTimeForEstimate` DATETIME NULL,
   PRIMARY KEY (`routesId`),
   INDEX `FK_startId_idx` (`startLocnId` ASC) VISIBLE,
@@ -233,7 +231,8 @@ CREATE TABLE `schoolpool`.`routes` (
   
 ALTER TABLE `schoolpool`.`drivers` 
 ADD INDEX `FK_route_idx` (`defaultRouteId` ASC) VISIBLE;
-;
+
+
 ALTER TABLE `schoolpool`.`drivers` 
 ADD CONSTRAINT `FK_route`
   FOREIGN KEY (`defaultRouteId`)
@@ -332,4 +331,8 @@ CREATE TABLE `schoolpool`.`riderequests` (
     ON UPDATE NO ACTION)
 COMMENT = 'Requests that were added to a ride';
     
-    
+CREATE TABLE `schoolpool`.`driverstovehiclesmap` (
+  `dtvmapId` INT NOT NULL AUTO_INCREMENT,
+  `vehicleId` INT NULL,
+  `drivId` INT NULL,
+PRIMARY KEY (`dtvmapId`));
