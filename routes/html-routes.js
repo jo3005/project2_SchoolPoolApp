@@ -45,12 +45,12 @@ module.exports = function(app) {
 
   // TODO: REQUESTOR STATIC ROUTES
   // =============================================================
-  app.get("/cms", function(req, res) {
+  app.get("/cms", isAuthenticated, function(req, res) { // added authentication middleware before accessing page
     res.sendFile(path.join(__dirname, "../public/cms.html"));
   });
 
   // blog route loads blog.html
-  app.get("/blog", function(req, res) {
+  app.get("/blog", isAuthenticated, function(req, res) { // added authentication middleware before accessing page
     res.sendFile(path.join(__dirname, "../public/blog.html"));
   });
 
