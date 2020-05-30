@@ -15,3 +15,9 @@ button.edit {
   float: right;
   margin: 5px;
 }
+
+/* Added css from passport authentication pages */
+form.signup,
+form.login {
+  margin-top: 50px;
+}
