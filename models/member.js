@@ -112,12 +112,12 @@ module.exports = function(sequelize, DataTypes) {
     user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null);
   });
 
-  // Member.associate = function(models) {
-  //   // Associating Author with Posts
-  //   // When an Author is deleted, also delete any associated Posts
-  //   Member.hasOne(models.Driver, {
-  //     onDelete: "cascade"
-  //   });
+  Member.associate = function(models) {
+    // Associating Author with Posts
+    // When an Author is deleted, also delete any associated Posts
+    Member.hasOne(models.Driver, {
+      onDelete: "cascade"
+    });
   //   Member.hasOne(models.Parent, {
   //     onDelete: "cascade"
   //   });
@@ -125,7 +125,7 @@ module.exports = function(sequelize, DataTypes) {
   //     onDelete: "cascade"
   // });
     
-  // };
+  };
 
 
   return Member;

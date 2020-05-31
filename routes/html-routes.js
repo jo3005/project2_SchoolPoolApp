@@ -54,6 +54,11 @@ module.exports = function(app) {
     res.sendFile(path.join(__dirname, "../public/blog.html"));
   });
 
+  // authors route loads author-manager.html
+  app.get("/authors", function(req, res) {
+    res.sendFile(path.join(__dirname, "../public/author-manager.html"));
+  });
+
   // TODO: DRIVER STATIC ROUTES
   // =============================================================
 
