@@ -82,17 +82,17 @@ module.exports = function(sequelize, DataTypes) {
     memMobile:{
         type:DataTypes.STRING(16),
         defaultValue:'0061 000 000 000'
-    }
-    // createdAt: {
-    //     allowNull: false,
-    //     type: 'TIMESTAMP',
-    //     defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
-    // },
-    // updatedAt: {
-    //     allowNull: false,
-    //     type: 'TIMESTAMP',
-    //     defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
-    // }  
+    },
+    createdAt: { // sequelize will create the createdAt and updatedAt field automatically
+        allowNull: false,
+        type: 'TIMESTAMP',
+        defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
+    },
+    updatedAt: {
+        allowNull: false,
+        type: 'TIMESTAMP',
+        defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
+    }  
   });
   // Creating a custom method for our User model. This will check if an unhashed password entered by the user can be compared to the hashed password stored in our database
   Member.prototype.validPassword = function(password) {
