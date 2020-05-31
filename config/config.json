@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": "sql0044",
-    "database": "blogger", 
+    "database": "schoolpool", 
     "host": "127.0.0.1",
     "port": 3306,
     "dialect": "mysql"
