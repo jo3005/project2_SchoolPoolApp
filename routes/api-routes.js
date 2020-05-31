@@ -31,6 +31,12 @@ module.exports = function(app) {
   // otherwise send back an error
   app.post("/api/signup", function(req, res) {
     db.Member.create({
+      // memId: req.body.memId, // autoincrement PK
+      mem_username: req.body.username,
+      memFirstname: req.body.firstName,
+      memLastname: req.body.lastName,
+      credits: req.body.credits,
+      memMobile: req.body.credits,
       memEmail: req.body.email,
       password: req.body.password
     })

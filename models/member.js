@@ -43,10 +43,10 @@ module.exports = function(sequelize, DataTypes) {
     // The email cannot be null, and must be a proper email before creation
     memId:{
         type: DataTypes.INTEGER,
-        allowNull:true, // changed to true for testing
-        // autoIncrement:true,
-        // unique:true,
-        // primaryKey:true
+        allowNull:false, // changed to true for testing
+        autoIncrement:true,
+        unique:true,
+        primaryKey:true
     },
     mem_username: {
         type: DataTypes.STRING,
@@ -82,6 +82,14 @@ module.exports = function(sequelize, DataTypes) {
     memMobile:{
         type:DataTypes.STRING(16),
         defaultValue:'0061 000 000 000'
+    },
+    parentORguardian:{
+      type:DataTypes.STRING,
+      defaultValue:'parent'
+    },
+    relationship:{
+      type:DataTypes.STRING,
+      defaultValue:'mother'
     },
     createdAt: { // sequelize will create the createdAt and updatedAt field automatically
         allowNull: false,
