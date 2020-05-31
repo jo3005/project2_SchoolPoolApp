@@ -73,24 +73,74 @@ module.exports = function(app) {
 // =============================================================
 
 app.post("/api/registerDriver", function(req, res) {
-  db.Member.create({
-    // memId: req.body.memId, // autoincrement PK
-    mem_username: req.body.username,
-    memFirstname: req.body.firstName,
-    memLastname: req.body.lastName,
-    credits: req.body.credits,
-    memMobile: req.body.credits,
-    memEmail: req.body.email,
-    password: req.body.password
+  db.Driver.create({
+    // driverId: req.body.driverId, // autoincrement PK
+   
+    defaultVehicle: req.body.defaultVehicle,
+    stateOfIssue: req.body.stateOfIssue,
+    expiryDate: req.body.expiryDate,
+    yearsDriving: req.body.yearsDriving,
+    workingWithChildren: req.body.workingWithChildren,
+    defaultRoute: req.body.defaultRoute,
+ 
   })
-    .then(function() {
-      res.redirect(307, "/api/login");
+    .then(function(dbDriver) {
+      res.json(dbDriver)
+      // res.redirect(307, "/api/login");
     })
     .catch(function(err) {
       res.status(401).json(err);
     });
+
+    db.Vehicle.create({
+      // driverId: req.body.driverId, // autoincrement PK
+     
+      registration: req.body.registration,
+      make: req.body.make,
+      model: req.body.model,
+      color: req.body.color,
+      spareSpots: req.body.spareSpots,
+      spareChildSeats: req.body.spareChildSeats,
+      spareBoosters: req.body.spareBoosters,
+      petsEverTravel: req.body.spareChildSeats
+    })
+      .then(function(dbVehicle) {
+        res.json(dbVehicle)
+        // res.redirect(307, "/api/login");
+      })
+      .catch(function(err) {
+        res.status(401).json(err);
+      });
+
+      db.Route.create({
+        // driverId: req.body.driverId, // autoincrement PK
+       
+        routeName: req.body.routeName,
+        startLocnId: req.body.startLocnId,
+        endLocnId: req.body.endLocnId,
+        routeDistance: req.body.routeDistance,
+        routeTotalTime: req.body.routeTotalTime,
+        routeStartTime: req.body.routeStartTime
+      })
+        .then(function(dbRoute) {
+          res.json(dbRoute)
+          // res.redirect(307, "/api/login");
+        })
+        .catch(function(err) {
+          res.status(401).json(err);
+        });
 });
 
+app.get("/api/drivers", function(req, res) {
+  // Here we add an "include" property to our options in our findAll query
+  // We set the value to an array of the models we want to include in a left outer join
+  // In this case, just db.Driver
+  db.Member.findAll({
+    include: [db.Driver]
+  }).then(function(dbDriver) {
+    res.json(dbDriver);
+  });
+});
 
 // ----- Post Routes -----------------------
 
