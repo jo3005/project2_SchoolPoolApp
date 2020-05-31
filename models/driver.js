@@ -2,13 +2,13 @@
 module.exports = function(sequelize, DataTypes) {
     var Driver = sequelize.define("Driver", {
       // The email cannot be null, and must be a proper email before creation
-        driverId:{
-            type: DataTypes.INTEGER,
-            allowNull:false,
-            autoIncrement:true,
-            unique:true,
-            primaryKey:true
-        },
+        // driverId:{ // may not be required if driver belongs to member
+        //     type: DataTypes.INTEGER,
+        //     allowNull:false,
+        //     autoIncrement:true,
+        //     unique:true,
+        //     primaryKey:true
+        // },
         /* memId:{
             //FK to members
             type: DataTypes.INTEGER,
@@ -26,7 +26,7 @@ module.exports = function(sequelize, DataTypes) {
             allowNull:true,
         },
         expiryDate: {
-            allowNull: false,
+            allowNull: true, // set to true for testing
             type: DataTypes.DATE
         },
         yearsDriving:{
@@ -56,20 +56,29 @@ module.exports = function(sequelize, DataTypes) {
         }
 
     });
-    // Driver.associate = function(models) {
+    Driver.associate = function(models) {
     //     // Associating Author with Posts
     //     // When an Author is deleted, also delete any associated Posts
-    //     Driver.belongsTo(Member);
-    //     Driver.HasMany(Vehicle, {
-    //         onDelete: "cascade"
-    //       });
-    //     Driver.HasMany(Route, {
-    //         onDelete: "cascade"
-    //       });
-          
-    //   };
-    
+            Driver.belongsTo(models.Member, {
+                foreignKey: {
+                allowNull: false
+                }
+            });
+            Driver.hasMany(models.Vehicle, {
+                foreignKey: {
+                allowNull: false,
+                onDelete: "cascade"
+                }
+            });
+            Driver.hasMany(models.Route, {
+                foreignKey: {
+                allowNull: false,
+                onDelete: "cascade"
+                }
+            });
 
+    };
+  
 
     return Driver;
   };
