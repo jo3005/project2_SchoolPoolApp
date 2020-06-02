@@ -69,7 +69,7 @@ module.exports = function(app) {
     }
   });
 
-// OTHER CRUD API ROUTES
+// REGISTER DRIVER API ROUTE
 // =============================================================
 
 app.post("/api/registerDriver", function(req, res) {
@@ -112,23 +112,23 @@ app.post("/api/registerDriver", function(req, res) {
         res.status(401).json(err);
       });
 
-      db.Route.create({
-        // driverId: req.body.driverId, // autoincrement PK
-       
-        routeName: req.body.routeName,
-        startLocnId: req.body.startLocnId,
-        endLocnId: req.body.endLocnId,
-        routeDistance: req.body.routeDistance,
-        routeTotalTime: req.body.routeTotalTime,
-        routeStartTime: req.body.routeStartTime
+    db.Route.create({
+      // driverId: req.body.driverId, // autoincrement PK
+      
+      routeName: req.body.routeName,
+      startLocnId: req.body.startLocnId,
+      endLocnId: req.body.endLocnId,
+      routeDistance: req.body.routeDistance,
+      routeTotalTime: req.body.routeTotalTime,
+      routeStartTime: req.body.routeStartTime
+    })
+      .then(function(dbRoute) {
+        res.json(dbRoute)
+        // res.redirect(307, "/api/login");
       })
-        .then(function(dbRoute) {
-          res.json(dbRoute)
-          // res.redirect(307, "/api/login");
-        })
-        .catch(function(err) {
-          res.status(401).json(err);
-        });
+      .catch(function(err) {
+        res.status(401).json(err);
+      });
 });
 
 app.get("/api/drivers", function(req, res) {
@@ -141,6 +141,104 @@ app.get("/api/drivers", function(req, res) {
     res.json(dbDriver);
   });
 });
+
+// CREATE REQUEST API ROUTE
+// =============================================================
+
+
+app.post("/api/createRequest", function(req, res) {
+  db.Request.create({
+    // driverId: req.body.driverId, // autoincrement PK
+    requestDate: req.body.requestDate,
+    requiredDate: req.body.requiredDate,
+    requiredDropOffTimeStart: req.body.requiredDropOffTimeStart,
+    requiredDropOffTimeEnd: req.body.requiredDropOffTimeEnd,
+    requiredPickupLocnId: req.body.requiredPickupLocnId,
+    requiredDropoffLocnId: req.body.requiredDropoffLocnId,
+    addedRouteDistance: req.body.addedRouteDistance,
+    addedRouteTime: req.body.addedRouteTime,
+    boostersRequired: req.body.boostersRequired,
+    carSeatsRequired: req.body.carSeatsRequired,
+    creditsOffered: req.body.creditsOffered,
+    booked: req.body.booked,
+    bookedBy: req.body.bookedBy,
+ 
+  })
+    .then(function(dbRequest) {
+      console.log("Request has been created");
+      // res.json(dbRequest)
+    })
+    .catch(function(err) {
+      res.status(401).json(err);
+    });
+
+    
+  db.Member.findOne({
+    include: [
+      {
+      model: db.Driver,
+      where: { 
+        expiryDate: { [Op.gt]: req.body.requiredDate }, 
+        workingWithChildren: true 
+      }
+      },
+      {
+        model: db.Vehicle,
+        where: {
+          spareSpots: { [Op.gte]: 1 }, // sparespots should be atleast 1
+          spareChildSeats : req.body.carSeatsRequired,
+          spareBoosters : req.body.boostersRequired,
+          addedRouteTime : req.body.addedRouteTime,
+          boostersRequired : req.body.boostersRequired,
+          carSeatsRequired : req.body.carSeatsRequired, 
+        }
+      },
+      {
+        model: db.Route,
+        where: {
+          routstartLocnId: req.body.requiredPickupLocnId, 
+          endLocnId: req.body.requiredDropoffLocnId,
+        }
+      }
+    ]
+
+    // ----- OR ----- 
+    // where: {
+
+    //   // compare request FROM and TO Locations with Drivers default route FROM and TO Locations
+    //   // required location services API
+      
+    //   // From Driver Table
+    //   "$Driver.expiryDate$": { [Op.gt]: req.body.requiredDate }, //  should be greater than the req.body.requiredDate
+    //   "$Driver.workingWithChildren$": true,
+      
+    //   // From Associated Vehicle Table
+    //   "$Vehicle.spareSpots$": { [Op.gte]: 1 }, // sparespots should be atleast 1
+    //   "$Vehicle.spareChildSeats$" : req.body.carSeatsRequired,
+    //   "$Vehicle.spareBoosters$" : req.body.boostersRequired,
+    //   "$Vehicle.addedRouteTime$" : req.body.addedRouteTime,
+    //   "$Vehicle.boostersRequired$" : req.body.boostersRequired,
+    //   "$Vehicle.carSeatsRequired$" : req.body.carSeatsRequired,
+
+    //   // From Associated Route Table
+    //   "$Route.routstartLocnId$": req.body.requiredPickupLocnId, 
+    //   "$Route.endLocnId$": req.body.requiredDropoffLocnId,
+    //   // routeName:"" // May not be required if google api resolves addresses into geocoded places
+
+    // },
+    // include: [db.Driver, db.Vehicle, db.Route]
+  }).then(function(dbMember) {
+    res.json(dbMember);
+    emailDriver(dBMember)
+  });
+});
+
+function emailDriver (driverObj) {
+  // require nodemailer
+  console.log("Calling emailDriver function");
+  console.log(driverObj);
+}
+
 
 // ----- Post Routes -----------------------
 

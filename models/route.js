@@ -1,13 +1,13 @@
 module.exports = function(sequelize, DataTypes) {
     var Route = sequelize.define("Route", {
-      // The email cannot be null, and must be a proper email before creation
-        // routeId:{
-        //   type: DataTypes.INTEGER,
-        //   allowNull:false,
-        //   autoIncrement:true,
-        //   unique:true,
-        //   primaryKey:true
-        // },
+   
+        routeId:{
+          type: DataTypes.INTEGER,
+          allowNull:false,
+          autoIncrement:true,
+          unique:true,
+          primaryKey:true
+        },
         routeName: {
             type: DataTypes.STRING,
             allowNull: false
