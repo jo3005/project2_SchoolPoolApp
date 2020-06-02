@@ -2,13 +2,13 @@
 module.exports = function(sequelize, DataTypes) {
     var Driver = sequelize.define("Driver", {
       // The email cannot be null, and must be a proper email before creation
-        // driverId:{ // may not be required if driver belongs to member
-        //     type: DataTypes.INTEGER,
-        //     allowNull:false,
-        //     autoIncrement:true,
-        //     unique:true,
-        //     primaryKey:true
-        // },
+        driverId:{ // may not be required if driver belongs to member
+            type: DataTypes.INTEGER,
+            allowNull:false,
+            autoIncrement:true,
+            unique:true,
+            primaryKey:true
+        },
         /* memId:{
             //FK to members
             type: DataTypes.INTEGER,

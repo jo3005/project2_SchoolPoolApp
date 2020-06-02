@@ -118,12 +118,13 @@ module.exports = function(sequelize, DataTypes) {
     Member.hasOne(models.Driver, {
       onDelete: "cascade"
     });
+    Member.hasMany(models.Request, {
+      onDelete: "cascade"
+    });
   //   Member.hasOne(models.Parent, {
   //     onDelete: "cascade"
   //   });
-  //   Member.hasMany(models.Request,{
-  //     onDelete: "cascade"
-  // });
+
     
   };
 

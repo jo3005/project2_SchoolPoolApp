@@ -1,13 +1,13 @@
 module.exports = function(sequelize, DataTypes) {
     var Vehicle = sequelize.define("Vehicle", {
       // The email cannot be null, and must be a proper email before creation
-        // vehicleId:{
-        //   type: Sequelize.INTEGER,
-        //   allowNull:false,
-        //   autoIncrement:true,
-        //   unique:true,
-        //   primaryKey:true
-        // },     
+        vehicleId:{
+          type: DataTypes.INTEGER,
+          allowNull:false,
+          autoIncrement:true,
+          unique:true,
+          primaryKey:true
+        },     
         registration: {
             type: DataTypes.STRING,
             allowNull:false 
