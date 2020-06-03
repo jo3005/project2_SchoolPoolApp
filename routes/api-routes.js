@@ -8,6 +8,16 @@
 // Requiring our models and passport as we've configured it
 var db = require("../models");
 var passport = require("../config/passport");
+var nodemailer = reuqire("nodemailer");
+const transporter = nodemailer.createTransport({
+  host: 'smtp.ethereal.email', // fake email that only receives email and tests sent emails.
+  port: 587,
+  auth: {
+      user: 'guy.lynch@ethereal.email',
+      pass: 'm6uvuqX1d1hb86wQNt'
+  }
+});
+
 
 // Routes
 // =============================================================
@@ -238,6 +248,20 @@ function emailDriver (driverObj) {
   // require nodemailer
   console.log("Calling emailDriver function");
   console.log(driverObj);
+  var mailOptions = {
+    from: 'guy.lynch@ethereal.email',
+    to: driverObj.email, // use test email guy.lynch@ethereal.email
+    subject: 'You have received a new booking request',
+    text: 'Please log into schoolpoolperth.com to accept booking'
+  };
+  
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
 }
 
 app.get("/api/requests", function(req, res) {
@@ -277,9 +301,23 @@ app.put("/api/requests", function(req, res) {
 });
 
 function emailRequestor(memberObj) {
-  // require nodemailer
-  console.log("Calling emailRequestor function");
-  console.log(memberObj);
+    // require nodemailer
+    console.log("Calling emailDriver function");
+    console.log(memberObj);
+    var mailOptions = {
+      from: 'guy.lynch@ethereal.email',
+      to: memberObj.email, // use test email guy.lynch@ethereal.email
+      subject: 'Your booking request has been confirmed',
+      text: 'Please log into schoolpoolperth.com to view details'
+    };
+    
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    });
 }
 
 // ----- Post Routes -----------------------
