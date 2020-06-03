@@ -253,6 +253,18 @@ app.get("/api/requests", function(req, res) {
   });
 });
 
+// UPDATE route for Drivers to update/confirm booking requests
+app.put("/api/requests", function(req, res) {
+  db.Request.update(
+    req.body, // body is boolean meaning false = unbooked and true = booked
+    {
+      where: {
+        reqId: req.body.id
+      }
+    }).then(function(dbRequest) {
+    res.json(dbRequest); // return updated request
+  });
+});
 
 // ----- Post Routes -----------------------
 
