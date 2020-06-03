@@ -4,17 +4,20 @@
 // ******************************************************************************
 // *** Dependencies
 // =============================================================
-var express = require("express");
-var session = require("express-session");
+let express = require("express");
+let session = require("express-session");
 // Requiring passport as we've configured it
-var passport = require("./config/passport");
+let passport = require("./config/passport");
+
+let conf = require("./config/config.json");
+let dbconfig=require("./config/dbconfig.json");
 
 // Sets up the Express App
 // =============================================================
-var PORT = process.env.PORT || 8080;
-var app = express();
+let PORT = process.env.PORT || 8080;
+let app = express();
 // Requiring our models for syncing
-var db = require("./models");
+let db = require("./models");
 
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
@@ -30,7 +33,6 @@ app.use(passport.session());
 
 // Routes
 // =============================================================
-require("./routes/author-api-routes.js")(app);
 require("./routes/api-routes.js")(app);
 require("./routes/html-routes.js")(app);
 
