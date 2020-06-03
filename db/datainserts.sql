@@ -70,13 +70,14 @@ values ('Mia','Anders','Female',0,0,1,2,0,0);
 insert into passengersminors (passId,passDob,passRequiredChildseatType,passRequiresEscortToClass) 
 values (3,'2009-04-01',0,0);
 
-insert into passtoparentmap (parentId,passMinId) values (1,1);
 insert into passtoparentmap (parentId,passMinId) values (1,2);
-insert into passtoparentmap (parentId,passMinId) values (2,1);
+insert into passtoparentmap (parentId,passMinId) values (1,3);
 insert into passtoparentmap (parentId,passMinId) values (2,2);
-insert into passtoparentmap (parentId,passMinId) values (3,1);
+insert into passtoparentmap (parentId,passMinId) values (2,3);
 insert into passtoparentmap (parentId,passMinId) values (3,2);
 insert into passtoparentmap (parentId,passMinId) values (3,3);
+insert into passtoparentmap (parentId,passMinId) values (4,4);
+
 
 insert into driverstoparentmap (parentId,driverId) values (1,1);
 insert into driverstoparentmap (parentId,driverId) values (2,2);
@@ -84,3 +85,17 @@ insert into driverstoparentmap (parentId,driverId) values (3,3);
 
 insert into vehicles (registration,make,model,color,spareSpots,spareChildSeats,spareBoosterSeats,doPetsEverTravel)
 values ('1DVL938','Hyundai','ix35','grey',3,1,1,0);
+insert into driverstovehiclesmap (vehicleId,drivId) values (1,1);
+
+insert into vehicles (registration,make,model,color,spareSpots,spareChildSeats,spareBoosterSeats,doPetsEverTravel)
+values ('1EEL 132','Mazda','6','white',2,0,1,0);
+insert into driverstovehiclesmap (vehicleId,drivId) values (2,2);
+
+insert into routes (startLocnId,endLocnId,routeDistance,routeTotalTime,routeStartTimeForEstimate)
+values (1,2,13.8,17,null);
+
+insert into routes (startLocnId,endLocnId,routeDistance,routeTotalTime,routeStartTimeForEstimate)
+values (1,3,16.1,19,null);
+
+
+
