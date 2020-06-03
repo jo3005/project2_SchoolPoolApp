@@ -1,54 +1,54 @@
 module.exports = function(sequelize, DataTypes) {
-    var Member = sequelize.define("School", {
+    var School = sequelize.define("School", {
       // The email cannot be null, and must be a proper email before creation
         schoolId:{
-          type: Sequelize.INTEGER,
+          type: DataTypes.INTEGER,
           allowNull:false,
           autoIncrement:true,
           unique:true,
           primaryKey:true
         },
         schoolName: {
-            type: Sequelize.STRING,
+            type: DataTypes.STRING,
             allowNull:false 
         },
         campusName: {
-            type: Sequelize.STRING,
+            type: DataTypes.STRING,
             allowNull:false 
         },
         schoolAddr:{
-            type: Sequelize.STRING,
+            type: DataTypes.STRING,
             allowNull:false
         },
         schoolPhone:{
-            type:Sequelize.STRING,
+            type:DataTypes.STRING,
             allowNull:true
         },
         openTime: {
-            type: Sequelize.TIME,
+            type: DataTypes.TIME,
             allowNull: true
         },
         startTime: {
-            type: Sequelize.TIME,
+            type: DataTypes.TIME,
             allowNull: true
         },
         finishTime: {
-            type: Sequelize.TIME,
+            type: DataTypes.TIME,
             allowNull: true
         },
         closeTime: {
-            type: Sequelize.TIME,
+            type: DataTypes.TIME,
             allowNull: true
         },
         createdAt: {
             allowNull: false,
             type: 'TIMESTAMP',
-            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+            defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
         },
         updatedAt: {
             allowNull: false,
             type: 'TIMESTAMP',
-            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+            defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
         }
     });
     

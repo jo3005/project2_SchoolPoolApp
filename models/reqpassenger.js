@@ -1,8 +1,8 @@
 module.exports = function(sequelize, DataTypes) {
-    var Member = sequelize.define("Reqpassenger", {
+    var Reqpassenger = sequelize.define("Reqpassenger", {
       // The email cannot be null, and must be a proper email before creation
         reqPassId:{
-          type: Sequelize.INTEGER,
+          type: DataTypes.INTEGER,
           allowNull:false,
           autoIncrement:true,
           unique:true,
@@ -10,7 +10,7 @@ module.exports = function(sequelize, DataTypes) {
         },
         passengerId: {
             //may not be required
-            type:Sequelize.INTEGER,
+            type:DataTypes.INTEGER,
             allowNull:false
         }
 
@@ -18,8 +18,8 @@ module.exports = function(sequelize, DataTypes) {
     Reqpassenger.associate = function(models) {
         // Associating Author with Posts
         // When an Author is deleted, also delete any associated Posts
-        Reqpassenger.belongsTo(Request);
-        Reqpassenger.hasOne(Passenger);
+        Reqpassenger.belongsTo(models.Request);
+        Reqpassenger.belongsTo(models.Passenger);
         
       };
     return Reqpassenger;

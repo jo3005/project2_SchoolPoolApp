@@ -1,61 +1,68 @@
 module.exports = function(sequelize, DataTypes) {
-    var Member = sequelize.define("Vehicle", {
+    var Vehicle = sequelize.define("Vehicle", {
       // The email cannot be null, and must be a proper email before creation
         vehicleId:{
-          type: Sequelize.INTEGER,
+          type: DataTypes.INTEGER,
           allowNull:false,
           autoIncrement:true,
           unique:true,
           primaryKey:true
         },     
         registration: {
-            type: Sequelize.STRING,
+            type: DataTypes.STRING,
             allowNull:false 
         },
         make: {
-            type: Sequelize.STRING,
+            type: DataTypes.STRING,
             allowNull:true 
         },
         model: {
-            type: Sequelize.STRING,
+            type: DataTypes.STRING,
             allowNull:true 
         },
         color: {
-            type: Sequelize.STRING,
+            type: DataTypes.STRING,
             allowNull:true 
         },
         spareSpots: {
-            type: Sequelize.INTEGER,
+            type: DataTypes.INTEGER,
             allowNull:false,
             defaultValue:1 
         },
         spareChildSeats: {
-            type: Sequelize.INTEGER,
+            type: DataTypes.INTEGER,
             allowNull:false,
             defaultValue:0 
         },
         spareBoosters: {
-            type: Sequelize.INTEGER,
+            type: DataTypes.INTEGER,
             allowNull:false,
             defaultValue:0 
         },
         petsEverTravel: {
-            type: Sequelize.BOOLEAN,
+            type: DataTypes.BOOLEAN,
             allowNull:false,
             defaultValue:false 
         },
         createdAt: {
             allowNull: false,
             type: 'TIMESTAMP',
-            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+            defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
         },
         updatedAt: {
             allowNull: false,
             type: 'TIMESTAMP',
-            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+            defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
         }
 
     });
+    Vehicle.associate = function(models) {
+        // Associating Drive with member, vehicles, routes
     
+        Vehicle.belongsTo(models.Driver, {
+            onDelete: "cascade"
+          });
+       
+      };
     return Vehicle;
   };

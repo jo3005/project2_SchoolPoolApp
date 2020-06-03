@@ -1,46 +1,46 @@
 module.exports = function(sequelize, DataTypes) {
-    var Member = sequelize.define("Location", {
+    var Location = sequelize.define("Location", {
       // The email cannot be null, and must be a proper email before creation
         locId:{
-          type: Sequelize.INTEGER,
+          type: DataTypes.INTEGER,
           allowNull:false,
           autoIncrement:true,
           unique:true,
           primaryKey:true
         },
         locationName: {
-            type: Sequelize.STRING,
+            type: DataTypes.STRING,
             allowNull:false 
         },
         streetNumber:{
-            type: Sequelize.STRING,
+            type: DataTypes.STRING,
             allowNull:true
         },
         streetName:{
-            type: Sequelize.STRING,
+            type: DataTypes.STRING,
             allowNull:true
         },
         suburb:{
-            type: Sequelize.STRING,
+            type: DataTypes.STRING,
             allowNull:true
         },
         postcode:{
-            type: Sequelize.INTEGER,
+            type: DataTypes.INTEGER,
             allowNull:true
         },
         locGps:{
-            type: Sequelize.STRING,
+            type: DataTypes.STRING,
             allowNull:true
         },
         createdAt: {
             allowNull: false,
             type: 'TIMESTAMP',
-            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+            defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
         },
         updatedAt: {
             allowNull: false,
             type: 'TIMESTAMP',
-            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+            defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
         }
 
     });

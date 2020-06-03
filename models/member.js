@@ -3,26 +3,26 @@ var bcrypt = require("bcryptjs");
 // Creating our User model
 
 module.exports = function(sequelize, DataTypes) {
-  var Member = sequelize.define("Member", {
+  const Member = sequelize.define("Member", {
     // The email cannot be null, and must be a proper email before creation
     memId:{
-        type: Sequelize.INTEGER,
+        type: DataTypes.INTEGER,
         allowNull:false,
         autoIncrement:true,
         unique:true,
         primaryKey:true
     },
     mem_username: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull:false,
     },
     memFirstname:{
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull:false,
     }, 
 
     memLastname: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull:false,
     }, 
     memEmail: {
@@ -50,21 +50,21 @@ module.exports = function(sequelize, DataTypes) {
     createdAt: {
         allowNull: false,
         type: 'TIMESTAMP',
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
     },
     updatedAt: {
         allowNull: false,
         type: 'TIMESTAMP',
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
     }  
   });
   // Creating a custom method for our User model. This will check if an unhashed password entered by the user can be compared to the hashed password stored in our database
-  User.prototype.validPassword = function(password) {
+  Member.prototype.validPassword = function(password) {
     return bcrypt.compareSync(password, this.password);
   };
   // Hooks are automatic methods that run during various phases of the User Model lifecycle
   // In this case, before a User is created, we will automatically hash their password
-  User.addHook("beforeCreate", function(user) {
+  Member.addHook("beforeCreate", function(user) {
     user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null);
   });
 

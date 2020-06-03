@@ -1,31 +1,31 @@
 module.exports = function(sequelize, DataTypes) {
-    var Member = sequelize.define("Parent", {
+    var Parent = sequelize.define("Parent", {
       // The email cannot be null, and must be a proper email before creation
         parentId:{
-          type: Sequelize.INTEGER,
+          type: DataTypes.INTEGER,
           allowNull:false,
           autoIncrement:true,
           unique:true,
           primaryKey:true
         },/* 
         memId:{
-          type: Sequelize.INTEGER,
+          type: DataTypes.INTEGER,
           allowNull:false,
         }, */
         relationship: {
-            type: Sequelize.STRING,
+            type: DataTypes.STRING,
             default: 'Parent',
             allowNull:true 
         },
         createdAt: {
             allowNull: false,
             type: 'TIMESTAMP',
-            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+            defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
         },
         updatedAt: {
             allowNull: false,
             type: 'TIMESTAMP',
-            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+            defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
         }
 
     });
@@ -36,7 +36,6 @@ module.exports = function(sequelize, DataTypes) {
       Parent.hasMany(models.Passenger, {
         onDelete: "cascade"
       });
-      Parent.belongsTo()
     };
     
 

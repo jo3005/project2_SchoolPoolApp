@@ -4,20 +4,20 @@
 // ******************************************************************************
 // *** Dependencies
 // =============================================================
-let express = require("express");
-let session = require("express-session");
+const express = require("express");
+const session = require("express-session");
 // Requiring passport as we've configured it
-let passport = require("./config/passport");
+const passport = require("./config/passport");
 
-let conf = require("./config/config.json");
-let dbconfig=require("./config/dbconfig.json");
+const conf = require("./config/config.json");
+const dbconfig=require("./config/dbconfig.json");
 
 // Sets up the Express App
 // =============================================================
-let PORT = process.env.PORT || 8080;
-let app = express();
+const PORT = process.env.PORT || 8080;
+const app = express();
 // Requiring our models for syncing
-let db = require("./models");
+const db = require("./models");
 
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
@@ -43,4 +43,3 @@ db.sequelize.sync().then(function() { // creates tables for all models that were
     console.log("==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.", PORT, PORT);
   });
 });
- 

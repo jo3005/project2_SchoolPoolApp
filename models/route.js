@@ -1,55 +1,55 @@
 module.exports = function(sequelize, DataTypes) {
-    var Member = sequelize.define("Route", {
+    var Route = sequelize.define("Route", {
       // The email cannot be null, and must be a proper email before creation
         routeId:{
-          type: Sequelize.INTEGER,
+          type: DataTypes.INTEGER,
           allowNull:false,
           autoIncrement:true,
           unique:true,
           primaryKey:true
         },
         routeName: {
-            type: Sequelize.STRING,
+            type: DataTypes.STRING,
             allowNull: false
         },
         startLocnId: {
             //FK to locations
-            type: Sequelize.INTEGER,
+            type: DataTypes.INTEGER,
             allowNull:false 
         },
         endLocnId: {
             //FK to locations
-            type: Sequelize.INTEGER,
+            type: DataTypes.INTEGER,
             allowNull:false 
         },
         routeDistance: {
-            type: Sequelize.DECIMAL(10,2),
+            type: DataTypes.DECIMAL(10,2),
             allowNull:false 
         },
         routeTotalTime: {
-            type: Sequelize.DECIMAL(10,2),
+            type: DataTypes.DECIMAL(10,2),
             allowNull:false 
         },
         routeStartTime: {
-            type:Sequelize.TIME,
+            type:DataTypes.TIME,
             allowNull:true
         },
         createdAt: {
             allowNull: false,
             type: 'TIMESTAMP',
-            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+            defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
         },
         updatedAt: {
             allowNull: false,
             type: 'TIMESTAMP',
-            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+            defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
         }
 
     });
     Route.associate = function(models) {
         // Associating Author with Posts
         // When an Author is deleted, also delete any associated Posts
-        Route.belongsTo(Driver);
+        Route.belongsTo(models.Driver);
         
       };
     return Route;

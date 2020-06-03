@@ -1,90 +1,90 @@
 module.exports = function(sequelize, DataTypes) {
-    var Member = sequelize.define("Route", {
+    var Request = sequelize.define("Request", {
       // The email cannot be null, and must be a proper email before creation
         reqId:{
-          type: Sequelize.INTEGER,
+          type: DataTypes.INTEGER,
           allowNull:false,
           autoIncrement:true,
           unique:true,
           primaryKey:true
         },
         requestDate: {
-            type: Sequelize.DATETIME,
+            type: DataTypes.DATE,
             allowNull: false
         },
         requiredDate: {
-            type: Sequelize.DATETIME,
+            type: DataTypes.DATE,
             allowNull: false
         },
         requiredDropOffTimeStart: {
-            type: Sequelize.DATETIME,
+            type: DataTypes.DATE,
             allowNull: false
         },
         requiredDropOffTimeEnd: {
-            type: Sequelize.DATETIME,
+            type: DataTypes.DATE,
             allowNull: false
         },
         requiredPickupLocnId: {
             //FK to locations
-            type: Sequelize.INTEGER,
+            type: DataTypes.INTEGER,
             allowNull:false 
         },
         requiredDropoffLocnId: {
             //FK to locations
-            type: Sequelize.INTEGER,
+            type: DataTypes.INTEGER,
             allowNull:false 
         },
         addedRouteDistance: {
-            type: Sequelize.DECIMAL(10,2),
+            type: DataTypes.DECIMAL(10,2),
             allowNull:false 
         },
         addedRouteTime: {
-            type: Sequelize.DECIMAL(10,2),
+            type: DataTypes.DECIMAL(10,2),
             allowNull:false 
         },
         boostersRequired: {
-            type:Sequelize.INTEGER,
+            type:DataTypes.INTEGER,
             allowNull:true,
             defaultValue:0
         },
         carSeatsRequired: {
-            type:Sequelize.INTEGER,
+            type:DataTypes.INTEGER,
             allowNull:true,
             defaultValue:0
         },
         creditsOffered: {
-            type:Sequelize.INTEGER,
+            type:DataTypes.INTEGER,
             allowNull:true,
             defaultValue:0
         },
         booked:{
-            type:Sequelize.BOOLEAN,
+            type:DataTypes.BOOLEAN,
             defaultValue:false,
         },
         
         bookedBy:{
-            type:Sequelize.STRING,
+            type:DataTypes.STRING,
             defaultValue:false,
         },
 
         createdAt: {
             allowNull: false,
             type: 'TIMESTAMP',
-            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+            defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
         },
         updatedAt: {
             allowNull: false,
             type: 'TIMESTAMP',
-            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+            defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
         }
 
     });
     Request.associate = function(models) {
         // Associating Author with Posts
         // When an Author is deleted, also delete any associated Posts
-        Request.belongsTo(Member);
-        Request.hasMany(Reqpassenger);
+        Request.belongsTo(models.Member);
+        Request.hasMany(models.Reqpassenger);
         
       };
-    return Route;
+    return Request;
   };
