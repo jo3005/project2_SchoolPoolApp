@@ -1,92 +1,90 @@
 module.exports = function(sequelize, DataTypes) {
-    var Request = sequelize.define("Request", {
- 
+    var Member = sequelize.define("Route", {
+      // The email cannot be null, and must be a proper email before creation
         reqId:{
-          type: DataTypes.INTEGER,
+          type: Sequelize.INTEGER,
           allowNull:false,
           autoIncrement:true,
           unique:true,
           primaryKey:true
         },
         requestDate: {
-            type: DataTypes.DATE,
+            type: Sequelize.DATETIME,
             allowNull: false
         },
         requiredDate: {
-            type: DataTypes.DATE,
+            type: Sequelize.DATETIME,
             allowNull: false
         },
         requiredDropOffTimeStart: {
-            type: DataTypes.DATE,
+            type: Sequelize.DATETIME,
             allowNull: false
         },
         requiredDropOffTimeEnd: {
-            type: DataTypes.DATE,
+            type: Sequelize.DATETIME,
             allowNull: false
         },
         requiredPickupLocnId: {
             //FK to locations
-            type: DataTypes.INTEGER,
+            type: Sequelize.INTEGER,
             allowNull:false 
         },
         requiredDropoffLocnId: {
             //FK to locations
-            type: DataTypes.INTEGER,
+            type: Sequelize.INTEGER,
             allowNull:false 
         },
         addedRouteDistance: {
-            type: DataTypes.DECIMAL(10,2),
+            type: Sequelize.DECIMAL(10,2),
             allowNull:false 
         },
         addedRouteTime: {
-            type: DataTypes.DECIMAL(10,2),
+            type: Sequelize.DECIMAL(10,2),
             allowNull:false 
         },
         boostersRequired: {
-            type:DataTypes.INTEGER,
+            type:Sequelize.INTEGER,
             allowNull:true,
             defaultValue:0
         },
         carSeatsRequired: {
-            type:DataTypes.INTEGER,
+            type:Sequelize.INTEGER,
             allowNull:true,
             defaultValue:0
         },
         creditsOffered: {
-            type:DataTypes.INTEGER,
+            type:Sequelize.INTEGER,
             allowNull:true,
             defaultValue:0
         },
         booked:{
-            type:DataTypes.BOOLEAN,
+            type:Sequelize.BOOLEAN,
             defaultValue:false,
         },
         
         bookedBy:{
-            type:DataTypes.STRING,
+            type:Sequelize.STRING,
             defaultValue:false,
         },
 
         createdAt: {
             allowNull: false,
             type: 'TIMESTAMP',
-            defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
+            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
         },
         updatedAt: {
             allowNull: false,
             type: 'TIMESTAMP',
-            defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
+            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
         }
 
     });
     Request.associate = function(models) {
-        // We're saying that a request should belong to an Member
-        // A request can't be created without an Member due to the foreign key constraint
-        Request.belongsTo(models.Member, {
-          foreignKey: {
-            allowNull: false
-          }
-        });
+        // Associating Author with Posts
+        // When an Author is deleted, also delete any associated Posts
+        Request.belongsTo(Member);
+        Request.hasMany(Reqpassenger);
+        
       };
-    return Request;
+    return Route;
   };

@@ -1,60 +1,56 @@
 module.exports = function(sequelize, DataTypes) {
-    var Route = sequelize.define("Route", {
-   
+    var Member = sequelize.define("Route", {
+      // The email cannot be null, and must be a proper email before creation
         routeId:{
-          type: DataTypes.INTEGER,
+          type: Sequelize.INTEGER,
           allowNull:false,
           autoIncrement:true,
           unique:true,
           primaryKey:true
         },
         routeName: {
-            type: DataTypes.STRING,
+            type: Sequelize.STRING,
             allowNull: false
         },
         startLocnId: {
             //FK to locations
-            type: DataTypes.INTEGER,
+            type: Sequelize.INTEGER,
             allowNull:false 
         },
         endLocnId: {
             //FK to locations
-            type: DataTypes.INTEGER,
+            type: Sequelize.INTEGER,
             allowNull:false 
         },
         routeDistance: {
-            type: DataTypes.DECIMAL(10,2),
+            type: Sequelize.DECIMAL(10,2),
             allowNull:false 
         },
         routeTotalTime: {
-            type: DataTypes.DECIMAL(10,2),
+            type: Sequelize.DECIMAL(10,2),
             allowNull:false 
         },
         routeStartTime: {
-            type:DataTypes.TIME,
+            type:Sequelize.TIME,
             allowNull:true
         },
         createdAt: {
             allowNull: false,
             type: 'TIMESTAMP',
-            defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
+            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
         },
         updatedAt: {
             allowNull: false,
             type: 'TIMESTAMP',
-            defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
+            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
         }
 
     });
     Route.associate = function(models) {
-        // We're saying that a Route should belong to a Driver
-        // A Route can't be created without an Driver due to the foreign key constraint
-        Route.belongsTo(models.Driver, {
-          foreignKey: {
-            allowNull: false
-          }
-        });
-      }; 
-
+        // Associating Author with Posts
+        // When an Author is deleted, also delete any associated Posts
+        Route.belongsTo(Driver);
+        
+      };
     return Route;
   };

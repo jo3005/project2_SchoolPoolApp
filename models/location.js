@@ -1,48 +1,36 @@
 module.exports = function(sequelize, DataTypes) {
-    var Member = sequelize.define("Vehicle", {
+    var Member = sequelize.define("Location", {
       // The email cannot be null, and must be a proper email before creation
-        vehicleId:{
+        locId:{
           type: Sequelize.INTEGER,
           allowNull:false,
           autoIncrement:true,
           unique:true,
           primaryKey:true
-        },     
-        registration: {
+        },
+        locationName: {
             type: Sequelize.STRING,
             allowNull:false 
         },
-        make: {
+        streetNumber:{
             type: Sequelize.STRING,
-            allowNull:true 
+            allowNull:true
         },
-        model: {
+        streetName:{
             type: Sequelize.STRING,
-            allowNull:true 
+            allowNull:true
         },
-        color: {
+        suburb:{
             type: Sequelize.STRING,
-            allowNull:true 
+            allowNull:true
         },
-        spareSpots: {
+        postcode:{
             type: Sequelize.INTEGER,
-            allowNull:false,
-            defaultValue:1 
+            allowNull:true
         },
-        spareChildSeats: {
-            type: Sequelize.INTEGER,
-            allowNull:false,
-            defaultValue:0 
-        },
-        spareBoosters: {
-            type: Sequelize.INTEGER,
-            allowNull:false,
-            defaultValue:0 
-        },
-        petsEverTravel: {
-            type: Sequelize.BOOLEAN,
-            allowNull:false,
-            defaultValue:false 
+        locGps:{
+            type: Sequelize.STRING,
+            allowNull:true
         },
         createdAt: {
             allowNull: false,
@@ -57,5 +45,16 @@ module.exports = function(sequelize, DataTypes) {
 
     });
     
-    return Vehicle;
+    Location.associate = function(models) {
+        // Associating Author with Posts
+        // When an Author is deleted, also delete any associated Posts
+        Location.belongsTo(models.Member);
+      };
+
+    return Location;
   };
+
+
+
+  // TODO: check that at least locAddress or locGps is not null.
+
