@@ -1,0 +1,28 @@
+
+body {
+    background-image: url(../img/road.png);
+    background-size: cover;
+
+}
+.pleaseLogIn {
+    color: white
+}
+#form {
+    display: inline-block;
+    padding: 32px 48px 0px 48px;
+    background: rgba(0, 0, 0, .6);
+}
+#forgotPassword {
+    float: right;
+}
+#logo {
+    width: 250px;
+}
+body {
+    background-image: url(../img/road.png);
+    background-size: cover;
+
+}
+.pleaseLogIn {
+    color: white
+}

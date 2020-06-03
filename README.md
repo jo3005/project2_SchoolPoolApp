@@ -19,3 +19,15 @@ I want to be able to be provided with real-time navigation whilst I am on a ride
 OPT: If I don't need so many credits in my account, I want to be able to return credits for a refund/fuel voucher... 
 OPT: I want to see the ratings of my accepted passengers.
 
+
+## Application Requirements
+* Must use a Node and Express server
+* Must be backed by a MySQL database and an ORM (not necessarily Sequelize)
+* Must utilize both GET and POST routes for retrieving and adding new data
+* Must be deployed using Heroku (with data)
+* Must utilize at least one new third-party API
+* Must have a polished UI
+* Must use a CSS framework _other than_ Bootstrap
+* Must follow MVC paradigm
+* Must meet good quality coding standards (indentation, scoping, naming)
+* Must use Handlebars.js

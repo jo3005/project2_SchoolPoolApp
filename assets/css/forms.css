@@ -1,0 +1,17 @@
+#logo {
+    width: 250px;
+}
+
+.container {
+  background: white;
+  padding: 20px 25px;
+  border: 5px solid #26a69a;
+  width: 550px;
+  height: auto;
+  box-sizing: border-box;
+  position: relative;
+}
+
+#menuBtn {
+  width: 400px;
+}
