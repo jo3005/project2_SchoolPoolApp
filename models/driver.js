@@ -1,8 +1,8 @@
 module.exports = function(sequelize, DataTypes) {
-    var Member = sequelize.define("Driver", {
+    var Driver = sequelize.define("Driver", {
       // The email cannot be null, and must be a proper email before creation
         driverId:{
-            type: Sequelize.INTEGER,
+            type: DataTypes.INTEGER,
             allowNull:false,
             autoIncrement:true,
             unique:true,
@@ -10,59 +10,62 @@ module.exports = function(sequelize, DataTypes) {
         },
         /* memId:{
             //FK to members
-            type: Sequelize.INTEGER,
+            type: DataTypes.INTEGER,
             allowNull:false,
         }, */
         defaultVehicle:{
             //FK to vehicles
-            type: Sequelize.INTEGER,
+            type: DataTypes.INTEGER,
             allowNull:true,
         },
         stateOfIssue:{
             //ref to ausstates
-            type: Sequelize.INTEGER,
+            type: DataTypes.INTEGER,
             defaultValue:1,  //defaults to WA
             allowNull:true,
         },
         expiryDate: {
             allowNull: false,
-            type: Sequelize.DATETIME
+            type: DataTypes.DATEONLY
         },
         yearsDriving:{
-            type: Sequelize.INTEGER,
+            type: DataTypes.INTEGER,
             allowNull:true,
         },
         workingWithChildren:{
             //Does the driver have an official working with children check?
-            type: Sequelize.BOOLEAN,
+            type: DataTypes.BOOLEAN,
             allowNull:true,
             defaultValue:false
         },
         defaultRoute:{
             //FK to routes
-            type: Sequelize.INTEGER,
+            type: DataTypes.INTEGER,
             allowNull:true,
         },
         createdAt: {
             allowNull: false,
             type: 'TIMESTAMP',
-            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+            defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
         },
         updatedAt: {
             allowNull: false,
             type: 'TIMESTAMP',
-            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+            defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
         }
 
+
+
     });
+
     Driver.associate = function(models) {
-        // Associating Author with Posts
-        // When an Author is deleted, also delete any associated Posts
-        Driver.belongsTo(Member);
-        Driver.HasMany(Vehicle, {
+        // Associating Drive with member, vehicles, routes
+    
+        Driver.belongsTo(models.Member);
+        Driver.hasMany(models.Vehicle, {
             onDelete: "cascade"
           });
-        Driver.HasMany(Route, {
+        Driver.hasMany(models.Route, {
             onDelete: "cascade"
           });
           
