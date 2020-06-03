@@ -164,13 +164,13 @@ app.post("/api/createRequest", function(req, res) {
     bookedBy: req.body.bookedBy,
  
   })
-    .then(function(dbRequest) {
-      console.log("Request has been created");
-      // res.json(dbRequest)
-    })
-    .catch(function(err) {
-      res.status(401).json(err);
-    });
+  .then(function(dbRequest) {
+    console.log("Request has been created");
+    // res.json(dbRequest)
+  })
+  .catch(function(err) {
+    res.status(401).json(err);
+  });
 
     
   db.Member.findOne({
@@ -202,7 +202,7 @@ app.post("/api/createRequest", function(req, res) {
       }
     ]
 
-    // ----- OR ----- 
+    // ----- OR -----  
     // where: {
 
     //   // compare request FROM and TO Locations with Drivers default route FROM and TO Locations
@@ -229,7 +229,8 @@ app.post("/api/createRequest", function(req, res) {
     // include: [db.Driver, db.Vehicle, db.Route]
   }).then(function(dbMember) {
     res.json(dbMember);
-    emailDriver(dBMember)
+    emailDriver(dBMember) // use member.email details to send email
+    // This is where we can consider updating status field in request for "requesting > pending > acccepted > cancelled > driving > arriving > ended"
   });
 });
 
@@ -238,6 +239,19 @@ function emailDriver (driverObj) {
   console.log("Calling emailDriver function");
   console.log(driverObj);
 }
+
+app.get("/api/requests", function(req, res) {
+  // Here we add an "include" property to our options in our findAll query
+  // We set the value to an array of the models we want to include in a left outer join
+  // In this case, just db.Driver
+  db.Request.findAll({
+    where: { booked: false }, // return requests that haven't been confirmed / booked
+    requiredDate: { [Op.gte]: new Date() } // only requests for today or the future
+  
+  }).then(function(requestsList) {
+    res.json(requestsList);
+  });
+});
 
 
 // ----- Post Routes -----------------------
