@@ -9,7 +9,7 @@ const session = require("express-session");
 // Requiring passport as we've configured it
 const passport = require("./config/passport");
 
-const conf = require("./config/config.json");
+const config = require("./config/config.json");
 const dbconfig=require("./config/dbconfig.json");
 
 // Sets up the Express App
