@@ -38,11 +38,12 @@ module.exports = function(app) {
     res.sendFile(path.join(__dirname, "../public/members.html"));
   });
 
-  // // index route loads view.html
-  // app.get("/", function(req, res) {
-  //   res.sendFile(path.join(__dirname, "../public/blog.html"));
-  // });
+  app.get("/signup",function(req,res){
+    res.sendFile(path.join(__dirname, "../public/signup.html"));
+  });
 
+  
+  
   // TODO: REQUESTOR STATIC ROUTES
   // =============================================================
   app.get("/cms", isAuthenticated, function(req, res) { // added authentication middleware before accessing page

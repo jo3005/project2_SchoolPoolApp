@@ -12,7 +12,7 @@ module.exports = function(sequelize, DataTypes) {
         unique:true,
         primaryKey:true
     },
-    mem_username: {
+    memUsername: {
         type: DataTypes.STRING,
         allowNull:false,
     },
