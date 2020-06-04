@@ -6,9 +6,9 @@
 // =============================================================
 
 // Requiring our models and passport as we've configured it
-var db = require("../models");
-var passport = require("../config/passport");
-var nodemailer = reuqire("nodemailer");
+const db = require("../models");
+const passport = require("../config/passport");
+const nodemailer = require("nodemailer");
 const transporter = nodemailer.createTransport({
   host: 'smtp.ethereal.email', // fake email that only receives email and tests sent emails.
   port: 587,
