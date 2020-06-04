@@ -9,6 +9,10 @@
 const db = require("../models");
 const passport = require("../config/passport");
 const nodemailer = require("nodemailer");
+
+//const express = require("express");
+//const app= express.Router();
+
 const transporter = nodemailer.createTransport({
   host: 'smtp.ethereal.email', // fake email that only receives email and tests sent emails.
   port: 587,
@@ -21,7 +25,7 @@ const transporter = nodemailer.createTransport({
 
 // Routes
 // =============================================================
-module.exports = function(app) {
+module.exports= function(app) {
   
 // PASSPORT AUTHENTICATION API ROUTES
 // =============================================================
@@ -29,6 +33,7 @@ module.exports = function(app) {
   // If the user has valid login credentials, send them to the members page.
   // Otherwise the user will be sent an error
   app.post("/api/login", passport.authenticate("local"), function(req, res) {
+    console.log("posting the login data");
     // Sending back a password, even a hashed password, isn't a good idea
     res.json({
       email: req.user.email,
@@ -40,13 +45,14 @@ module.exports = function(app) {
   // how we configured our Sequelize User Model. If the user is created successfully, proceed to log the user in,
   // otherwise send back an error
   app.post("/api/signup", function(req, res) {
+    console.log("posting the create user data");
     db.Member.create({
       // memId: req.body.memId, // autoincrement PK
-      mem_username: req.body.username,
+      memUsername: req.body.username,
       memFirstname: req.body.firstName,
       memLastname: req.body.lastName,
-      credits: req.body.credits,
-      memMobile: req.body.credits,
+      credits: 0,
+      memMobile: req.body.mobile,
       memEmail: req.body.email,
       password: req.body.password
     })
@@ -60,13 +66,16 @@ module.exports = function(app) {
 
   // Route for logging user out
   app.get("/logout", function(req, res) {
+    console.log("logging user out");
     req.logout();
     res.redirect("/");
   });
 
   // Route for getting some data about our user to be used client side
   app.get("/api/user_data", function(req, res) {
+    console.log("getting some data about our user to be used client side");
     if (!req.user) {
+      console.log("No user data found");
       // The user is not logged in, send back an empty object
       res.json({});
     } else {
@@ -385,4 +394,3 @@ function emailRequestor(memberObj) {
       });
     });
   };
-  
