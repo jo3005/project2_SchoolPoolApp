@@ -10,9 +10,6 @@ const db = require("../models");
 const passport = require("../config/passport");
 const nodemailer = require("nodemailer");
 
-//const express = require("express");
-//const app= express.Router();
-
 const transporter = nodemailer.createTransport({
   host: 'smtp.ethereal.email', // fake email that only receives email and tests sent emails.
   port: 587,
@@ -39,6 +36,7 @@ module.exports= function(app) {
       email: req.user.email,
       id: req.user.id
     });
+    //console.log(res);
   });
 
   // Route for signing up a user. The user's password is automatically hashed and stored securely thanks to
@@ -69,11 +67,12 @@ module.exports= function(app) {
     console.log("logging user out");
     req.logout();
     res.redirect("/");
+    currentUserId="";
   });
 
   // Route for getting some data about our user to be used client side
   app.get("/api/user_data", function(req, res) {
-    console.log("getting some data about our user to be used client side");
+    //console.log("getting some data about our user to be used client side");
     if (!req.user) {
       console.log("No user data found");
       // The user is not logged in, send back an empty object
@@ -85,13 +84,39 @@ module.exports= function(app) {
         email: req.user.memEmail, // changed to memEmail
         id: req.user.id
       });
+
     }
   });
 
-// REGISTER DRIVER API ROUTE
+// REGISTER LOCATIONS API ROUTE
+// =============================================================
+
+app.post("/api/newLocation",function(req,res){
+  db.Location.create({
+    locationName:req.body.locationName,
+    streetNumber:req.body.streetNumber,
+    streetName:req.body.streetName,
+    suburb:req.body.suburb,
+    postcode:req.body.postcode,
+    locGps:null
+  })
+  .then(function(dbLocation) {
+    res.json(dbLocation);
+    console.log(res.json(dbLocation));
+    // res.redirect(307, "/api/login");
+  })
+  .catch(function(err) {
+    res.status(401).json(err);
+  });
+})
+
+
+
+  // REGISTER DRIVER API ROUTE
 // =============================================================
 
 app.post("/api/registerDriver", function(req, res) {
+
   db.Driver.create({
     // driverId: req.body.driverId, // autoincrement PK
    
@@ -101,7 +126,7 @@ app.post("/api/registerDriver", function(req, res) {
     yearsDriving: req.body.yearsDriving,
     workingWithChildren: req.body.workingWithChildren,
     defaultRoute: req.body.defaultRoute,
- 
+    MemberMemId: req.user.id
   })
     .then(function(dbDriver) {
       res.json(dbDriver)
@@ -132,8 +157,6 @@ app.post("/api/registerDriver", function(req, res) {
       });
 
     db.Route.create({
-      // driverId: req.body.driverId, // autoincrement PK
-      
       routeName: req.body.routeName,
       startLocnId: req.body.startLocnId,
       endLocnId: req.body.endLocnId,
@@ -329,37 +352,38 @@ function emailRequestor(memberObj) {
     });
 }
 
-// ----- Post Routes -----------------------
+// ----- GET Routes -----------------------
 
-    // GET route for getting all of the posts
-    app.get("/api/posts", function(req, res) {
+    // GET route for getting all location addresses
+    app.get("/api/locations", function(req, res) {
       var query = {};
-      if (req.query.author_id) {
-        query.AuthorId = req.query.author_id;
+      if (req.query.MemberMemId) {
+        query.MemberMemId = req.query.MemberMemId;
       }
       // Here we add an "include" property to our options in our findAll query
       // We set the value to an array of the models we want to include in a left outer join
       // In this case, just db.Author
-      db.Post.findAll({
+      db.Location.findAll({
         where: query,
-        include: [db.Author]
-      }).then(function(dbPost) {
-        res.json(dbPost);
+        include: [db.Location]
+      }).then(function(dbLocation) {
+        res.json(dbLocation);
       });
     });
   
     // Get route for retrieving a single post
     app.get("/api/posts/:id", function(req, res) {
+      var query = {};
       // Here we add an "include" property to our options in our findOne query
       // We set the value to an array of the models we want to include in a left outer join
       // In this case, just db.Author
-      db.Post.findOne({
+      db.Location.findOne({
         where: {
-          id: req.params.id
+          locId: req.params.id
         },
-        include: [db.Author]
-      }).then(function(dbPost) {
-        res.json(dbPost);
+        include: [db.Location]
+      }).then(function(dbLocation) {
+        res.json(dbLocation);
       });
     });
   
