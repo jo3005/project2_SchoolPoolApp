@@ -1,0 +1,10 @@
+<ul>
+    {{#each requests}}
+    {{#unless (this.dataValues.booked)}} 
+    {{!-- opposite is unless --}}
+        <li>{{this.dataValues.reqId}}</li>
+    {{/unless}}
+    {{/each}}
+</ul>
+
+<h1>Hello</h1>
