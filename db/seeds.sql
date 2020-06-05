@@ -11,17 +11,17 @@ insert into vehicles (registration,make,model,color,spareSpots,spareChildSeats,s
 insert into vehicles (registration,make,model,color,spareSpots,spareChildSeats,spareBoosters,petsEverTravel,DriverDriverID) values ('1DVL938','Hyundai','ix35','grey',3,1,1,0,2);
 insert into vehicles (registration,make,model,color,spareSpots,spareChildSeats,spareBoosters,petsEverTravel,DriverDriverID) values ('1DVL938','Hyundai','ix35','grey',3,1,1,0,3);
 
-insert into locations (locationName,streetNumber,streetName,suburb,postcode,locGps,MemberMemID) values ('Black house','17','Le Souef Drive','Kardinya','6163','-32.066027,115.811441',1);
-insert into locations (locationName,streetNumber,streetName,suburb,postcode,locGps,MemberMemID) values ('St Hilda''s Childley Campus',null,'McCabe Street','Mosmon Park','6012','-32.022123,115.773325',1);
-insert into locations (locationName,streetNumber,streetName,suburb,postcode,locGps,MemberMemID) values ('Christchurch GS',null,'Queenslea Drive','Claremont','6010','-31.986847,115.778429',1);
-insert into locations (locationName,streetNumber,streetName,suburb,postcode,locGps,MemberMemID) values ('Black house','17','Le Souef Drive','Kardinya','6163','-32.066027,115.811441',2);
-insert into locations (locationName,streetNumber,streetName,suburb,postcode,locGps,MemberMemID) values ('St Hilda''s Childley Campus',null,'McCabe Street','Mosmon Park','6012','-32.022123,115.773325',2);
-insert into locations (locationName,streetNumber,streetName,suburb,postcode,locGps,MemberMemID) values ('Christchurch GS',null,'Queenslea Drive','Claremont','6010','-31.986847,115.778429',2);
-insert into locations (locationName,streetNumber,streetName,suburb,postcode,locGps,MemberMemID) values ('Black house','17','Le Souef Drive','Kardinya','6163','-32.066027,115.811441',3);
-insert into locations (locationName,streetNumber,streetName,suburb,postcode,locGps,MemberMemID) values ('St Hilda''s Childley Campus',null,'McCabe Street','Mosmon Park','6012','-32.022123,115.773325',3);
-insert into locations (locationName,streetNumber,streetName,suburb,postcode,locGps,MemberMemID) values ('Christchurch GS',null,'Queenslea Drive','Claremont','6010','-31.986847,115.778429',3);
-insert into locations (locationName,streetNumber,streetName,suburb,postcode,locGps,MemberMemID) values ('Anders Home','25A','Elvira Street','Palmyra','6157','-32.039796,115.780780',4);
-insert into locations (locationName,streetNumber,streetName,suburb,postcode,locGps,MemberMemID) values ('St Hilda''s Childley Campus',null,'McCabe Street','Mosmon Park','6012','-32.022123,115.773325',4);
+insert into locations (locationName,streetNumber,streetName,suburb,postcode,state,country,locGps,MemberMemID) values ('Black house','17','Le Souef Drive','Kardinya','6163','WA','Australia','-32.066027,115.811441',1);
+insert into locations (locationName,streetNumber,streetName,suburb,postcode,state,country,locGps,MemberMemID) values ('St Hilda''s Childley Campus',null,'McCabe Street','Mosmon Park','6012','WA','Australia','-32.022123,115.773325',1);
+insert into locations (locationName,streetNumber,streetName,suburb,postcode,state,country,locGps,MemberMemID) values ('Christchurch GS',null,'Queenslea Drive','Claremont','6010','WA','Australia','-31.986847,115.778429',1);
+insert into locations (locationName,streetNumber,streetName,suburb,postcode,state,country,locGps,MemberMemID) values ('Black house','17','Le Souef Drive','Kardinya','6163','WA','Australia','-32.066027,115.811441',2);
+insert into locations (locationName,streetNumber,streetName,suburb,postcode,state,country,locGps,MemberMemID) values ('St Hilda''s Childley Campus',null,'McCabe Street','Mosmon Park','6012','WA','Australia','-32.022123,115.773325',2);
+insert into locations (locationName,streetNumber,streetName,suburb,postcode,state,country,locGps,MemberMemID) values ('Christchurch GS',null,'Queenslea Drive','Claremont','6010','WA','Australia','-31.986847,115.778429',2);
+insert into locations (locationName,streetNumber,streetName,suburb,postcode,state,country,locGps,MemberMemID) values ('Black house','17','Le Souef Drive','Kardinya','6163','WA','Australia','-32.066027,115.811441',3);
+insert into locations (locationName,streetNumber,streetName,suburb,postcode,state,country,locGps,MemberMemID) values ('St Hilda''s Childley Campus',null,'McCabe Street','Mosmon Park','6012','WA','Australia','-32.022123,115.773325',3);
+insert into locations (locationName,streetNumber,streetName,suburb,postcode,state,country,locGps,MemberMemID) values ('Christchurch GS',null,'Queenslea Drive','Claremont','6010','WA','Australia','-31.986847,115.778429',3);
+insert into locations (locationName,streetNumber,streetName,suburb,postcode,state,country,locGps,MemberMemID) values ('Anders Home','25A','Elvira Street','Palmyra','6157','WA','Australia','-32.039796,115.780780',4);
+insert into locations (locationName,streetNumber,streetName,suburb,postcode,state,country,locGps,MemberMemID) values ('St Hilda''s Childley Campus',null,'McCabe Street','Mosmon Park','6012','WA','Australia','-32.022123,115.773325',4);
 
 insert into parents (MemberMemId,relationship) values (1,"Father");
 insert into parents (MemberMemId,relationship) values (2,"Mother");
