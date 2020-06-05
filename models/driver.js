@@ -8,6 +8,10 @@ module.exports = function(sequelize, DataTypes) {
             unique:true,
             primaryKey:true
         },
+        licenceNumber:{
+            type: DataTypes.STRING,
+            allowNull:false
+        },
         /* memId:{
             //FK to members
             type: DataTypes.INTEGER,
