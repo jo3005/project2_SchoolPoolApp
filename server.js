@@ -6,7 +6,7 @@
 // =============================================================
 const express = require("express");
 const session = require("express-session");
-
+const exphbs = require("express-handlebars");
 // Requiring passport as we've configured it
 const passport = require("./config/passport");
 
@@ -26,7 +26,9 @@ const db = require("./models");
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
+// Handlebars
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
 // Static directory
 app.use(express.static("public"));
 
@@ -39,10 +41,11 @@ app.use(passport.session());
 // =============================================================
 require("./routes/api-routes.js")(app);
 require("./routes/html-routes.js")(app);
+require("./routes/author-api-routes.js")(app);
 
 // Syncing our sequelize models and then starting our Express app
 // =============================================================
-db.sequelize.sync({force: true}).then(function() { // creates tables for all models that were defined (i.e. using the define method on an instance of Sequelize)
+db.sequelize.sync({force: false}).then(function() { // creates tables for all models that were defined (i.e. using the define method on an instance of Sequelize)
   app.listen(PORT, function() {
     console.log("==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.", PORT, PORT);
   });
