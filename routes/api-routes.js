@@ -19,7 +19,7 @@ const transporter = nodemailer.createTransport({
   auth: {
       user: 'guy.lynch@ethereal.email',
       pass: 'm6uvuqX1d1hb86wQNt'
-  }
+  } 
 });
 
 
