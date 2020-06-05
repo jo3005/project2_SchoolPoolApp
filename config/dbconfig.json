@@ -1,7 +1,7 @@
 {
   "development": {
-    "username": "schoolie",
-    "password": "leavers2020",
+    "username": "root",
+    "password": "sql0044",
     "database": "schoolpool", 
     "host": "localhost",
     "port": "3306",
