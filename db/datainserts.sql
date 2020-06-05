@@ -1,30 +1,5 @@
-insert into childseattype (description) values ('none');
-insert into childseattype (description) values ('childseat');
-insert into childseattype (description) values ('booster');
 
-insert into relationships (relationship) values ('Mother');
-insert into relationships (relationship) values ('Father');
-insert into relationships (relationship) values ('Step-Mother');
-insert into relationships (relationship) values ('Step-Father');
-insert into relationships (relationship) values ('Grandmother - maternal');
-insert into relationships (relationship) values ('Grandmother - paternal');
-insert into relationships (relationship) values ('Grandfather - maternal');
-insert into relationships (relationship) values ('Grandfather - paternal');
-insert into relationships (relationship) values ('Older Sibling');
-insert into relationships (relationship) values ('Nanny');
-insert into relationships (relationship) values ('Other');
-
-insert into australiastates (stateAbbr,stateName) values ('WA','Western Australia');
-insert into australiastates (stateAbbr,stateName) values ('SA','South Australia');
-insert into australiastates (stateAbbr,stateName) values ('NT','Northern Territory');
-insert into australiastates (stateAbbr,stateName) values ('QLD','Queensland');
-insert into australiastates (stateAbbr,stateName) values ('NSW','New South Wales');
-insert into australiastates (stateAbbr,stateName) values ('VIC','Victoria');
-insert into australiastates (stateAbbr,stateName) values ('TAS','Tasmania');
-insert into australiastates (stateAbbr,stateName) values ('ACT','Australian Capital Territory');
-
-
-insert into members (mem_username, memFirstname,memLastname,memEmail,credits,memMobile)
+insert into members (mem_username, memFirstname,memLastname,memEmail,credits,memMobile, password)
 values ('jblack1974', 'John', 'Black', 'jblack@hotmail.com',12,'0061 432 158 394','tempyboy#45');
 insert into members (mem_username, memFirstname,memLastname,memEmail,credits,memMobile,memPwd)
 values ('fblack_06', 'Fiona', 'Black', 'fblack06@hotmail.com',34,'0061 435 206 111','wondergirl99');
@@ -46,13 +21,13 @@ insert into drivers (licenceNumber, stateOfIssue, expiryDate,yearsDriving,workin
 values (4628912,1,'2021-12-01',24,1,4);
 
 insert into locations (locationName,streetNumber,unitNumber,streetName,suburb,postcode,gpsCoords)
-values ('Black house','17',null,'Le Souef Drive','Kardinya','6163','-32.066027, 115.811441');
+values ('Black house','17',null,'Le Souef Drive','Kardinya','6163','-32.066027,115.811441');
 insert into locations (locationName,streetNumber,unitNumber,streetName,suburb,postcode,gpsCoords)
-values ('St Hilda''s Childley Campus',null,null,'McCabe Street','Mosmon Park','6012','--32.022123, 115.773325');
+values ('St Hilda''s Childley Campus',null,null,'McCabe Street','Mosmon Park','6012','-32.022123,115.773325');
 insert into locations (locationName,streetNumber,unitNumber,streetName,suburb,postcode,gpsCoords)
-values ('Christchurch GS',null,null,'Queenslea Drive','Claremont','6010','-31.986847, 115.778429');
+values ('Christchurch GS',null,null,'Queenslea Drive','Claremont','6010','-31.986847,115.778429');
 insert into locations (locationName,streetNumber,unitNumber,streetName,suburb,postcode,gpsCoords)
-values ('Anders Home',25,'A','Elvira Street','Palmyra','6157','-32.039796, 115.780780');
+values ('Anders Home',25,'A','Elvira Street','Palmyra','6157','-32.039796,115.780780');
 
 
 insert into passengers (passFirstname,passLastname,passGender,havePetAllergies,haveFoodAllergies,defaultPickupId,defaultDestinationId,bigEquipmentCarried,meetingPointConsidered)

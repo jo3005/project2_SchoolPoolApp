@@ -14,6 +14,7 @@ const passport = require("./config/passport");
 // Include environmental variables
 require('dotenv').config();
 
+
 // Sets up the Express App
 // =============================================================
 const PORT = process.env.PORT || 8080;
@@ -22,7 +23,6 @@ const app = express();
 
 // Requiring our models for syncing
 const db = require("./models");
-
 
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
