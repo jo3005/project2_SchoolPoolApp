@@ -28,6 +28,14 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.INTEGER,
             allowNull:true
         },
+        state:{
+            type: DataTypes.STRING,
+            allowNull:true
+        },
+        country:{
+            type: DataTypes.STRING,
+            allowNull:true
+        },
         locGps:{
             type: DataTypes.STRING,
             allowNull:true

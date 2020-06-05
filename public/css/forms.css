@@ -15,3 +15,12 @@
 #menuBtn {
   width: 400px;
 }
+
+tr {
+  border-style: none;
+}
+
+#noborder {
+  border-bottom: 0px none white;
+  
+}

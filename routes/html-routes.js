@@ -42,6 +42,10 @@ module.exports = function(app) {
     res.sendFile(path.join(__dirname, "../public/signup.html"));
   });
 
+  app.get("/location",function(req,res){
+    res.sendFile(path.join(__dirname, "../public/location.html"));
+  });
+
   
   
   // TODO: REQUESTOR STATIC ROUTES

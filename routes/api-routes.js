@@ -9,6 +9,7 @@
 const db = require("../models");
 const passport = require("../config/passport");
 const nodemailer = require("nodemailer");
+let currentUserId=0;
 
 const transporter = nodemailer.createTransport({
   host: 'smtp.ethereal.email', // fake email that only receives email and tests sent emails.
@@ -22,7 +23,7 @@ const transporter = nodemailer.createTransport({
 
 // Routes
 // =============================================================
-module.exports= function(app) {
+module.exports = function(app) {
   
 // PASSPORT AUTHENTICATION API ROUTES
 // =============================================================
@@ -39,11 +40,12 @@ module.exports= function(app) {
     //console.log(res);
   });
 
+
   // Route for signing up a user. The user's password is automatically hashed and stored securely thanks to
   // how we configured our Sequelize User Model. If the user is created successfully, proceed to log the user in,
   // otherwise send back an error
-  app.post("/api/signup", function(req, res) {
-    console.log("posting the create user data");
+  app.post("/api/member", function(req, res) {
+    console.log("posting the member data");
     db.Member.create({
       // memId: req.body.memId, // autoincrement PK
       memUsername: req.body.username,
@@ -84,6 +86,7 @@ module.exports= function(app) {
         email: req.user.memEmail, // changed to memEmail
         id: req.user.id
       });
+      currentUserId=req.user.id;
 
     }
   });
@@ -91,25 +94,29 @@ module.exports= function(app) {
 // REGISTER LOCATIONS API ROUTE
 // =============================================================
 
-app.post("/api/newLocation",function(req,res){
+
+app.post("/api/location", function(req, res) {
+  console.log("posting the create location data");
   db.Location.create({
-    locationName:req.body.locationName,
-    streetNumber:req.body.streetNumber,
-    streetName:req.body.streetName,
+    streetNumber:req.body.streetnumber,
+    streetName:req.body.streetname,
     suburb:req.body.suburb,
     postcode:req.body.postcode,
-    locGps:null
+    state:req.body.state,
+    country:req.body.country,
+    locGps:req.body.gps,
+    locationName:req.body.name,
+    MemberMemID:currentUserId //need to get the current userid that is logged in
   })
   .then(function(dbLocation) {
     res.json(dbLocation);
     console.log(res.json(dbLocation));
     // res.redirect(307, "/api/login");
   })
-  .catch(function(err) {
-    res.status(401).json(err);
-  });
-})
-
+    .catch(function(err) {
+      res.status(401).json(err);
+    });
+});
 
 
   // REGISTER DRIVER API ROUTE

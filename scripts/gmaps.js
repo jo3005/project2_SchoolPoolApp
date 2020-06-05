@@ -29,7 +29,7 @@ module.exports = async function (origin,destination,whatTime="now"){
             departure_time:whatTime,
             key:process.env.GOOGLE_MAPS_API_KEY
         };
-    console.log(params);
+    //console.log(params);
     distance.key(params.key);
 
     async function getMatrixData(params){
@@ -68,6 +68,6 @@ function buildAddr(addr){
         
     }
 
-}
+};
 
 
