@@ -3,11 +3,12 @@
 
 module.exports = async function (origin,destination,whatTime="now"){
     
-    let distance=require("google-distance-matrix")
+    let distance=require("google-distance-matrix");
 
     //const {Client,Status} =require("@googlemaps/google-maps-services-js");
     //const axios = require('axios');
-    const {GOOGLE_MAPS_API_KEY} = require("../config/config.json");
+    const configs = require("../config/config");
+    
 
     let originString=buildAddr(origin);
     let destinationString=buildAddr(destination);
@@ -21,15 +22,15 @@ module.exports = async function (origin,destination,whatTime="now"){
 
     //destinations — One or more locations to use as the finishing point for calculating travel distance and time.
 
-    
+    require('dotenv').config();
     const params={
             origins:originString,
             destinations:destinationString,
             departure_time:whatTime,
-            key:GOOGLE_MAPS_API_KEY
+            key:process.env.GOOGLE_MAPS_API_KEY
         };
-    //console.log(params);
-    distance.key(GOOGLE_MAPS_API_KEY);
+    console.log(params);
+    distance.key(params.key);
 
     async function getMatrixData(params){
         //wrapper for the distance matrix response as it doesn't return a promise in its current form
