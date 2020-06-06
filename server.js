@@ -20,6 +20,7 @@ require('dotenv').config();
 const PORT = process.env.PORT || 8080;
 const app = express();
 
+const exphbs = require('express-handlebars');
 
 // Requiring our models for syncing
 const db = require("./models");
@@ -30,6 +31,10 @@ app.use(express.json());
 
 // Static directory
 app.use(express.static("public"));
+
+// Set Handlebars as the view engine
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
+app.set('view engine', 'handlebars');
 
 // We need to use sessions to keep track of our user's login status
 app.use(session({secret: "keyboard cat", resave: true, saveUninitialized: true }));

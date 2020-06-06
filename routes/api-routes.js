@@ -94,7 +94,6 @@ module.exports = function(app) {
 // REGISTER LOCATIONS API ROUTE
 // =============================================================
 
-
 app.post("/api/location", function(req, res) {
   console.log("posting the create location data");
   db.Location.create({
