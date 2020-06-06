@@ -10,37 +10,37 @@ module.exports = function(sequelize, DataTypes) {
         },
         requestDate: {
             type: DataTypes.DATE,
-            allowNull: false
+            allowNull: true
         },
         requiredDate: {
             type: DataTypes.DATE,
             allowNull: false
         },
         requiredDropOffTimeStart: {
-            type: DataTypes.DATE,
+            type: DataTypes.TIME,
             allowNull: false
         },
         requiredDropOffTimeEnd: {
-            type: DataTypes.DATE,
+            type: DataTypes.TIME,
             allowNull: false
         },
         requiredPickupLocnId: {
             //FK to locations
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING, // changed to string to simplify
             allowNull:false 
         },
         requiredDropoffLocnId: {
             //FK to locations
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING, // changed to string to simplify
             allowNull:false 
         },
         addedRouteDistance: {
             type: DataTypes.DECIMAL(10,2),
-            allowNull:false 
+            allowNull:true 
         },
         addedRouteTime: {
             type: DataTypes.DECIMAL(10,2),
-            allowNull:false 
+            allowNull:true 
         },
         boostersRequired: {
             type:DataTypes.INTEGER,
