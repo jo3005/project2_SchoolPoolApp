@@ -46,7 +46,7 @@ module.exports = function(app) {
   // otherwise send back an error
   app.post("/api/signup", function(req, res) {
     console.log("posting the member data");
-    db.Member.create({
+    db.member.create({
       // memId: req.body.memId, // autoincrement PK
       memUsername: req.body.username,
       memFirstname: req.body.firstName,
@@ -106,7 +106,7 @@ app.post("/api/location", function(req, res) {
     country:req.body.country,
     locGps:req.body.gps,
     locationName:req.body.name,
-    MemberMemID:currentUserId //need to get the current userid that is logged in
+    memberMemID:req.user.id //need to get the current userid that is logged in
   })
   .then(function(dbLocation) {
     res.json(dbLocation);
@@ -133,7 +133,7 @@ app.post("/api/registerDriver", function(req, res) {
     yearsDriving: req.body.yearsDriving,
     workingWithChildren: req.body.workingWithChildren,
     defaultRoute: req.body.defaultRoute,
-    MemberMemId: req.user.id
+    memberMemId: req.user.id
   })
     .then(function(dbDriver) {
       res.json(dbDriver)
@@ -184,7 +184,7 @@ app.get("/api/drivers", function(req, res) {
   // Here we add an "include" property to our options in our findAll query
   // We set the value to an array of the models we want to include in a left outer join
   // In this case, just db.Driver
-  db.Member.findAll({
+  db.member.findAll({
     include: [db.Driver]
   }).then(function(dbDriver) {
     res.json(dbDriver);

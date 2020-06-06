@@ -3,7 +3,7 @@ var bcrypt = require("bcryptjs");
 // Creating our User model
 
 module.exports = function(sequelize, DataTypes) {
-  const Member = sequelize.define("Member", {
+  const Member = sequelize.define("member", {
     // The email cannot be null, and must be a proper email before creation
     memId:{
         type: DataTypes.INTEGER,

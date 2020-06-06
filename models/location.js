@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-    var Location = sequelize.define("Location", {
+    var Location = sequelize.define("location", {
       // The email cannot be null, and must be a proper email before creation
         locId:{
           type: DataTypes.INTEGER,

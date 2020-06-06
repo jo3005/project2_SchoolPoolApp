@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-    var Driver = sequelize.define("Driver", {
+    var Driver = sequelize.define("driver", {
       // The email cannot be null, and must be a proper email before creation
         driverId:{
             type: DataTypes.INTEGER,

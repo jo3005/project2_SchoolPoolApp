@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-    var Reqpassenger = sequelize.define("Reqpassenger", {
+    var Reqpassenger = sequelize.define("reqpassenger", {
       // The email cannot be null, and must be a proper email before creation
         reqPassId:{
           type: DataTypes.INTEGER,

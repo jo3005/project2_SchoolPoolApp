@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-    var Vehicle = sequelize.define("Vehicle", {
+    var Vehicle = sequelize.define("vehicle", {
       // The email cannot be null, and must be a proper email before creation
         vehicleId:{
           type: DataTypes.INTEGER,

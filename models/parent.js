@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-    var Parent = sequelize.define("Parent", {
+    var Parent = sequelize.define("parent", {
       // The email cannot be null, and must be a proper email before creation
         parentId:{
           type: DataTypes.INTEGER,

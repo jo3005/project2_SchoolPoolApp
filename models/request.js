@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-    var Request = sequelize.define("Request", {
+    var Request = sequelize.define("request", {
       // The email cannot be null, and must be a proper email before creation
         reqId:{
           type: DataTypes.INTEGER,
