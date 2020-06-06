@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-    var Passenger = sequelize.define("passenger", {
+    var passenger = sequelize.define("passenger", {
       // The email cannot be null, and must be a proper email before creation
         passId:{
           type: DataTypes.INTEGER,
@@ -80,13 +80,13 @@ module.exports = function(sequelize, DataTypes) {
         }
 
     });
-    Passenger.associate = function(models) {
+    passenger.associate = function(models) {
         // Associating Author with Posts
         // When an Author is deleted, also delete any associated Posts
-        Passenger.belongsTo(models.Parent,{
+        passenger.belongsTo(models.parent,{
             onDelete: "cascade"    
         });
-        Passenger.hasMany(models.Reqpassenger);
+        passenger.hasMany(models.reqpassenger);
       };
-    return Passenger;
+    return passenger;
   };

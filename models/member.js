@@ -3,7 +3,7 @@ var bcrypt = require("bcryptjs");
 // Creating our User model
 
 module.exports = function(sequelize, DataTypes) {
-  const Member = sequelize.define("member", {
+  const member = sequelize.define("member", {
     // The email cannot be null, and must be a proper email before creation
     memId:{
         type: DataTypes.INTEGER,
@@ -59,30 +59,30 @@ module.exports = function(sequelize, DataTypes) {
     }  
   });
   // Creating a custom method for our User model. This will check if an unhashed password entered by the user can be compared to the hashed password stored in our database
-  Member.prototype.validPassword = function(password) {
+  member.prototype.validPassword = function(password) {
     return bcrypt.compareSync(password, this.password);
   };
   // Hooks are automatic methods that run during various phases of the User Model lifecycle
   // In this case, before a User is created, we will automatically hash their password
-  Member.addHook("beforeCreate", function(user) {
+  member.addHook("beforeCreate", function(user) {
     user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null);
   });
 
-  Member.associate = function(models) {
+  member.associate = function(models) {
     // Associating Author with Posts
     // When an Author is deleted, also delete any associated Posts
-    Member.hasOne(models.Driver, {
+    member.hasOne(models.driver, {
       onDelete: "cascade"
     });
-    Member.hasOne(models.Parent, {
+    member.hasOne(models.parent, {
       onDelete: "cascade"
     });
-    Member.hasMany(models.Request,{
+    member.hasMany(models.request,{
       onDelete: "cascade"
   });
     
   };
 
 
-  return Member;
+  return member;
 };

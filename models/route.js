@@ -48,7 +48,7 @@ module.exports = function(sequelize, DataTypes) {
     });
     Route.associate = function(models) {
         
-        Route.belongsTo(models.Driver);
+        Route.belongsTo(models.driver);
         
       };
     return Route;

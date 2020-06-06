@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-    var Driver = sequelize.define("driver", {
+    var driver = sequelize.define("driver", {
       // The email cannot be null, and must be a proper email before creation
         driverId:{
             type: DataTypes.INTEGER,
@@ -62,14 +62,14 @@ module.exports = function(sequelize, DataTypes) {
 
     });
 
-    Driver.associate = function(models) {
+    driver.associate = function(models) {
         // Associating Drive with member, vehicles, routes
     
-        Driver.belongsTo(models.Member);
-        Driver.hasMany(models.Vehicle, {
+        driver.belongsTo(models.member);
+        driver.hasMany(models.vehicle, {
             onDelete: "cascade"
           });
-        Driver.hasMany(models.Route, {
+        driver.hasMany(models.route, {
             onDelete: "cascade"
           });
           
@@ -77,5 +77,5 @@ module.exports = function(sequelize, DataTypes) {
     
 
 
-    return Driver;
+    return driver;
   };

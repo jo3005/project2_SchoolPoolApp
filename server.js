@@ -6,7 +6,6 @@
 // =============================================================
 const express = require("express");
 const session = require("express-session");
-var currentUserId="";
 
 // Requiring passport as we've configured it
 const passport = require("./config/passport");
@@ -45,10 +44,6 @@ require("./routes/html-routes.js")(app);
 // =============================================================
 db.sequelize.sync({force: true}).then(function() { // creates tables for all models that were defined (i.e. using the define method on an instance of Sequelize)
   
-  //add data to tables
-
-  
-
   //start listening
   app.listen(PORT, function() {
     console.log("==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.", PORT, PORT);

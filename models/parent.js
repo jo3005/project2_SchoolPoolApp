@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-    var Parent = sequelize.define("parent", {
+    var parent = sequelize.define("parent", {
       // The email cannot be null, and must be a proper email before creation
         parentId:{
           type: DataTypes.INTEGER,
@@ -30,15 +30,15 @@ module.exports = function(sequelize, DataTypes) {
 
     });
     
-    Parent.associate = function(models) {
+    parent.associate = function(models) {
       // Associating Author with Posts
       // When an Author is deleted, also delete any associated Posts
-      Parent.hasMany(models.Passenger, {
+      parent.hasMany(models.passenger, {
         onDelete: "cascade"
       });
     };
     
 
-    return Parent;
+    return parent;
   };
   

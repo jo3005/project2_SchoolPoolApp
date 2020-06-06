@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-    var School = sequelize.define("school", {
+    var school = sequelize.define("school", {
       // The email cannot be null, and must be a proper email before creation
         schoolId:{
           type: DataTypes.INTEGER,
@@ -52,5 +52,5 @@ module.exports = function(sequelize, DataTypes) {
         }
     });
     
-    return School;
+    return school;
   };
