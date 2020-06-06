@@ -123,7 +123,7 @@ app.post("/api/location", function(req, res) {
 
 app.post("/api/registerDriver", function(req, res) {
 
-  db.Driver.create({
+  db.driver.create({
     // driverId: req.body.driverId, // autoincrement PK
    
     defaultVehicle: req.body.defaultVehicle,
@@ -142,7 +142,7 @@ app.post("/api/registerDriver", function(req, res) {
       res.status(401).json(err);
     });
 
-    db.Vehicle.create({
+    db.vehicle.create({
       // driverId: req.body.driverId, // autoincrement PK
      
       registration: req.body.registration,
@@ -162,7 +162,7 @@ app.post("/api/registerDriver", function(req, res) {
         res.status(401).json(err);
       });
 
-    db.Route.create({
+    db.route.create({
       routeName: req.body.routeName,
       startLocnId: req.body.startLocnId,
       endLocnId: req.body.endLocnId,
@@ -195,9 +195,10 @@ app.get("/api/drivers", function(req, res) {
 
 
 app.post("/api/createRequest", function(req, res) {
-  db.Request.create({
-    // driverId: req.body.driverId, // autoincrement PK
-    requestDate: req.body.requestDate,
+  console.log("Creating new request",req.body);
+  db.request.create({
+    // reqId:  // autoincrement PK
+    requestDate: req.body.requestDate, // redundant date can be retrived from date created.
     requiredDate: req.body.requiredDate,
     requiredDropOffTimeStart: req.body.requiredDropOffTimeStart,
     requiredDropOffTimeEnd: req.body.requiredDropOffTimeEnd,
@@ -210,45 +211,47 @@ app.post("/api/createRequest", function(req, res) {
     creditsOffered: req.body.creditsOffered,
     booked: req.body.booked,
     bookedBy: req.body.bookedBy,
+    memberMemId: req.body.memberMemId
  
   })
   .then(function(dbRequest) {
     console.log("Request has been created");
-    // res.json(dbRequest)
+    console.log(dbRequest);
+    res.json(dbRequest)
   })
   .catch(function(err) {
     res.status(401).json(err);
   });
 
     
-  db.Member.findOne({
-    include: [
-      {
-      model: db.Driver,
-      where: { 
-        expiryDate: { [Op.gt]: req.body.requiredDate }, 
-        workingWithChildren: true 
-      }
-      },
-      {
-        model: db.Vehicle,
-        where: {
-          spareSpots: { [Op.gte]: 1 }, // sparespots should be atleast 1
-          spareChildSeats : req.body.carSeatsRequired,
-          spareBoosters : req.body.boostersRequired,
-          addedRouteTime : req.body.addedRouteTime,
-          boostersRequired : req.body.boostersRequired,
-          carSeatsRequired : req.body.carSeatsRequired, 
-        }
-      },
-      {
-        model: db.Route,
-        where: {
-          routstartLocnId: req.body.requiredPickupLocnId, 
-          endLocnId: req.body.requiredDropoffLocnId,
-        }
-      }
-    ]
+  // db.member.findOne({
+  //   include: [
+  //     {
+  //     model: db.driver,
+  //     where: { 
+  //       expiryDate: { [Op.gt]: req.body.requiredDate }, 
+  //       workingWithChildren: true 
+  //     }
+  //     },
+  //     {
+  //       model: db.vehicle,
+  //       where: {
+  //         spareSpots: { [Op.gte]: 1 }, // sparespots should be atleast 1
+  //         spareChildSeats : req.body.carSeatsRequired,
+  //         spareBoosters : req.body.boostersRequired,
+  //         addedRouteTime : req.body.addedRouteTime,
+  //         boostersRequired : req.body.boostersRequired,
+  //         carSeatsRequired : req.body.carSeatsRequired, 
+  //       }
+  //     },
+  //     {
+  //       model: db.route,
+  //       where: {
+  //         routstartLocnId: req.body.requiredPickupLocnId, 
+  //         endLocnId: req.body.requiredDropoffLocnId,
+  //       }
+  //     }
+  //   ]
 
     // ----- OR -----  
     // where: {
@@ -275,11 +278,11 @@ app.post("/api/createRequest", function(req, res) {
 
     // },
     // include: [db.Driver, db.Vehicle, db.Route]
-  }).then(function(dbMember) {
-    res.json(dbMember);
-    emailDriver(dBMember) // use member.email details to send email
-    // This is where we can consider updating status field in request for "requesting > pending > acccepted > cancelled > driving > arriving > ended"
-  });
+  // }).then(function(dbmember) {
+  //   res.json(dbmember);
+  //   emailDriver(dBmember) // use member.email details to send email
+  //   // This is where we can consider updating status field in request for "requesting > pending > acccepted > cancelled > driving > arriving > ended"
+  // });
 });
 
 function emailDriver (driverObj) {
@@ -331,8 +334,8 @@ app.put("/api/requests", function(req, res) {
         requestId: updatedRequest.reqId // where Member.requestId = request.reqId
       },
       include: [db.Request]
-    }).then(function(dbMember) {
-      emailRequestor(dbMember)
+    }).then(function(dbmember) {
+      emailRequestor(dbmember)
     });
     
   });
