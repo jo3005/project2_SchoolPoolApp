@@ -51,10 +51,24 @@ module.exports = function(app) {
     res.render("member-facing/location");
   });
 
-   // TODO: REQUESTOR STATIC ROUTES
+ 
+  // TODO: REQUESTOR STATIC ROUTES
   // =============================================================
-  app.get("/cms", isAuthenticated, function(req, res) { // added authentication middleware before accessing page
-    res.render("member-facing/cms");
+  app.get("/search-ride", isAuthenticated, function(req, res) { // added authentication middleware before accessing page
+    res.render("member-facing/search-ride");
+  });
+
+  app.get("/requests-made", isAuthenticated, function(req, res) {
+    res.render("member-facing/requests-made");
+  });
+
+  app.get("/location", isAuthenticated, function(req, res) {
+    res.render("member-facing/location");
+  });
+  // TODO: DRIVER STATIC ROUTES
+  // =============================================================
+  app.get("/requests-received", isAuthenticated, function(req, res) {
+    res.render("member-facing/requests-received");
   });
 
   // blog route loads blog.html
@@ -63,11 +77,12 @@ module.exports = function(app) {
   });
 
   // authors route loads author-manager.html
-  app.get("/authors", function(req, res) {
-    res.render("member-facing/authors");
+  app.get("/authors", isAuthenticated, function(req, res) {
+    res.render("member-facing/author-manager");
   });
 
-  // TODO: DRIVER STATIC ROUTES
-  // =============================================================
-
+    app.get("/authors", isAuthenticated, function(req, res) {
+    res.render("member-facing/author-manager");
+  });
+    // ----------------- Boiler plate code ---------------------------
 };
