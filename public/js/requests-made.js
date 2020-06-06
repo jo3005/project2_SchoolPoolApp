@@ -100,7 +100,7 @@ $(document).ready(function () {
     newPostCardBody.append(newPostBody);
     newPostCard.append(newPostCardHeading);
     newPostCard.append(newPostCardBody);
-    newPostCard.data("Request", post);
+    newPostCard.data("request", post);
     newPostCardHeading.append(deleteBtn);
     newPostCardHeading.append(editBtn);
     return newPostCard;
@@ -108,8 +108,9 @@ $(document).ready(function () {
 
   // This function figures out which post we want to delete and then calls deletePost
   function handlePostDelete() {
+    console.log($(this));
     var currentPost = $(this).parent().parent().data("request");
-    deletePost(currentPost.id);
+    deletePost(currentPost.reqId);
   }
 
   // This function figures out which post we want to edit and takes it to the appropriate url

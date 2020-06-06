@@ -365,6 +365,17 @@ app.put("/api/requests", function(req, res) {
   });
 });
 
+app.delete("/api/requests/:id", function(req, res) {
+  db.request.destroy({
+    where: {
+      reqId: req.params.id
+    }
+  }).then(function(dbrequest) {
+    // res.json(dbrequest);
+    res.redirect("/member-facing/requests-made");
+  });
+});
+
 function emailRequestor(memberObj) {
     // require nodemailer
     console.log("Calling emailDriver function");
