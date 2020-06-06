@@ -81,8 +81,10 @@ module.exports = function(app) {
     res.render("member-facing/author-manager");
   });
 
-    app.get("/authors", isAuthenticated, function(req, res) {
-    res.render("member-facing/author-manager");
-  });
+    // authors route loads author-manager.html
+    app.get("/cms", isAuthenticated, function(req, res) {
+      res.render("member-facing/cms");
+    });
+
     // ----------------- Boiler plate code ---------------------------
 };

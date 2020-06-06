@@ -12,6 +12,7 @@ $(document).ready(function() {
 
   let userId, userEmail;
   $.get("/api/user_data").then(function(data) {
+    console.log(data);
     userId = data.id;
     userEmail = data.email;
   });

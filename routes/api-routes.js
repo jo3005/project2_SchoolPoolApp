@@ -10,6 +10,7 @@ const db = require("../models");
 const passport = require("../config/passport");
 const nodemailer = require("nodemailer");
 let currentUserId=0;
+var isAuthenticated = require("../config/middleware/isAuthenticated");
 
 const transporter = nodemailer.createTransport({
   host: 'smtp.ethereal.email', // fake email that only receives email and tests sent emails.
@@ -327,13 +328,14 @@ function emailDriver (driverObj) {
   });
 }
 
-app.get("/api/requests", function(req, res) {
+app.get("/api/requests", isAuthenticated, function(req, res) {
+  console.log("Req User", req.user);
   // Here we add an "include" property to our options in our findAll query
   // We set the value to an array of the models we want to include in a left outer join
   // In this case, just db.Driver
-  db.Request.findAll({
-    where: { booked: false }, // return requests that haven't been confirmed / booked
-    requiredDate: { [Op.gte]: new Date() } // only requests for today or the future
+  db.request.findAll({
+    where: { memberMemId: req.user.memId}, // return requests that haven't been confirmed / booked
+    // requiredDate: { [Op.gte]: new Date() } // only requests for today or the future
   
   }).then(function(requestsList) {
     res.json(requestsList);
@@ -342,7 +344,7 @@ app.get("/api/requests", function(req, res) {
 
 // UPDATE route for Drivers to update/confirm booking requests
 app.put("/api/requests", function(req, res) {
-  db.Request.update(
+  db.request.update(
     req.body.booked, // field object BOOL { booked: true }
     {
       where: {
@@ -351,11 +353,11 @@ app.put("/api/requests", function(req, res) {
     }).then(function(updatedRequest) {
     res.json(updatedRequest); // return updated request
     //get requestor email
-    db.Member.findOne({
+    db.member.findOne({
       where: {
         requestId: updatedRequest.reqId // where Member.requestId = request.reqId
       },
-      include: [db.Request]
+      include: [db.request]
     }).then(function(dbmember) {
       emailRequestor(dbmember)
     });
@@ -388,17 +390,17 @@ function emailRequestor(memberObj) {
     // GET route for getting all location addresses
     app.get("/api/locations", function(req, res) {
       var query = {};
-      if (req.query.MemberMemId) {
-        query.MemberMemId = req.query.MemberMemId;
+      if (req.query.memberMemId) {
+        query.MemberMemId = req.query.memberMemId;
       }
       // Here we add an "include" property to our options in our findAll query
       // We set the value to an array of the models we want to include in a left outer join
       // In this case, just db.Author
       db.Location.findAll({
         where: query,
-        include: [db.Location]
-      }).then(function(dbLocation) {
-        res.json(dbLocation);
+        include: [db.location]
+      }).then(function(dblocation) {
+        res.json(dblocation);
       });
     });
   
@@ -408,13 +410,13 @@ function emailRequestor(memberObj) {
       // Here we add an "include" property to our options in our findOne query
       // We set the value to an array of the models we want to include in a left outer join
       // In this case, just db.Author
-      db.Location.findOne({
+      db.location.findOne({
         where: {
           locId: req.params.id
         },
-        include: [db.Location]
-      }).then(function(dbLocation) {
-        res.json(dbLocation);
+        include: [db.location]
+      }).then(function(dblocation) {
+        res.json(dblocation);
       });
     });
   
