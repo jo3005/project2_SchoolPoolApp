@@ -28,8 +28,7 @@ $(document).ready(function() {
         //not working
         const toastHTML = "<span>Oops!Your passwords don't match!</span><button class='btn-flat toast-action'>OK</button>";
         M.toast({html: toastHTML});        
-      return
-    }
+      return    }
     // If we have an email and password, run the signUpUser function
     signUpUser();
     emailInput.val("");
