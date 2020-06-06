@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-    var Location = sequelize.define("Location", {
+    var location = sequelize.define("location", {
       // The email cannot be null, and must be a proper email before creation
         locId:{
           type: DataTypes.INTEGER,
@@ -53,13 +53,13 @@ module.exports = function(sequelize, DataTypes) {
 
     });
     
-    Location.associate = function(models) {
+    location.associate = function(models) {
         // Associating Author with Posts
         // When an Author is deleted, also delete any associated Posts
-        Location.belongsTo(models.Member);
+        location.belongsTo(models.member);
       };
 
-    return Location;
+    return location;
   };
 
 

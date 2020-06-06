@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-    var Request = sequelize.define("Request", {
+    var request = sequelize.define("request", {
       // The email cannot be null, and must be a proper email before creation
         reqId:{
           type: DataTypes.INTEGER,
@@ -79,12 +79,12 @@ module.exports = function(sequelize, DataTypes) {
         }
 
     });
-    Request.associate = function(models) {
+    request.associate = function(models) {
         // Associating Author with Posts
         // When an Author is deleted, also delete any associated Posts
-        Request.belongsTo(models.Member);
-        Request.hasMany(models.Reqpassenger);
+        request.belongsTo(models.member);
+        request.hasMany(models.reqpassenger);
         
       };
-    return Request;
+    return request;
   };

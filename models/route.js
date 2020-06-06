@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-    var Route = sequelize.define("Route", {
+    var Route = sequelize.define("route", {
       // The email cannot be null, and must be a proper email before creation
         routeId:{
           type: DataTypes.INTEGER,
@@ -48,7 +48,7 @@ module.exports = function(sequelize, DataTypes) {
     });
     Route.associate = function(models) {
         
-        Route.belongsTo(models.Driver);
+        Route.belongsTo(models.driver);
         
       };
     return Route;
