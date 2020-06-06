@@ -80,16 +80,38 @@ module.exports = function(app) {
       // The user is not logged in, send back an empty object
       res.json({});
     } else {
+
       // Otherwise send back the user's email and id
       // Sending back a password, even a hashed password, isn't a good idea
-      res.json({
-        email: req.user.memEmail, // changed to memEmail
-        id: req.user.id
+      res.json({ // json data for use in front end
+        id: req.user.memId,
+        email: req.user.memEmail, 
+        firstName: req.user.memFirstname,
+        lastname: req.user.memLastname,
+        mobile: req.user.memMobile,
       });
       currentUserId=req.user.id;
 
     }
   });
+
+    // Route for getting some data about our driver to be used client side
+    app.get("/api/driver_data", function(req, res) {
+      console.log("getting some data about our driver to be used client side");
+      if (!req.user) {
+        console.log("Please sign up or log in");
+        // The driver is not logged in, send back an empty object
+        res.json({});
+      } else {
+  
+        // Otherwise send back the driver's details incl vehicle and routes
+        db.member.findAll({
+          include: [db.driver]
+        }).then(function(dbdriver) {
+          res.json(dbdriver);
+        });
+      }
+    });
 
 // REGISTER LOCATIONS API ROUTE
 // =============================================================
@@ -154,8 +176,8 @@ app.post("/api/registerDriver", function(req, res) {
       spareBoosters: req.body.spareBoosters,
       petsEverTravel: req.body.spareChildSeats
     })
-      .then(function(dbVehicle) {
-        res.json(dbVehicle)
+      .then(function(dbvehicle) {
+        res.json(dbvehicle)
         // res.redirect(307, "/api/login");
       })
       .catch(function(err) {
@@ -170,8 +192,8 @@ app.post("/api/registerDriver", function(req, res) {
       routeTotalTime: req.body.routeTotalTime,
       routeStartTime: req.body.routeStartTime
     })
-      .then(function(dbRoute) {
-        res.json(dbRoute)
+      .then(function(dbroute) {
+        res.json(dbroute)
         // res.redirect(307, "/api/login");
       })
       .catch(function(err) {
@@ -184,9 +206,9 @@ app.get("/api/drivers", function(req, res) {
   // We set the value to an array of the models we want to include in a left outer join
   // In this case, just db.Driver
   db.member.findAll({
-    include: [db.Driver]
-  }).then(function(dbDriver) {
-    res.json(dbDriver);
+    include: [db.driver]
+  }).then(function(dbdriver) {
+    res.json(dbdriver);
   });
 });
 
@@ -426,4 +448,46 @@ function emailRequestor(memberObj) {
         res.json(dbPost);
       });
     });
-  };
+
+    app.get("/api/authors", function(req, res) {
+      // Here we add an "include" property to our options in our findAll query
+      // We set the value to an array of the models we want to include in a left outer join
+      // In this case, just db.Post
+      db.Author.findAll({
+        include: [db.Post]
+      }).then(function(dbAuthor) {
+        res.json(dbAuthor);
+      });
+    });
+  
+    app.get("/api/authors/:id", function(req, res) {
+      // Here we add an "include" property to our options in our findOne query
+      // We set the value to an array of the models we want to include in a left outer join
+      // In this case, just db.Post
+      db.Author.findOne({
+        where: {
+          id: req.params.id
+        },
+        include: [db.Post]
+      }).then(function(dbAuthor) {
+        res.json(dbAuthor);
+      });
+    });
+  
+    app.post("/api/authors", function(req, res) {
+      db.Author.create(req.body).then(function(dbAuthor) {
+        res.json(dbAuthor);
+    });
+  
+    app.delete("/api/authors/:id", function(req, res) {
+      db.Author.destroy({
+        where: {
+          id: req.params.id
+        }
+      }).then(function(dbAuthor) {
+        res.json(dbAuthor);
+      });
+    });
+    
+  })
+}
