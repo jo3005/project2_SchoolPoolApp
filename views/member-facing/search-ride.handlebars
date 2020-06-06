@@ -13,7 +13,7 @@
           <div class='input-field col s12'>
             <i class="material-icons md-18 prefix">location_searching</i>
             <input class='validate' type='text' name='pickupLocn' id='pickupLocn' />
-            <label for='pickupLocn'>Enter pickup location</label>
+            <label for='pickupLocn'>Enter pick up location</label>
           </div>
         </div>
 
@@ -29,7 +29,7 @@
         <div class='row'>
           <div class='input-field col s12'>
             <i class="material-icons prefix">date_range</i>
-            <input class='datepicker' type='date' name='pickupDate' id='pickupDate' />
+            <input class='datepicker' type='text' name='pickupDate' id='pickupDate' />
             <label for='pickupDate'>Pick Up Date</label>
           </div>
         </div>
@@ -45,6 +45,14 @@
 
         <div class='row'>
           <div class='input-field col s12'>
+            <i class="material-icons prefix">access_time</i>
+            <input class='timepicker' type="time" id='dropOffTime' name="dropOffTime" />
+            <label for='pickupTime'>Drop off Time</label>
+          </div>
+        </div>
+
+        <div class='row'>
+          <div class='input-field col s12'>
             <i class="material-icons prefix">airline_seat_recline_normal</i>
             <input class='number' type='number' min="0" max="2" id='carSeatsRequired' />
             <label for='carSeatsRequired'>Number of Car Seats</label>
@@ -53,7 +61,7 @@
 
         <center>
           <div class='row'>
-            <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect indigo' id='btn_search'><i
+            <button type='submit' name='btn_search' class='col s12 btn btn-large waves-effect indigo' id='btn_search'><i
                 class="material-icons prefix bottom"> search</i> Search Rides
             </button>
           </div>
@@ -106,6 +114,7 @@
     }
 </script>
 <script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
+   {{!-- src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMZnQbyddVyfM_VGPo-qimTnSh-HHG9vg&callback=initMap"--}}
+   >
   </script>
 <script type="text/javascript" src="/js/search-ride.js"></script>
