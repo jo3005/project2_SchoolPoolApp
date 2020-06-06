@@ -43,7 +43,7 @@ module.exports = function(app) {
 
   app.get("/signup",function(req,res){
     // res.sendFile(path.join(__dirname, "../public/signup.html"));
-    res.render("public/signup");
+    res.render("public-facing/signup");
   });
 
   app.get("/location",function(req,res){
