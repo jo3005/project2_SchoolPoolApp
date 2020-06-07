@@ -1,40 +1,56 @@
 :root {
-    --mainFont: 'Kreon', serif;;
+  --mainFont: "Kreon", serif;
 }
 html {
-    height: 100%;
+  height: 100%;
 }
 body {
-    background-image: url(../img/roadMap.jpg);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    font-family: var(--mainFont);
-    height: 100%;
-    width:100%;
+  background-image: url(../img/roadMap.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  font-family: var(--mainFont);
+  height: 100%;
+  width: 100%;
 }
 #logo {
-    width: 250px;
+  width: 250px;
 }
 .pleaseLogIn {
-    color: white;
-    font-family: var(--mainFont);
+  color: white;
+  font-family: var(--mainFont);
 }
 .login {
-    display: inline-block;
-    padding: 32px 48px 0px 48px;
-    background: rgba(0, 0, 0, .6);
-    border-radius: 10px;
-    font-size: 30px;
-    font: white;
+  display: inline-block;
+  padding: 32px 48px 0px 48px;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+  font-size: 30px;
+  font: white;
 }
 #emailHeader {
-    font: white;
-    font-size: 40px;
+  font: white;
+  font-size: 40px;
 }
 #passwordHeader {
-    font: white;
+  font: white;
 }
 .signUp {
-    font-size: 30px;
+  font-size: 30px;
+}
+
+nav .nav-wrapper {
+  position: relative;
+  height: 100%;
+  padding-top: 0%;
+  background: rgba(0, 0, 0, 0.6);
+  font: white;
+}
+
+.page-footer {
+  max-height: fit-content;
+  padding-top: 0%;
+  display: inline-block;
+  background: rgba(0, 0, 0, 0.6);
+  font: white;
 }

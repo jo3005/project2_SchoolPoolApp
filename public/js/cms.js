@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
   // Getting jQuery references to the post body, title, form, and author select
   var bodyInput = $("#body");
   var titleInput = $("#title");
@@ -31,18 +31,18 @@ $(document).ready(function() {
   function handleFormSubmit(event) {
     event.preventDefault();
     // Wont submit the post if we are missing a body, title, or author
-    if (!titleInput.val().trim() || !bodyInput.val().trim() || !authorSelect.val()) {
+    if (
+      !titleInput.val().trim() ||
+      !bodyInput.val().trim() ||
+      !authorSelect.val()
+    ) {
       return;
     }
     // Constructing a newPost object to hand to the database
     var newPost = {
-      title: titleInput
-        .val()
-        .trim(),
-      body: bodyInput
-        .val()
-        .trim(),
-      AuthorId: authorSelect.val()
+      title: titleInput.val().trim(),
+      body: bodyInput.val().trim(),
+      AuthorId: authorSelect.val(),
     };
 
     // If we're updating a post run updatePost to update a post
@@ -50,15 +50,14 @@ $(document).ready(function() {
     if (updating) {
       newPost.id = postId;
       updatePost(newPost);
-    }
-    else {
+    } else {
       submitPost(newPost);
     }
   }
 
   // Submits a new post and brings user to blog page upon completion
   function submitPost(post) {
-    $.post("/api/posts", post, function() {
+    $.post("/api/posts", post, function () {
       window.location.href = "/blog";
     });
   }
@@ -67,16 +66,16 @@ $(document).ready(function() {
   function getPostData(id, type) {
     var queryUrl;
     switch (type) {
-    case "post":
-      queryUrl = "/api/posts/" + id;
-      break;
-    case "author":
-      queryUrl = "/api/authors/" + id;
-      break;
-    default:
-      return;
+      case "post":
+        queryUrl = "/api/posts/" + id;
+        break;
+      case "author":
+        queryUrl = "/api/authors/" + id;
+        break;
+      default:
+        return;
     }
-    $.get(queryUrl, function(data) {
+    $.get(queryUrl, function (data) {
       if (data) {
         console.log(data.AuthorId || data.id);
         // If this post exists, prefill our cms forms with its data
@@ -125,10 +124,9 @@ $(document).ready(function() {
     $.ajax({
       method: "PUT",
       url: "/api/posts",
-      data: post
-    })
-      .then(function() {
-        window.location.href = "/blog";
-      });
+      data: post,
+    }).then(function () {
+      window.location.href = "/blog";
+    });
   }
 });

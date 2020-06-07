@@ -1,34 +1,41 @@
+<link rel="stylesheet" href="css/sign_in.css">
 
-  {{!-- <nav class="navbar navbar-default">
-    <div class="container-fluid">
-      <div class="navbar-header">
+<nav class="transparent z-depth-0">
+  <div class="nav-wrapper">
+    <a href="#" class="brand-logo center hide-on-small-and-down"><img class="responsive-img" id="logo"
+        src="./img/school_pool_logo_white.png" /></a>
+  </div>
+</nav>
+<div class="container">
+  <center>
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <h2>Please, log in...</h2>
+        <form class="login">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="email" class="form-control" id="email-input" placeholder="Email">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" class="form-control" id="password-input" placeholder="Password">
+          </div>
+          <button type="submit" class="btn btn-default">Login</button>
+        </form>
+        <br />
+        <p>Or sign up <a href="/signup">here</a></p>
+        <p><a href="/">Forgot my password</a></p>
       </div>
     </div>
-  </nav> --}}
-  <link rel="stylesheet" href="css/sign_in.css">
-  <div class="container">
-    <center>
-       <img class="responsive-img" id="logo" src="/img/school_pool_logo_white.png" />
-      <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-          <h2>Please, log in...</h2>
-          <form class="login">
-            <div class="form-group">
-              <label for="exampleInputEmail1">Email address</label>
-              <input type="email" class="form-control" id="email-input" placeholder="Email">
-            </div>
-            <div class="form-group">
-              <label for="exampleInputPassword1">Password</label>
-              <input type="password" class="form-control" id="password-input" placeholder="Password">
-            </div>
-            <button type="submit" class="btn btn-default">Login</button>
-          </form>
-          <br />
-          <p>Or sign up <a href="/signup">here</a></p>
-          <p><a href="/">Forgot my password</a></p>
-        </div>
-      </div>
-    </center>
-  </div>
 
-  <script type="text/javascript" src="/js/login.js"></script>
+  </center>
+</div>
+<footer class="page-footer center" style="position:fixed;bottom:0;left:0;width:100%;">
+  <div class="col s12 m6 l6">
+    <h6 class="white-text">School Pool Perth - Copyright 2020 © </h6>
+
+
+  </div>
+</footer>
+
+<script type="text/javascript" src="/js/login.js"></script>
