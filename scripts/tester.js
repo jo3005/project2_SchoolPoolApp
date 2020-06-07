@@ -1,53 +1,56 @@
-const googlefns=require("./googlefns");
-const gmaps=require("./gmaps");
+const getalldistances=require("./getalldistances");
 const geodata=require("./geodata");    
 
-let origin=[{
-    number: "24",
-    streetname: "Le Souef Drive",
-    suburb: "Kardinya",
-    postcode: "6163",
-    state:"WA",
-    country: "Australia",
-    gps:null
-    },
+let places=[
     {
-    number: "66",
-    streetname: "Jackson Avenue",
-    suburb: "Winthrop",
-    postcode: "6160",
-    state:"WA",
-    country: "Australia",
-    gps:"-32.053309,115.831192"
-    }];
-    
+        number: "24",
+        streetname: "Le Souef Drive",
+        suburb: "Kardinya",
+        postcode: "6163",
+        state:"WA",
+        country: "Australia",
+        gps:"-32.066027,115.811441"
+        },
+    {
+        number: "66",
+        streetname: "Jackson Avenue",
+        suburb: "Winthrop",
+        postcode: "6160",
+        state:"WA",
+        country: "Australia",
+        gps: "-32.053309,115.831192"
+        },
+    {
+        number: "61",
+        streetname: "Owston Street,",
+        suburb: "Mosman Park",
+        postcode: "6012",
+        state:"WA",
+        country: "Australia",
+        gps: "-32.020717, 115.773808"
+        }    
 
-   
-let destination= [{
-    number: null,
-    streetname: "McCabe Street",
-    suburb: "Mosmon Park",
-    postcode: "6012",
-    state:"WA",
-    country: "Australia",
-    gps:"-32.022123,115.773325" 
-}];
+]
+let totalExtraTime=0;
+let totalExtraDistance=0;
+let notice=getalldistances(places,"now")
+    .then(res=>{
+        //console.log(res)
+        totalExtraTime=  res[1].duration+res[2].duration - res[0].duration;
+
+        totalExtraDistance=  res[1].distance+res[2].distance - res[0].distance;
+
+    }).then(res=>{
+        let textToWrite=`This pickup will cost you an extra ${Math.round(totalExtraTime)} minutes of travel time and will add ${totalExtraDistance}km to your journey.`
+        console.log(textToWrite)
+        return (textToWrite);
+        
+    });
 
 
-
-
-let distances= gmaps(origin,destination)
-    .then(response=>{
-        console.log(response);
-        return response
-});
-
-let gps=geodata(origin[0])
+/* let gps=geodata(origin[0])
     .then(response =>{
         console.log(response);
         return response;
-})
-
-    
-        
+}) */
 
