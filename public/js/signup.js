@@ -9,9 +9,9 @@ $(document).ready(function() {
 
 
   // When the signup button is clicked, we validate the email and password are not blank
-  $("#signupFrm").submit(function(event) {
-    console.log("pressed button");
+  $("#btn_login").on("click", function(event) {
     event.preventDefault();
+    console.log("pressed button");
     let userData = {
       email: emailInput.val().trim(),
       password: passwordInput.val().trim(),
@@ -22,20 +22,13 @@ $(document).ready(function() {
     if (!userData.email || !userData.password || !userData.passwordrpt) {
       console.log();
       const toastHTML = "<span>Oops!Please enter some data!</span><button class='btn-flat toast-action'>OK</button>";
-        M.toast({html: toastHTML,completeCallback: function(){
-          M.toastHTML.dismiss();
-          }
-        }); 
+        M.toast({html: toastHTML}); 
       return;
     } else if (userData.password !== userData.passwordrpt){
         //not working
         const toastHTML = "<span>Oops!Your passwords don't match!</span><button class='btn-flat toast-action'>OK</button>";
-        M.toast({html: toastHTML,completeCallback: function(){
-          M.toastHTML.dismiss();
-          }
-        });        
-      return
-    }
+        M.toast({html: toastHTML});        
+      return    }
     // If we have an email and password, run the signUpUser function
     signUpUser();
     emailInput.val("");

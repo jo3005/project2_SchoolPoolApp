@@ -1,0 +1,120 @@
+<link rel="stylesheet" href="css/search-ride.css">
+<center>
+  <img class="responsive-img" id="logo" style="width:50vw;" src="img/school_pool_logo.png" />
+  <h4>Search Rides</h4>
+</center>
+<div id="map" class="col l6 m9 s12"></div>
+<center>
+  <div class="container">
+    <div class="row">
+
+      <form class="col s12 signup" id="signupFrm" method="post">
+        <div class='row'>
+          <div class='input-field col s12'>
+            <i class="material-icons md-18 prefix">location_searching</i>
+            <input class='validate' type='text' name='pickupLocn' id='pickupLocn' />
+            <label for='pickupLocn'>Enter pick up location</label>
+          </div>
+        </div>
+
+        <div class='row'>
+          <div class='input-field col s12'>
+            <i class="material-icons prefix">location_on</i>
+            {{!-- location_searching edit_location add_location --}}
+            <input class='validate' type='text' name='dropOffLocn' id='dropOffLocn' />
+            <label for='dropOffLocn'>Enter drop off location</label>
+          </div>
+        </div>
+
+        <div class='row'>
+          <div class='input-field col s12'>
+            <i class="material-icons prefix">date_range</i>
+            <input class='datepicker' type='text' name='pickupDate' id='pickupDate' />
+            <label for='pickupDate'>Pick Up Date</label>
+          </div>
+        </div>
+
+        <div class='row'>
+          <div class='input-field col s12'>
+            <i class="material-icons prefix">access_time</i>
+            <input class='timepicker' type="time" id='pickupTime' name="pickupTime" />
+            <label for='pickupTime'>Pick Up Time</label>
+          </div>
+        </div>
+
+
+        <div class='row'>
+          <div class='input-field col s12'>
+            <i class="material-icons prefix">access_time</i>
+            <input class='timepicker' type="time" id='dropOffTime' name="dropOffTime" />
+            <label for='pickupTime'>Drop off Time</label>
+          </div>
+        </div>
+
+        <div class='row'>
+          <div class='input-field col s12'>
+            <i class="material-icons prefix">airline_seat_recline_normal</i>
+            <input class='number' type='number' min="0" max="2" id='carSeatsRequired' />
+            <label for='carSeatsRequired'>Number of Car Seats</label>
+          </div>
+        </div>
+
+        <center>
+          <div class='row'>
+            <button type='submit' name='btn_search' class='col s12 btn btn-large waves-effect indigo' id='btn_search'><i
+                class="material-icons prefix bottom"> search</i> Search Rides
+            </button>
+          </div>
+        </center>
+      </form>
+    </div>
+  </div>
+</center>
+<script>
+    // Note: This example requires that you consent to location sharing when
+    // prompted by your browser. If you see the error "The Geolocation service
+    // failed.", it means you probably did not give permission for the browser to
+    // locate you.
+    var map, infoWindow, marker;
+    function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: -34.397, lng: 150.644 },
+            zoom: 16
+        });
+        //marker = new google.maps.Marker({ position: {lat: -34.397, lng: 150.644}, map: map });
+       
+        infoWindow = new google.maps.InfoWindow;
+        // Try HTML5 geolocation.
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+
+                infoWindow.setPosition(pos);
+                infoWindow.setContent('Location found.');
+                infoWindow.open(map);
+                map.setCenter(pos);
+            }, function () {
+                handleLocationError(true, infoWindow, map.getCenter());
+            });
+        } else {
+            // Browser doesn't support Geolocation
+            handleLocationError(false, infoWindow, map.getCenter());
+        }
+    }
+
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+            'Error: The Geolocation service failed.' :
+            'Error: Your browser doesn\'t support geolocation.');
+        infoWindow.open(map);
+    }
+</script>
+<script async defer
+   {{!-- src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMZnQbyddVyfM_VGPo-qimTnSh-HHG9vg&callback=initMap"--}}
+   >
+  </script>
+<script type="text/javascript" src="/js/search-ride.js"></script>

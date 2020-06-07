@@ -10,6 +10,7 @@ const db = require("../models");
 const passport = require("../config/passport");
 const nodemailer = require("nodemailer");
 let currentUserId=0;
+var isAuthenticated = require("../config/middleware/isAuthenticated");
 
 const transporter = nodemailer.createTransport({
   host: 'smtp.ethereal.email', // fake email that only receives email and tests sent emails.
@@ -80,20 +81,41 @@ module.exports = function(app) {
       // The user is not logged in, send back an empty object
       res.json({});
     } else {
+
       // Otherwise send back the user's email and id
       // Sending back a password, even a hashed password, isn't a good idea
-      res.json({
-        email: req.user.memEmail, // changed to memEmail
-        id: req.user.id
+      res.json({ // json data for use in front end
+        id: req.user.memId,
+        email: req.user.memEmail, 
+        firstName: req.user.memFirstname,
+        lastname: req.user.memLastname,
+        mobile: req.user.memMobile,
       });
       currentUserId=req.user.id;
 
     }
   });
 
+    // Route for getting some data about our driver to be used client side
+    app.get("/api/driver_data", function(req, res) {
+      console.log("getting some data about our driver to be used client side");
+      if (!req.user) {
+        console.log("Please sign up or log in");
+        // The driver is not logged in, send back an empty object
+        res.json({});
+      } else {
+  
+        // Otherwise send back the driver's details incl vehicle and routes
+        db.member.findAll({
+          include: [db.driver]
+        }).then(function(dbdriver) {
+          res.json(dbdriver);
+        });
+      }
+    });
+
 // REGISTER LOCATIONS API ROUTE
 // =============================================================
-
 
 app.post("/api/location", function(req, res) {
   console.log("posting the create location data");
@@ -124,7 +146,7 @@ app.post("/api/location", function(req, res) {
 
 app.post("/api/registerDriver", function(req, res) {
 
-  db.Driver.create({
+  db.driver.create({
     // driverId: req.body.driverId, // autoincrement PK
    
     defaultVehicle: req.body.defaultVehicle,
@@ -143,7 +165,7 @@ app.post("/api/registerDriver", function(req, res) {
       res.status(401).json(err);
     });
 
-    db.Vehicle.create({
+    db.vehicle.create({
       // driverId: req.body.driverId, // autoincrement PK
      
       registration: req.body.registration,
@@ -155,15 +177,15 @@ app.post("/api/registerDriver", function(req, res) {
       spareBoosters: req.body.spareBoosters,
       petsEverTravel: req.body.spareChildSeats
     })
-      .then(function(dbVehicle) {
-        res.json(dbVehicle)
+      .then(function(dbvehicle) {
+        res.json(dbvehicle)
         // res.redirect(307, "/api/login");
       })
       .catch(function(err) {
         res.status(401).json(err);
       });
 
-    db.Route.create({
+    db.route.create({
       routeName: req.body.routeName,
       startLocnId: req.body.startLocnId,
       endLocnId: req.body.endLocnId,
@@ -171,8 +193,8 @@ app.post("/api/registerDriver", function(req, res) {
       routeTotalTime: req.body.routeTotalTime,
       routeStartTime: req.body.routeStartTime
     })
-      .then(function(dbRoute) {
-        res.json(dbRoute)
+      .then(function(dbroute) {
+        res.json(dbroute)
         // res.redirect(307, "/api/login");
       })
       .catch(function(err) {
@@ -185,9 +207,9 @@ app.get("/api/drivers", function(req, res) {
   // We set the value to an array of the models we want to include in a left outer join
   // In this case, just db.Driver
   db.member.findAll({
-    include: [db.Driver]
-  }).then(function(dbDriver) {
-    res.json(dbDriver);
+    include: [db.driver]
+  }).then(function(dbdriver) {
+    res.json(dbdriver);
   });
 });
 
@@ -196,9 +218,10 @@ app.get("/api/drivers", function(req, res) {
 
 
 app.post("/api/createRequest", function(req, res) {
-  db.Request.create({
-    // driverId: req.body.driverId, // autoincrement PK
-    requestDate: req.body.requestDate,
+  console.log("Creating new request",req.body);
+  db.request.create({
+    // reqId:  // autoincrement PK
+    requestDate: req.body.requestDate, // redundant date can be retrived from date created.
     requiredDate: req.body.requiredDate,
     requiredDropOffTimeStart: req.body.requiredDropOffTimeStart,
     requiredDropOffTimeEnd: req.body.requiredDropOffTimeEnd,
@@ -211,45 +234,47 @@ app.post("/api/createRequest", function(req, res) {
     creditsOffered: req.body.creditsOffered,
     booked: req.body.booked,
     bookedBy: req.body.bookedBy,
+    memberMemId: req.body.memberMemId
  
   })
   .then(function(dbRequest) {
     console.log("Request has been created");
-    // res.json(dbRequest)
+    console.log(dbRequest);
+    res.json(dbRequest)
   })
   .catch(function(err) {
     res.status(401).json(err);
   });
 
     
-  db.Member.findOne({
-    include: [
-      {
-      model: db.Driver,
-      where: { 
-        expiryDate: { [Op.gt]: req.body.requiredDate }, 
-        workingWithChildren: true 
-      }
-      },
-      {
-        model: db.Vehicle,
-        where: {
-          spareSpots: { [Op.gte]: 1 }, // sparespots should be atleast 1
-          spareChildSeats : req.body.carSeatsRequired,
-          spareBoosters : req.body.boostersRequired,
-          addedRouteTime : req.body.addedRouteTime,
-          boostersRequired : req.body.boostersRequired,
-          carSeatsRequired : req.body.carSeatsRequired, 
-        }
-      },
-      {
-        model: db.Route,
-        where: {
-          routstartLocnId: req.body.requiredPickupLocnId, 
-          endLocnId: req.body.requiredDropoffLocnId,
-        }
-      }
-    ]
+  // db.member.findOne({
+  //   include: [
+  //     {
+  //     model: db.driver,
+  //     where: { 
+  //       expiryDate: { [Op.gt]: req.body.requiredDate }, 
+  //       workingWithChildren: true 
+  //     }
+  //     },
+  //     {
+  //       model: db.vehicle,
+  //       where: {
+  //         spareSpots: { [Op.gte]: 1 }, // sparespots should be atleast 1
+  //         spareChildSeats : req.body.carSeatsRequired,
+  //         spareBoosters : req.body.boostersRequired,
+  //         addedRouteTime : req.body.addedRouteTime,
+  //         boostersRequired : req.body.boostersRequired,
+  //         carSeatsRequired : req.body.carSeatsRequired, 
+  //       }
+  //     },
+  //     {
+  //       model: db.route,
+  //       where: {
+  //         routstartLocnId: req.body.requiredPickupLocnId, 
+  //         endLocnId: req.body.requiredDropoffLocnId,
+  //       }
+  //     }
+  //   ]
 
     // ----- OR -----  
     // where: {
@@ -276,11 +301,11 @@ app.post("/api/createRequest", function(req, res) {
 
     // },
     // include: [db.Driver, db.Vehicle, db.Route]
-  }).then(function(dbMember) {
-    res.json(dbMember);
-    emailDriver(dBMember) // use member.email details to send email
-    // This is where we can consider updating status field in request for "requesting > pending > acccepted > cancelled > driving > arriving > ended"
-  });
+  // }).then(function(dbmember) {
+  //   res.json(dbmember);
+  //   emailDriver(dBmember) // use member.email details to send email
+  //   // This is where we can consider updating status field in request for "requesting > pending > acccepted > cancelled > driving > arriving > ended"
+  // });
 });
 
 function emailDriver (driverObj) {
@@ -303,13 +328,14 @@ function emailDriver (driverObj) {
   });
 }
 
-app.get("/api/requests", function(req, res) {
+app.get("/api/requests", isAuthenticated, function(req, res) {
+  console.log("Req User", req.user);
   // Here we add an "include" property to our options in our findAll query
   // We set the value to an array of the models we want to include in a left outer join
   // In this case, just db.Driver
-  db.Request.findAll({
-    where: { booked: false }, // return requests that haven't been confirmed / booked
-    requiredDate: { [Op.gte]: new Date() } // only requests for today or the future
+  db.request.findAll({
+    where: { memberMemId: req.user.memId}, // return requests that haven't been confirmed / booked
+    // requiredDate: { [Op.gte]: new Date() } // only requests for today or the future
   
   }).then(function(requestsList) {
     res.json(requestsList);
@@ -318,7 +344,7 @@ app.get("/api/requests", function(req, res) {
 
 // UPDATE route for Drivers to update/confirm booking requests
 app.put("/api/requests", function(req, res) {
-  db.Request.update(
+  db.request.update(
     req.body.booked, // field object BOOL { booked: true }
     {
       where: {
@@ -327,15 +353,26 @@ app.put("/api/requests", function(req, res) {
     }).then(function(updatedRequest) {
     res.json(updatedRequest); // return updated request
     //get requestor email
-    db.Member.findOne({
+    db.member.findOne({
       where: {
         requestId: updatedRequest.reqId // where Member.requestId = request.reqId
       },
-      include: [db.Request]
-    }).then(function(dbMember) {
-      emailRequestor(dbMember)
+      include: [db.request]
+    }).then(function(dbmember) {
+      emailRequestor(dbmember)
     });
     
+  });
+});
+
+app.delete("/api/requests/:id", function(req, res) {
+  db.request.destroy({
+    where: {
+      reqId: req.params.id
+    }
+  }).then(function(dbrequest) {
+    // res.json(dbrequest);
+    res.redirect("/member-facing/requests-made");
   });
 });
 
@@ -364,17 +401,17 @@ function emailRequestor(memberObj) {
     // GET route for getting all location addresses
     app.get("/api/locations", function(req, res) {
       var query = {};
-      if (req.query.MemberMemId) {
-        query.MemberMemId = req.query.MemberMemId;
+      if (req.query.memberMemId) {
+        query.MemberMemId = req.query.memberMemId;
       }
       // Here we add an "include" property to our options in our findAll query
       // We set the value to an array of the models we want to include in a left outer join
       // In this case, just db.Author
       db.Location.findAll({
         where: query,
-        include: [db.Location]
-      }).then(function(dbLocation) {
-        res.json(dbLocation);
+        include: [db.location]
+      }).then(function(dblocation) {
+        res.json(dblocation);
       });
     });
   
@@ -384,13 +421,13 @@ function emailRequestor(memberObj) {
       // Here we add an "include" property to our options in our findOne query
       // We set the value to an array of the models we want to include in a left outer join
       // In this case, just db.Author
-      db.Location.findOne({
+      db.location.findOne({
         where: {
           locId: req.params.id
         },
-        include: [db.Location]
-      }).then(function(dbLocation) {
-        res.json(dbLocation);
+        include: [db.location]
+      }).then(function(dblocation) {
+        res.json(dblocation);
       });
     });
   
@@ -424,4 +461,46 @@ function emailRequestor(memberObj) {
         res.json(dbPost);
       });
     });
-  };
+
+    app.get("/api/authors", function(req, res) {
+      // Here we add an "include" property to our options in our findAll query
+      // We set the value to an array of the models we want to include in a left outer join
+      // In this case, just db.Post
+      db.Author.findAll({
+        include: [db.Post]
+      }).then(function(dbAuthor) {
+        res.json(dbAuthor);
+      });
+    });
+  
+    app.get("/api/authors/:id", function(req, res) {
+      // Here we add an "include" property to our options in our findOne query
+      // We set the value to an array of the models we want to include in a left outer join
+      // In this case, just db.Post
+      db.Author.findOne({
+        where: {
+          id: req.params.id
+        },
+        include: [db.Post]
+      }).then(function(dbAuthor) {
+        res.json(dbAuthor);
+      });
+    });
+  
+    app.post("/api/authors", function(req, res) {
+      db.Author.create(req.body).then(function(dbAuthor) {
+        res.json(dbAuthor);
+    });
+  
+    app.delete("/api/authors/:id", function(req, res) {
+      db.Author.destroy({
+        where: {
+          id: req.params.id
+        }
+      }).then(function(dbAuthor) {
+        res.json(dbAuthor);
+      });
+    });
+    
+  })
+}
