@@ -10,8 +10,8 @@ module.exports = async function (origin,destination,whatTime="now"){
     const configs = require("../config/config");
     
 
-    let originString=buildAddr(origin);
-    let destinationString=buildAddr(destination);
+    let originStrArr=buildAddr(origin);
+    let destinationStrArr=buildAddr(destination);
 
     //let settings= require("../config/config.json");
 
@@ -24,12 +24,12 @@ module.exports = async function (origin,destination,whatTime="now"){
 
     require('dotenv').config();
     const params={
-            origins:originString,
-            destinations:destinationString,
-            departure_time:whatTime,
-            key:process.env.GOOGLE_MAPS_API_KEY
-        };
-    //console.log(params);
+        origins:originStrArr,
+        destinations:destinationStrArr,
+        departure_time:whatTime,
+        key:process.env.GOOGLE_MAPS_API_KEY
+    };
+    console.log(params);
     distance.key(params.key);
 
     async function getMatrixData(params){
@@ -37,7 +37,7 @@ module.exports = async function (origin,destination,whatTime="now"){
         let promise= new Promise((resolve,reject) => {
             distance.matrix([params.origins],[params.destinations],function(err,distances){
                 if (!err) {
-                    resolve (distances.rows[0].elements[0]);
+                    resolve (distances.rows);
                     };
                 });
         });
@@ -49,24 +49,26 @@ module.exports = async function (origin,destination,whatTime="now"){
     return matData;    
 };
 
-function buildAddr(addr){
+function buildAddr(addrs){
     //console.log(addr);
     //requires an object in the form number, streetname,suburb,state,country,gps
-    let addrString="";
-    if (addr!== null && addr!== undefined) {
-        if (addr.gps !== null) {
-            addrString= addr.gps;
-            addrString=addrString.replace(/\s/g,"").trim();
-            //console.log(addrString);
-            return addrString; 
-        }
-        if (addr.number!=="" && addr.streetName !== "" && addr.suburb !== "" && addr.state !== ""){
-            addrString=`${addr.number} ${addr.streetname} ${addr.suburb} ${addr.state}`;
-            addrString=addrString.replace(/\s/g,"+");
-            return addrString;
-        };
+    let addrString=[""];
+    if (addrs!== null && addrs!== undefined) {
+        addrs.forEach(function(addr,index){
+            if (addr.gps !== null) {
+                addrString= addr.gps;
+                addrString=addrString.replace(/\s/g,"").trim();
+                //console.log(addrString);
+                return addrString; 
+                };
+            if (addr.number!=="" && addr.streetName !== "" && addr.suburb !== "" && addr.state !== ""){
+                addrString=`${addr.number} ${addr.streetname} ${addr.suburb} ${addr.state}`;
+                addrString=addrString.replace(/\s/g,"+");
+                return addrString;
+                };
+            })
         
-    }
+        }
 
 };
 

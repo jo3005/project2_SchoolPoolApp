@@ -2,7 +2,7 @@ const googlefns=require("./googlefns");
 const gmaps=require("./gmaps");
 const geodata=require("./geodata");    
 
-let origin={
+let origin=[{
     number: "24",
     streetname: "Le Souef Drive",
     suburb: "Kardinya",
@@ -10,9 +10,8 @@ let origin={
     state:"WA",
     country: "Australia",
     gps:null
-};
-
-let destination= {
+    },
+    {
     number: "66",
     streetname: "Jackson Avenue",
     suburb: "Winthrop",
@@ -20,7 +19,19 @@ let destination= {
     state:"WA",
     country: "Australia",
     gps:"-32.053309,115.831192"
-};
+    }];
+    
+
+   
+let destination= [{
+    number: null,
+    streetname: "McCabe Street",
+    suburb: "Mosmon Park",
+    postcode: "6012",
+    state:"WA",
+    country: "Australia",
+    gps:"-32.022123,115.773325" 
+}];
 
 
 
@@ -31,7 +42,7 @@ let distances= gmaps(origin,destination)
         return response
 });
 
-let gps=geodata(origin)
+let gps=geodata(origin[0])
     .then(response =>{
         console.log(response);
         return response;
