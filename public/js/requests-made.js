@@ -46,7 +46,7 @@ $(document).ready(function () {
       method: "DELETE",
       url: "/api/requests/" + id,
     }).then(function () {
-      getPosts(statusSelect.val());
+      console.log ("Deleted request")
     });
   }
 
@@ -89,7 +89,7 @@ $(document).ready(function () {
     newPostTitle.text("From: "+ post.requiredPickupLocnId + " To: " + post.requiredDropoffLocnId + " ");
     newPostBody.html(
         "<br> <p>Car Seats Required: " + post.carSeatsRequired+ "</p>" + 
-        "<br> <p>Date Reuqired: " + post.requiredDate +"</p>" + 
+        "<br> <p>Date Required: " + post.requiredDate +"</p>" + 
         "<br> <p>Pick up Time: " + post.requiredDropOffTimeStart + "</p>"+
         "<br> <p>Credits offered: " + post.creditsOffered +"</p>"
     );
