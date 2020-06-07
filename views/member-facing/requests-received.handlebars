@@ -1,27 +1,141 @@
-<link rel="stylesheet" href="css/requests-made.css">
-<nav class="transparent z-depth-0">
+
+<link rel="stylesheet" href="css/requests-received.css">
+<!-- Custom Script -->
+{{!-- <script src="/js/requests-received.js" type="text/javascript"></script> --}}
+<nav>
+
   <div class="nav-wrapper">
     <a href="#" class="brand-logo center hide-on-small-and-down"><img class="responsive-img" id="logo"
         src="./img/school_pool_logo_white.png" /></a>
     <ul id="nav-mobile" class="left">
+
+      <li><a href="/search-ride">New Request</a></li>
       <li><a href="/members">Menu</a></li>
-      <li><a href="/requests-made">New Request</a></li>
+
       <li><a href="/manage-driver">Driver Details</a></li>
     </ul>
   </div>
 </nav>
 
-<center>
-  <div class="row">
-    <div class="col s8 request-container offset-s2">
+
+<div id="map"></div>
+<div id="right-panel">
+  <div>
+    <h5>Start Location:</h5>
+    {{!-- <div class="input-field col s12">
+      <select id="start">
+        <option value="96 Boulder Ave, WA, Aus">96 Boulder Ave, WA, Aus</option>
+        <option value="Boston, MA">Boston, MA</option>
+        <option value="New York, NY">New York, NY</option>
+        <option value="Miami, FL">Miami, FL</option>
+      </select>
+      <label>Select start location</label>
+    </div> --}}
+
+    <div class='input-field col s12'>
+      <i class="material-icons md-15 prefix">location_searching</i>
+      <input class='validate' type='text' name='start' id='start' />
+      <label for='start'>Enter start up location</label>
     </div>
+
+
+    <h5>Requests Received:</h5>
+    <i>(Ctrl+Click or Cmd+Click for multiple selection)</i> <br />
+    <div class="input-field col s12">
+      <select multiple id="waypoints" class="browser-default" style=" height:10rem">
+        <option value="Belmont Forum">Belmont Forum</option>
+        <option value="toronto, ont">Toronto, ONT</option>
+        <option value="chicago, il">Chicago</option>
+        <option value="winnipeg, mb">Winnipeg</option>
+        <option value="winnipeg, mb">Winnipeg</option>
+      </select>
+    </div>
+
+
+    <h5>My Destination:</h5>
+    <div class="input-field col s12">
+      <select id="end" class="browser-default">
+        <option value="Burswood Casino">Burswood Casino</option>
+        <option value="Seattle, WA">Seattle, WA</option>
+        <option value="San Francisco, CA">San Francisco, CA</option>
+        <option value="Los Angeles, CA">Los Angeles, CA</option>
+      </select>
+    </div>
+    <hr>
+    <center>
+      <input value="Check Route" type="submit" id="submit" class="btn" />
+    </center>
   </div>
-</center>
+  <div id="directions-panel" style=" height:15rem"></div>
+</div>
+<script>
+  scr
+  $('select').formSelect(); // initialize form selection
+  function initMap() {
+    var directionsService = new google.maps.DirectionsService();
+    var directionsRenderer = new google.maps.DirectionsRenderer();
+    var map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 6,
+      center: { lat: 41.85, lng: -87.65 },
+    });
+    directionsRenderer.setMap(map);
+
+    document
+      .getElementById("submit")
+      .addEventListener("click", function () {
+        calculateAndDisplayRoute(directionsService, directionsRenderer);
+      });
+  }
+
+  function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+    var waypts = [];
+    var checkboxArray = document.getElementById("waypoints");
+    for (var i = 0; i < checkboxArray.length; i++) {
+      if (checkboxArray.options[i].selected) {
+        waypts.push({
+          location: checkboxArray[i].value,
+          stopover: true,
+        });
+      }
+    }
+
+    directionsService.route(
+      {
+        origin: document.getElementById("start").value,
+        destination: document.getElementById("end").value,
+        waypoints: waypts,
+        optimizeWaypoints: true,
+        travelMode: "DRIVING",
+      },
+      function (response, status) {
+        if (status === "OK") {
+          directionsRenderer.setDirections(response);
+          var route = response.routes[0];
+          var summaryPanel = document.getElementById("directions-panel");
+          summaryPanel.innerHTML = "<h5>Route Information</h5>";
+          // For each route, display summary information.
+          for (var i = 0; i < route.legs.length; i++) {
+            var routeSegment = i + 1;
+            summaryPanel.innerHTML +=
+              "<b>Route Segment: " + routeSegment + "</b><br>";
+            summaryPanel.innerHTML += route.legs[i].start_address + " to ";
+            summaryPanel.innerHTML += route.legs[i].end_address + "<br>";
+            summaryPanel.innerHTML +=
+              route.legs[i].distance.text + "<br><br>";
+          }
+        } else {
+          window.alert("Directions request failed due to " + status);
+        }
+      }
+    );
+  }
+</script>
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=YOUR-GOOGLE-API-KEY&callback=initMap">
+  </script>
 
 <footer class="page-footer center" style="position:fixed;bottom:0;left:0;width:100%;">
   <div class="col s12 m6 l6">
     <h6 class="white-text">School Pool Perth - Copyright 2020 © </h6>
   </div>
 </footer>
-<!-- Custom Script -->
-<script src="/js/requests-received.js" type="text/javascript"></script>
