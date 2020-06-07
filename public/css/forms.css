@@ -1,24 +1,39 @@
+:root {
+  --mainFont: 'Kreon', serif;;
+}
 #logo {
-    width: 250px;
+    width: 300px;
 }
-
-.container {
-  background: white;
-  padding: 20px 25px;
-  border: 5px solid #26a69a;
-  height: auto;
-  box-sizing: border-box;
-  position: relative;
+html {
+  height: 100%;
 }
-
+body {
+  background-image: url(../img/roadMap.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  font-family: var(--mainFont);
+  height: 100%;
+  width:100%;
+  font-family: var(--mainFont);
+}
+#logo {
+  width: 250px;
+}
+#signupFrm {
+  display: inline-block;
+  padding: 32px 48px 0px 48px;
+  background: rgba(0, 0, 0, .6);
+  border-radius: 10px;
+  font-size: 30px;
+  font: white;
+}
 #menuBtn {
   width: 400px;
 }
-
 tr {
   border-style: none;
 }
-
 #noborder {
   border-bottom: 0px none white;
   
