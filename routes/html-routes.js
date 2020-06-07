@@ -46,12 +46,6 @@ module.exports = function(app) {
     res.render("public-facing/signup");
   });
 
-  app.get("/location",function(req,res){
-    // res.sendFile(path.join(__dirname, "../public/location.html"));
-    res.render("member-facing/location");
-  });
-
- 
   // TODO: REQUESTOR STATIC ROUTES
   // =============================================================
   app.get("/search-ride", isAuthenticated, function(req, res) { // added authentication middleware before accessing page
@@ -76,9 +70,9 @@ module.exports = function(app) {
     res.render("member-facing/blog");
   });
 
-  // authors route loads author-manager.html
-  app.get("/authors", isAuthenticated, function(req, res) {
-    res.render("member-facing/author-manager");
+  // manage driver route loads manage-driver.html
+  app.get("/manage-driver", isAuthenticated, function(req, res) {
+    res.render("member-facing/manage-driver");
   });
 
     // authors route loads author-manager.html
@@ -86,5 +80,5 @@ module.exports = function(app) {
       res.render("member-facing/cms");
     });
 
-    // ----------------- Boiler plate code ---------------------------
+
 };

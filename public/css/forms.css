@@ -16,6 +16,8 @@ font-family: var(--mainFont);
 height: 100%;
 width:100%;
 font-family: var(--mainFont);
+    width: 300px;
+    margin-top: 15px;
 }
 #logo {
 width: 250px;
