@@ -1,15 +1,3 @@
-/* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-#map {
-  padding: 20px 25px;
-  border: 5px solid rgba(0, 0, 0, 0.6);
-  border-radius: 15px;
-  height: 500px;
-  width: 80%;
-  box-sizing: border-box;
-  position: relative;
-}
-/* Optional: Makes the sample page fill the window. */
 html,
 body {
   height: 100%;
@@ -34,6 +22,7 @@ body {
   background-clip: padding-box; /* for IE9+, Firefox 4+, Opera, Chrome */
   border-radius: 15px;
   height: auto;
+  box-sizing: border-box;
   position: relative;
 }
 
@@ -66,9 +55,6 @@ body {
   width: 100%;
 }
 
-#spacer {
-  padding-top: 5%;
-}
 .page-footer {
   max-height: fit-content;
   padding-top: 0%;
@@ -91,4 +77,8 @@ nav .nav-wrapper {
   padding-top: 0%;
   background: rgba(0, 0, 0, 0.6);
   font: white;
+}
+
+#spacer {
+  padding-top: 10%;
 }
