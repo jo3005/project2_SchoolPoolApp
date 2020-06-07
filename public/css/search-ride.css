@@ -49,24 +49,17 @@ tr {
   border-bottom: 0px none white;
 }
 
-/* body {
-background-image: url(../img/road.png);
-background-color: #d1eaa3;
-background-repeat: no-repeat;
-background-size: cover;
-} */
 
 body {
   background-image: url(../img/roadMap.jpg);
-  background-size: cover;
+  background-position: center center;
   background-repeat: no-repeat;
-  background-position: stretch;
+  background-attachment: fixed;
+  background-size: cover;
   font-family: var(--mainFont);
-  height: 100%;
-  width: 100%;
 }
 
-#spacer {
+.spacer {
   padding-top: 5%;
 }
 .page-footer {
@@ -91,4 +84,9 @@ nav .nav-wrapper {
   padding-top: 0%;
   background: rgba(0, 0, 0, 0.6);
   font: white;
+}
+
+.btn-default {
+  margin-top: 5px;
+  border-radius: 15px;
 }

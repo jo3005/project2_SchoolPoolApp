@@ -46,13 +46,12 @@ background-size: cover;
 } */
 
 body {
-  background-image: url(../img/roadMap.jpg);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: stretch;
-  font-family: var(--mainFont);
-  height: 100%;
-  width: 100%;
+    background-image: url(../img/roadMap.jpg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    font-family: var(--mainFont);
 }
 
 .page-footer {
