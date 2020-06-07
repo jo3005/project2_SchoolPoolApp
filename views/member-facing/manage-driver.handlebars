@@ -1,13 +1,19 @@
-<div class="row">
-  <div class="col s12 center">
-    <a href="/"><img class="responsive-img" id="logo" src="./img/school_pool_logo.png" /> </a>
+<link rel="stylesheet" href="css/manage-driver.css">
+<nav class="transparent z-depth-0">
+  <div class="nav-wrapper">
+    <a href="#" class="brand-logo center hide-on-small-and-down"><img class="responsive-img" id="logo"
+        src="./img/school_pool_logo_white.png" /></a>
+    <ul id="nav-mobile" class="left">
+      <li><a href="/members">Menu</a></a></li>
+    </ul>
   </div>
-</div>
+</nav>
+<br>
 <center>
   <div id="map" class="col l6 m9 s12 center"></div>
 </center>
 <br>
-<center>
+<center id="spacer">
   <div class="container">
     <div class="row">
 
@@ -23,7 +29,7 @@
         <div class='row'>
           <div class='input-field col s12'>
             <i class="material-icons prefix">directions_car</i>
-     
+
             <input class='validate' type='text' name='defaultVehicle' id='defaultVehicle' />
             <label for='defaultVehicle'>Vehicle Make-Model</label>
           </div>
@@ -56,12 +62,19 @@
 
         <center>
           <div class='row'>
-            <button type='submit' name='btn_registerDriver' class=' col s12 btn btn-large waves-effect indigo' id='btn_registerDriver'><i
-                class="material-icons prefix"> check_circle</i> Become a Driver!
+            <button type='submit' name='btn_registerDriver' class=' col s12 btn btn-large waves-effect indigo'
+              id='btn_registerDriver'><i class="material-icons prefix"> check_circle</i> Become a Driver!
             </button>
           </div>
         </center>
       </form>
+
+
+      <footer class="page-footer center" style="position:fixed;bottom:0;left:0;width:100%;">
+        <div class="col s12">
+          <h6 class="white-text">School Pool Perth - Copyright 2020 © </h6>
+        </div>
+      </footer>
     </div>
   </div>
 </center>

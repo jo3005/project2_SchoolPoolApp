@@ -69,7 +69,7 @@ $(document).ready(function () {
     var newPostCardHeading = $("<div>");
     newPostCardHeading.addClass("card-title-text");
     var deleteBtn = $("<button>");
-    deleteBtn.text("x");
+    deleteBtn.text("DELETE");
     deleteBtn.addClass("delete btn waves-effect red");
     var editBtn = $("<button>");
     editBtn.text("EDIT");
@@ -134,7 +134,7 @@ $(document).ready(function () {
     var messageH2 = $("<h2>");
     messageH2.css({ "text-align": "center", "margin-top": "50px" });
     messageH2.html(
-      "No ride bookings make yet" +
+      "No ride bookings made yet" +
         partial +
         ", navigate <a href='/search-ride" +
         query +
