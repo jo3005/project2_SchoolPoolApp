@@ -46,7 +46,7 @@ $(document).ready(function () {
       method: "DELETE",
       url: "/api/requests/" + id,
     }).then(function () {
-      getPosts(statusSelect.val());
+      console.log ("Deleted request")
     });
   }
 
