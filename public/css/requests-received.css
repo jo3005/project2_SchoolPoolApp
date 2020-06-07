@@ -1,0 +1,139 @@
+ /* Boiiler Page Styling */
+#logo {
+    max-width: 250px;
+    margin-top: 8px;
+  }
+  
+  .card {
+    background: white;
+    padding: 20px 25px;
+    border: 5px solid #26a69a;
+    border-radius: 15px;
+    height: auto;
+    box-sizing: border-box;
+    position: relative;
+    margin-top: 10%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  #menuBtn {
+    width: 400px;
+  }
+  
+  tr {
+    border-style: none;
+  }
+  
+  #noborder {
+    border-bottom: 0px none white;
+  }
+  body {
+    background-image: url(../img/roadMap.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: stretch;
+    font-family: var(--mainFont);
+    height: 100%;
+    width: 100%;
+  }
+  
+  .page-footer {
+    max-height: fit-content;
+    padding-top: 0%;
+    display: inline-block;
+    background: rgba(0, 0, 0, 0.6);
+    font: white;
+  }
+  #spacer {
+    padding-top: 5%;
+  }
+  p {
+    font-size: medium;
+  }
+  
+  h6 {
+    font-size: medium;
+  }
+  
+  .delete {
+    margin-top: 30px;
+    border-radius: 15px;
+  }
+  
+  .edit {
+    margin-top: 30px;
+    border-radius: 15px;
+  }
+  
+  h2 {
+    border: 5px solid rgba(0, 0, 0, 0.6);
+    -webkit-background-clip: padding-box; /* for Safari */
+    background-clip: padding-box; /* for IE9+, Firefox 4+, Opera, Chrome */
+    background-color: white;
+    border-radius: 15px;
+    padding: 10px;
+    color: white;
+  }
+  
+  nav .nav-wrapper {
+    position: relative;
+    height: 100%;
+    padding-top: 0%;
+    background: rgba(0, 0, 0, 0.6);
+    font: white;
+  }
+
+/* Google api styles */
+
+#right-panel {
+    font-family: "Roboto", "sans-serif";
+    line-height: 30px;
+    padding-left: 10px;
+    background-color: #d4ffb1;
+    color: black;
+  }
+
+  #right-panel select,
+  #right-panel input {
+    font-size: 1rem;
+  }
+
+  #right-panel select {
+    width: 100%;
+  }
+
+  #right-panel i {
+    font-size: 0.85rem;
+  }
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  #map {
+    height: 100%;
+    float: left;
+    width: 70%;
+    height: 100%;
+  }
+  #right-panel {
+    margin: 20px;
+    border-width: 2px;
+    width: 20%;
+    height: 50vh;
+    float: left;
+    text-align: left;
+    padding-top: 0;
+    
+  }
+  #directions-panel {
+    margin-top: 10px;
+    background-color: #d4ffb1;
+    padding: 10px;
+    overflow: scroll;
+    height: 10vh;
+    
+  }
+
