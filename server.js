@@ -48,7 +48,7 @@ require("./routes/html-routes.js")(app);
 
 // Syncing our sequelize models and then starting our Express app
 // =============================================================
-db.sequelize.sync({ force: true }).then(function () {
+db.sequelize.sync({ force: false }).then(function () {
   // creates tables for all models that were defined (i.e. using the define method on an instance of Sequelize)
 
   //start listening

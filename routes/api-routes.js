@@ -292,12 +292,13 @@ module.exports = function (app) {
 
   // UPDATE route for Drivers to update/confirm booking requests
   app.put("/api/requests", function (req, res) {
+    console.log("Updating booking...",req.body)
     db.request
       .update(
-        req.body.booked, // field object BOOL { booked: true }
+        {booked: true}, // field object BOOL { booked: true }
         {
           where: {
-            reqId: req.body.id, // matching request ID
+            reqId: req.body.reqId, // matching request ID
           },
         }
       )

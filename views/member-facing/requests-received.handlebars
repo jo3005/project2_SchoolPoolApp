@@ -1,4 +1,3 @@
-
 <link rel="stylesheet" href="css/requests-received.css">
 <!-- Custom Script -->
 {{!-- <script src="/js/requests-received.js" type="text/javascript"></script> --}}
@@ -64,10 +63,15 @@
 </div>
 <script>
 
+  let reqSelectedData;
   $('select').formSelect(); // initialize form selection
+  document
+    .getElementById("accept")
+    .addEventListener("click", function () {
+      acceptBooking(reqSelectedData)
+    });
   //Get requests from database
-
-  const requestTrips = [];
+  let requestTrips = [];
   $.get("/api/requests").then(function (data) {
     console.log("Requests", data);
     data.forEach((request) => {
@@ -79,77 +83,95 @@
       });
       console.log(requestTrips)
 
-      let newOption = $("<option>");
+      var newOption = $("<option>");
       newOption.html(
-        "<option>"+request.requiredPickupLocnId+"</option>"
-     );
-      newOption.data = request.bookedBy; // contains email
+        "<option>" + request.requiredPickupLocnId + "</option>"
+      );
+      //newOption.data =  { reqId: request.reqId, booked: request.booked, bookedBy: request.bookedBy }; // contains email
+  
+      newOption.data('id', 555); // contains id
       $("#waypoints").append(newOption);
+      console.log(newOption);
     });
   });
 
-  function acceptRequest (reqId)
-  function initMap() {
-        var directionsService = new google.maps.DirectionsService();
-        var directionsRenderer = new google.maps.DirectionsRenderer();
-        var map = new google.maps.Map(document.getElementById("map"), {
-          zoom: 6,
-          center: { lat:-31.95, lng: 115.85 }, // Perth lat, lng
-        });
-        directionsRenderer.setMap(map);
+  // Update a given request with status booked and update database
 
-        document
-          .getElementById("submit")
-          .addEventListener("click", function () {
-            calculateAndDisplayRoute(directionsService, directionsRenderer);
-          });
-      }
+
+  function acceptBooking(reqSelectedObj) {
+    console.log("Accept button pressed", reqSelectedObj)
+    $.ajax({
+      method: "PUT",
+      url: "/api/requests",
+      data: reqSelectedObj
+    })
+      .then(function () {
+        window.location.href = "/members";
+      });
+  }
+  function initMap() {
+    var directionsService = new google.maps.DirectionsService();
+    var directionsRenderer = new google.maps.DirectionsRenderer();
+    var map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 12,
+      center: { lat: -31.95, lng: 115.85 }, // Perth lat, lng
+    });
+    directionsRenderer.setMap(map);
+
+    document
+      .getElementById("submit")
+      .addEventListener("click", function () {
+        calculateAndDisplayRoute(directionsService, directionsRenderer);
+      });
+  }
 
   function calculateAndDisplayRoute(directionsService, directionsRenderer) {
-        var waypts = [];
-        var checkboxArray = document.getElementById("waypoints");
-        for (var i = 0; i < checkboxArray.length; i++) {
-          if (checkboxArray.options[i].selected) {
-            waypts.push({
-              location: checkboxArray[i].value,
-              stopover: true,
-            });
-          }
-        }
-
-        directionsService.route(
-          {
-            origin: document.getElementById("start").value,
-            destination: document.getElementById("end").value,
-            waypoints: waypts,
-            optimizeWaypoints: true,
-            travelMode: "DRIVING",
-          },
-          function (response, status) {
-            if (status === "OK") {
-              directionsRenderer.setDirections(response);
-              var route = response.routes[0];
-              var summaryPanel = document.getElementById("directions-panel");
-              summaryPanel.innerHTML = "<h5>Route Information</h5>";
-              // For each route, display summary information.
-              for (var i = 0; i < route.legs.length; i++) {
-                var routeSegment = i + 1;
-                summaryPanel.innerHTML +=
-                  "<b>Route Segment: " + routeSegment + "</b><br>";
-                summaryPanel.innerHTML += route.legs[i].start_address + " to ";
-                summaryPanel.innerHTML += route.legs[i].end_address + "<br>";
-                summaryPanel.innerHTML +=
-                  route.legs[i].distance.text + "<br><br>";
-              }
-            } else {
-              window.alert("Directions request failed due to " + status);
-            }
-          }
-        );
+    var waypts = [];
+    var checkboxArray = document.getElementById("waypoints");
+    for (var i = 0; i < checkboxArray.length; i++) {
+      if (checkboxArray.options[i].selected) {
+        console.log(checkboxArray.options[i].data('id'));
+       reqSelectedData = checkboxArray.options[i].data('id');
+        waypts.push({
+          location: checkboxArray[i].value,
+          stopover: true,
+        });
       }
+    }
+
+    directionsService.route(
+      {
+        origin: document.getElementById("start").value,
+        destination: document.getElementById("end").value,
+        waypoints: waypts,
+        optimizeWaypoints: true,
+        travelMode: "DRIVING",
+      },
+      function (response, status) {
+        if (status === "OK") {
+          directionsRenderer.setDirections(response);
+          var route = response.routes[0];
+          var summaryPanel = document.getElementById("directions-panel");
+          summaryPanel.innerHTML = "<h5>Route Information</h5>";
+          // For each route, display summary information.
+          for (var i = 0; i < route.legs.length; i++) {
+            var routeSegment = i + 1;
+            summaryPanel.innerHTML +=
+              "<b>Route Segment: " + routeSegment + "</b><br>";
+            summaryPanel.innerHTML += route.legs[i].start_address + " to ";
+            summaryPanel.innerHTML += route.legs[i].end_address + "<br>";
+            summaryPanel.innerHTML +=
+              route.legs[i].distance.text + "<br><br>";
+          }
+        } else {
+          window.alert("Directions request failed due to " + status);
+        }
+      }
+    );
+  }
 </script>
 <script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=YOURKEY&callback=initMap">
+  src="https://maps.googleapis.com/maps/api/js?key=YOUR-API-KEY&callback=initMap">
   </script>
 
 <footer class="page-footer center" style="position:fixed;bottom:0;left:0;width:100%;">
