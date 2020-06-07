@@ -29,12 +29,12 @@ tr {
 }
 
 body {
-    background-image: url(../img/roadMap.jpg);
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    font-family: var(--mainFont);
+  background-image: url(../img/roadMap.jpg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  font-family: var(--mainFont);
 }
 
 .page-footer {

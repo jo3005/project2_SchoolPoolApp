@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
   /* global moment */
 
   // blogContainer holds all of our posts
@@ -23,20 +23,18 @@ $(document).ready(function() {
     getPosts();
   }
 
-
   // This function grabs posts from the database and updates the view
   function getPosts(author) {
     authorId = author || "";
     if (authorId) {
       authorId = "/?author_id=" + authorId;
     }
-    $.get("/api/posts" + authorId, function(data) {
+    $.get("/api/posts" + authorId, function (data) {
       console.log("Posts", data);
       posts = data;
       if (!posts || !posts.length) {
         displayEmpty(author);
-      }
-      else {
+      } else {
         initializeRows();
       }
     });
@@ -46,11 +44,10 @@ $(document).ready(function() {
   function deletePost(id) {
     $.ajax({
       method: "DELETE",
-      url: "/api/posts/" + id
-    })
-      .then(function() {
-        getPosts(postCategorySelect.val());
-      });
+      url: "/api/posts/" + id,
+    }).then(function () {
+      getPosts(postCategorySelect.val());
+    });
   }
 
   // InitializeRows handles appending all of our constructed post HTML inside blogContainer
@@ -84,8 +81,7 @@ $(document).ready(function() {
     newPostAuthor.css({
       float: "right",
       color: "blue",
-      "margin-top":
-      "-10px"
+      "margin-top": "-10px",
     });
     var newPostCardBody = $("<div>");
     newPostCardBody.addClass("card-body");
@@ -107,19 +103,13 @@ $(document).ready(function() {
 
   // This function figures out which post we want to delete and then calls deletePost
   function handlePostDelete() {
-    var currentPost = $(this)
-      .parent()
-      .parent()
-      .data("post");
+    var currentPost = $(this).parent().parent().data("post");
     deletePost(currentPost.id);
   }
 
   // This function figures out which post we want to edit and takes it to the appropriate url
   function handlePostEdit() {
-    var currentPost = $(this)
-      .parent()
-      .parent()
-      .data("post");
+    var currentPost = $(this).parent().parent().data("post");
     window.location.href = "/cms?post_id=" + currentPost.id;
   }
 
@@ -133,9 +123,13 @@ $(document).ready(function() {
     blogContainer.empty();
     var messageH2 = $("<h2>");
     messageH2.css({ "text-align": "center", "margin-top": "50px" });
-    messageH2.html("No posts yet" + partial + ", navigate <a href='/cms" + query +
-    "'>here</a> in order to get started.");
+    messageH2.html(
+      "No posts yet" +
+        partial +
+        ", navigate <a href='/cms" +
+        query +
+        "'>here</a> in order to get started."
+    );
     blogContainer.append(messageH2);
   }
-
 });

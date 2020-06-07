@@ -18,8 +18,8 @@ $(document).ready(function () {
   // The code below handles the case where we want to get blog posts for a specific user
   // Looks for a query param in the url for user_id
   var url = window.location.search;
- 
-  if (userId)  {
+
+  if (userId) {
     getPosts(userId);
   }
   // If there's no userId we just get all posts as usual
@@ -46,7 +46,7 @@ $(document).ready(function () {
       method: "DELETE",
       url: "/api/requests/" + id,
     }).then(function () {
-      console.log ("Deleted request")
+      console.log("Deleted request");
     });
   }
 
@@ -86,12 +86,26 @@ $(document).ready(function () {
     var newPostCardBody = $("<div>");
     newPostCardBody.addClass("card-content");
     var newPostBody = $("<p>");
-    newPostTitle.text("From: "+ post.requiredPickupLocnId + " To: " + post.requiredDropoffLocnId + " ");
+    newPostTitle.text(
+      "From: " +
+        post.requiredPickupLocnId +
+        " To: " +
+        post.requiredDropoffLocnId +
+        " "
+    );
     newPostBody.html(
-        "<br> <p>Car Seats Required: " + post.carSeatsRequired+ "</p>" + 
-        "<br> <p>Date Required: " + post.requiredDate +"</p>" + 
-        "<br> <p>Pick up Time: " + post.requiredDropOffTimeStart + "</p>"+
-        "<br> <p>Credits offered: " + post.creditsOffered +"</p>"
+      "<br> <p>Car Seats Required: " +
+        post.carSeatsRequired +
+        "</p>" +
+        "<br> <p>Date Required: " +
+        post.requiredDate +
+        "</p>" +
+        "<br> <p>Pick up Time: " +
+        post.requiredDropOffTimeStart +
+        "</p>" +
+        "<br> <p>Credits offered: " +
+        post.creditsOffered +
+        "</p>"
     );
     newPostDate.text(formattedDate);
     newPostTitle.append(newPostDate);
