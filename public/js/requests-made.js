@@ -69,7 +69,7 @@ $(document).ready(function () {
     var newPostCardHeading = $("<div>");
     newPostCardHeading.addClass("card-title-text");
     var deleteBtn = $("<button>");
-    deleteBtn.text("x");
+    deleteBtn.text("DELETE");
     deleteBtn.addClass("delete btn waves-effect red");
     var editBtn = $("<button>");
     editBtn.text("EDIT");

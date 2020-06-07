@@ -1,0 +1,61 @@
+#logo {
+  max-width: 250px;
+  margin-top: 8px;
+}
+
+.card {
+  background: white;
+  padding: 20px 25px;
+  border: 5px solid #26a69a;
+  border-radius: 15px;
+  height: auto;
+  box-sizing: border-box;
+  position: relative;
+  margin-top: 10%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#menuBtn {
+  width: 400px;
+}
+
+tr {
+  border-style: none;
+}
+
+#noborder {
+  border-bottom: 0px none white;
+}
+
+body {
+  background-image: url(../img/road.png);
+  background-color: #d1eaa3;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.page-footer {
+  max-height: fit-content;
+  padding-top: 0%;
+  background-color: #565656;
+}
+
+p {
+  font-size: medium;
+}
+
+h6 {
+  font-size: medium;
+}
+
+.delete {
+  margin-top: 30px;
+  border-radius: 15px;
+
+}
+
+.edit {
+  margin-top: 30px;
+  border-radius: 15px;
+
+}
