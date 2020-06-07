@@ -141,81 +141,33 @@ app.post("/api/location", function(req, res) {
 });
 
 
-  // REGISTER DRIVER API ROUTE
+// REGISTER DRIVER API ROUTE
 // =============================================================
 
 app.post("/api/registerDriver", function(req, res) {
 
+  console.log("Registering new driver...",req.body);
   db.driver.create({
-    // driverId: req.body.driverId, // autoincrement PK
-   
+    // reqId:  // autoincrement PK
+    licenceNumber: req.body.licenceNumber, // redundant date can be retrived from date created.
     defaultVehicle: req.body.defaultVehicle,
-    stateOfIssue: req.body.stateOfIssue,
-    expiryDate: req.body.expiryDate,
-    yearsDriving: req.body.yearsDriving,
-    workingWithChildren: req.body.workingWithChildren,
+    freeSpots: req.body.freeSpots,
     defaultRoute: req.body.defaultRoute,
-    memberMemId: req.user.id
+    homeAddress: req.body.homeAddress,
+    memberMemId: req.body.memberMemId
+   })
+  .then(function(dbDriver) {
+    console.log("Driver profile has been created", dbDriver);
+    res.json(dbDriver)
   })
-    .then(function(dbDriver) {
-      res.json(dbDriver)
-      // res.redirect(307, "/api/login");
-    })
-    .catch(function(err) {
-      res.status(401).json(err);
-    });
-
-    db.vehicle.create({
-      // driverId: req.body.driverId, // autoincrement PK
-     
-      registration: req.body.registration,
-      make: req.body.make,
-      model: req.body.model,
-      color: req.body.color,
-      spareSpots: req.body.spareSpots,
-      spareChildSeats: req.body.spareChildSeats,
-      spareBoosters: req.body.spareBoosters,
-      petsEverTravel: req.body.spareChildSeats
-    })
-      .then(function(dbvehicle) {
-        res.json(dbvehicle)
-        // res.redirect(307, "/api/login");
-      })
-      .catch(function(err) {
-        res.status(401).json(err);
-      });
-
-    db.route.create({
-      routeName: req.body.routeName,
-      startLocnId: req.body.startLocnId,
-      endLocnId: req.body.endLocnId,
-      routeDistance: req.body.routeDistance,
-      routeTotalTime: req.body.routeTotalTime,
-      routeStartTime: req.body.routeStartTime
-    })
-      .then(function(dbroute) {
-        res.json(dbroute)
-        // res.redirect(307, "/api/login");
-      })
-      .catch(function(err) {
-        res.status(401).json(err);
-      });
-});
-
-app.get("/api/drivers", function(req, res) {
-  // Here we add an "include" property to our options in our findAll query
-  // We set the value to an array of the models we want to include in a left outer join
-  // In this case, just db.Driver
-  db.member.findAll({
-    include: [db.driver]
-  }).then(function(dbdriver) {
-    res.json(dbdriver);
+  .catch(function(err) {
+    res.status(401).json(err);
   });
+
 });
 
 // CREATE REQUEST API ROUTE
 // =============================================================
-
 
 app.post("/api/createRequest", function(req, res) {
   console.log("Creating new request",req.body);
