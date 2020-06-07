@@ -1,13 +1,30 @@
-      /* Always set the map height explicitly to define the size of the div
+/* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
-       #map {
-        height: 40%;
-        
-        }
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        
-      }
+#map {
+  background: white;
+  padding: 20px 25px;
+  border: 5px solid white;
+  border-radius: 15px;
+  height: 500px;
+  width: 80%;
+  box-sizing: border-box;
+  position: relative;
+}
+/* Optional: Makes the sample page fill the window. */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.btn-large {
+  border-radius: 15px;
+}
+
+body {
+  background-image: url(../img/road.png);
+  background-color: #d1eaa3;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
