@@ -7,7 +7,7 @@ module.exports={
     },
     "development": {
               "username": "root",
-              "password": "sql0044",
+              "password": "dank",
               "database": "schoolpool", 
               "host": "localhost",
               "port": "3306",
@@ -15,7 +15,7 @@ module.exports={
             },
     "test": {
               "username": "root",
-              "password": null,
+              "password": "dank",
               "database": "database_test",
               "host": "127.0.0.1",
               "port": 3306,

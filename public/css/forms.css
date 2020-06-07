@@ -1,11 +1,13 @@
 #logo {
-    width: 250px;
+    width: 300px;
+    margin-top: 15px;
 }
 
 .container {
   background: white;
   padding: 20px 25px;
   border: 5px solid #26a69a;
+  border-radius: 15px;
   height: auto;
   box-sizing: border-box;
   position: relative;
@@ -22,4 +24,24 @@ tr {
 #noborder {
   border-bottom: 0px none white;
   
+}
+
+body {
+  background-image: url(../img/road.png);
+  background-color: #d1eaa3;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.page-footer {
+  max-height: fit-content;
+  padding-top: 0%;
+  background-color: #565656;
+}
+
+#signupFrmBtn {
+  border-radius: 15px;
+}
+
+.btn-large {
+  border-radius: 15px;
 }
