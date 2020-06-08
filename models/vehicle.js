@@ -53,6 +53,10 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false,
             type: 'TIMESTAMP',
             defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
+        },
+        driverId:{
+            type: DataTypes.INTEGER,
+            allowNull:false
         }
 
     });
@@ -60,7 +64,8 @@ module.exports = function(sequelize, DataTypes) {
         // Associating Drive with member, vehicles, routes
     
         vehicle.belongsTo(models.driver, {
-            onDelete: "cascade"
+            onDelete: "cascade",
+            foreignKey:{name:"driverId"}
           });
       };
     return vehicle;

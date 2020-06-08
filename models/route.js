@@ -43,12 +43,16 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false,
             type: 'TIMESTAMP',
             defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
+        },
+        driverId:{
+            type: DataTypes.INTEGER,
+            allowNull:false
         }
 
     });
     Route.associate = function(models) {
         
-        Route.belongsTo(models.driver);
+        Route.belongsTo(models.driver,{foreignKey:{name:"driverId"}});
         
       };
     return Route;

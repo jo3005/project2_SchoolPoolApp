@@ -49,6 +49,10 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false,
             type: 'TIMESTAMP',
             defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
+        },
+        memId:{
+            type: DataTypes.INTEGER,
+            allowNull:false
         }
 
     });
@@ -56,7 +60,9 @@ module.exports = function(sequelize, DataTypes) {
     location.associate = function(models) {
         // Associating Author with Posts
         // When an Author is deleted, also delete any associated Posts
-        location.belongsTo(models.member);
+        location.belongsTo(models.member,{
+            foreignKey:{name:"memId"}
+        });
       };
 
     return location;
