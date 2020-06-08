@@ -1,12 +1,17 @@
 $(document).ready(function () {
   // Getting references to our form and input
   const locationForm = $("form.location");
+  $.get("/api/user_data").then(function (data) {
+    console.log(data);
+    userId = data.id;
+    userEmail = data.email;
+  });
 
   // When the signup button is clicked, we validate the email and password are not blank
   $("#signupFrmBtn").on("click", function (event) {
-    console.log("pressed button");
     event.preventDefault();
-
+    console.log("pressed button");
+    
     let newAddr = {
       streetnumber: $("#street_number").val(),
       streetname: $("#route").val(),
@@ -16,7 +21,7 @@ $(document).ready(function () {
       country: $("#country").val(),
       gps: $("#latlong").val(),
       name: $("#name").val(),
-      MemberMemID: null, //need to get the Member ID from password
+      memId: userId //need to get the Member ID from password
     };
 
     console.log(newAddr);
@@ -55,7 +60,7 @@ $(document).ready(function () {
       country: $("#country").val(),
       gps: $("#latlong").val(),
       name: $("#name").val(),
-      MemberMemID: null, //need to get the Member ID from password
+      memId: userId //need to get the Member ID from password
     })
       .then(function (data) {
         window.location.replace("/members");

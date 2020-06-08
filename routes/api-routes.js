@@ -117,7 +117,8 @@ module.exports = function (app) {
 
   app.post("/api/location", function (req, res) {
     console.log("posting the create location data");
-    db.Location.create({
+    console.log(req.body.memId);
+    db.location.create({
       streetNumber: req.body.streetnumber,
       streetName: req.body.streetname,
       suburb: req.body.suburb,
@@ -126,12 +127,12 @@ module.exports = function (app) {
       country: req.body.country,
       locGps: req.body.gps,
       locationName: req.body.name,
-      memberMemID: req.user.id, //need to get the current userid that is logged in
+      memId: req.body.memId //need to get the current userid that is logged in
     })
       .then(function (dbLocation) {
         res.json(dbLocation);
         console.log(res.json(dbLocation));
-        // res.redirect(307, "/api/login");
+        res.redirect(307, "/api/location");
       })
       .catch(function (err) {
         res.status(401).json(err);

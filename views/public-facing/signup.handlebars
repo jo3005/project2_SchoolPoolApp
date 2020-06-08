@@ -1,73 +1,77 @@
-<link rel="stylesheet" href="css/forms.css">
+{{!-- <link rel="stylesheet" href="css/forms.css"> --}}
+<link rel="stylesheet" href="css/search-ride.css">
+<div class="">
+    <div class="row" >
 
-<main>
+    
     <center>
         <img class="responsive-img" id="logo" src="img/school_pool_logo_white.png" />
 
-
-        <h3 class="pleaseLogIn">Create an Account</h3>
-        <p>Or Login <a href="/login">here</a></p>
-
-        <div class="container">
-            <!-- <div id="form"> -->
-
-            <form class="col s12 signup" id="signupFrm" method="post">
-                <div class='row'>
-                    <div class='input-field col s6'>
-                        <input class='validate' type="text" name='firstname' id='firstname' />
-                        <label for='firstname'>Enter your first name</label>
-                    </div>
-                    <div class='input-field col s6'>
-                        <input class='validate' type="text" name='lastname' id='lastname' />
-                        <label for='lastname'>Enter your last name</label>
-                    </div>
-                </div>
-                <div class='row'>
-                    <div class='input-field col s6'>
-                        <input class='validate' type='email' name='email' id='email' />
-                        <label for='email'>Enter your email</label>
-                    </div>
-                    <div class='input-field col s6'>
-                        <input class='validate' type='number' name='mobile' id='mobile' />
-                        <label for='mobile'>Enter your mobile number</label>
-                    </div>
-                </div>
-
-                <div class='input-field col s12'>
-                    <input class='validate' type="text" name='username' id='username' />
-                    <label for='username'>Enter your desired username</label>
-                </div>
-        </div>
-
-        <div class='row'>
-            <div class='input-field col s12'>
-                <input class='validate' type='password' name='password' id='password' />
-                <label for='password'>Enter your password</label>
+        <div class="container" id="header-strip">
+            <div class="row">
+                <h4 class="pleaseLogIn">Create an Account</h4>
+                <p id="loginHere">Or Login <a href="/login">here</a></p>
             </div>
-        </div>
+             
+            
 
-        <div class='row'>
-            <div class='input-field col s12'>
-                <input class='validate' type='password' name='passwordval' id='passwordval' />
-                <label for='passwordval'>Confirm your password</label>
+            <div class="row" id="content-box">
+                <!-- <div id="form"> -->
+
+                <form class="col s12 signup teal-darken4" id="signupFrm" method="post">
+                    <div class='row'>
+                        <div class='input-field col s12'>
+                            <input class='validate' type="text" name='firstname' id='firstname' />
+                            <label for='firstname'>Enter your first name</label>
+                        </div>
+                        <div class='input-field col s12'>
+                            <input class='validate' type="text" name='lastname' id='lastname' />
+                            <label for='lastname'>Enter your last name</label>
+                        </div>
+                        <div class='input-field col s12'>
+                            <input class='validate' type='email' name='email' id='email' />
+                            <label for='email'>Enter your email</label>
+                        </div>
+                        <div class='input-field col s12'>
+                            <input class='validate' type='number' name='mobile' id='mobile' />
+                            <label for='mobile'>Enter your mobile number</label>
+                        </div>
+                        <div class='input-field col s12'>
+                            <input class='validate' type="text" name='username' id='username' />
+                            <label for='username'>Enter your desired username</label>
+                        </div>
+                        <div class='input-field col s12'>
+                            <input class='validate' type='password' name='password' id='password' />
+                            <label for='password'>Enter your password</label>
+                        </div>
+                        <div class='input-field col s12'>
+                            <input class='validate' type='password' name='passwordval' id='passwordval' />
+                            <label for='passwordval'>Confirm your password</label>
+                        </div>
+                        <center>
+                            <div class='row'>
+                                <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect indigo'
+                                    id='btn_login'>Sign Up</button>
+                            </div>
+                        </center>
+                    </div>
+                    
+                </div>                   
+            
             </div>
-        </div>
 
-
-
-        <center>
-            <div class='row'>
-                <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect indigo'
-                    id='btn_login'>Sign Up</button>
+            </form>
+            <!-- </div> -->
             </div>
-        </center>
-        </form>
-        <!-- </div> -->
-        </div>
+        </container>
+        
     </center>
+    </div>
+</div>
 
 
-</main>
+
+
 <footer class="page-footer center" style="position:fixed;bottom:0;left:0;width:100%;">
     <div class="col s12 m6 l6">
         <h6 class="white-text">School Pool Perth - Copyright 2020 © </h6>

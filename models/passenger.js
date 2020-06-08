@@ -84,7 +84,8 @@ module.exports = function(sequelize, DataTypes) {
         // Associating Author with Posts
         // When an Author is deleted, also delete any associated Posts
         passenger.belongsTo(models.parent,{
-            onDelete: "cascade"    
+            onDelete: "cascade", 
+            foreignKey:{name:"parentId"}   
         });
         passenger.hasMany(models.reqpassenger);
       };

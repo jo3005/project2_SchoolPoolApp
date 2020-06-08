@@ -88,4 +88,16 @@ nav .nav-wrapper {
 .btn-default {
   margin-top: 5px;
   border-radius: 15px;
+  width:90%
+}
+
+tr.hidden,tr.hidden>td {
+  line-height:1.2em;
+  margin: 3px;
+  padding:0px 5px;
+}
+
+
+#tr{
+
 }

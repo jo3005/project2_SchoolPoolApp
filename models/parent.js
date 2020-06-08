@@ -7,11 +7,11 @@ module.exports = function(sequelize, DataTypes) {
           autoIncrement:true,
           unique:true,
           primaryKey:true
-        },/* 
+        },
         memId:{
           type: DataTypes.INTEGER,
-          allowNull:false,
-        }, */
+          allowNull:false
+        },
         relationship: {
             type: DataTypes.STRING,
             default: 'Parent',
@@ -36,6 +36,7 @@ module.exports = function(sequelize, DataTypes) {
       parent.hasMany(models.passenger, {
         onDelete: "cascade"
       });
+      parent.belongsTo(models.member,{foreignKey:{name:"memId"}});
     };
     
 
