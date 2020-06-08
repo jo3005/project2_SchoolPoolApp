@@ -6,8 +6,8 @@ module.exports={
         "google_email": process.env.GOOGLE_API_EMAIL
     },
     "development": {
-              "username": "root",
-              "password": "dank",
+              "username": process.env.MYSQL_USERNAME,
+              "password": process.env.MYSQL_PASSWORD,
               "database": "schoolpool", 
               "host": "localhost",
               "port": "3306",

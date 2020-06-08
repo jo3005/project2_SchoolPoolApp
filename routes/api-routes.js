@@ -134,7 +134,8 @@ module.exports = function (app) {
         // res.redirect(307, "/api/login");
       })
       .catch(function (err) {
-        res.status(401).json(err);
+        res.status(401).json("401 - location page insert")
+        console.log(err);
       });
   });
 
