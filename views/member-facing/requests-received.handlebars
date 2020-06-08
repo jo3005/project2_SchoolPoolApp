@@ -1,6 +1,5 @@
 <link rel="stylesheet" href="css/requests-received.css">
 <!-- Custom Script -->
-{{!-- <script src="/js/requests-received.js" type="text/javascript"></script> --}}
 <nav>
 
   <div class="nav-wrapper">
@@ -21,28 +20,17 @@
 <div id="right-panel">
   <div>
     <h5>Start Location:</h5>
-    {{!-- <div class="input-field col s12">
-      <select id="start">
-        <option value="96 Boulder Ave, WA, Aus">96 Boulder Ave, WA, Aus</option>
-        <option value="Boston, MA">Boston, MA</option>
-        <option value="New York, NY">New York, NY</option>
-        <option value="Miami, FL">Miami, FL</option>
-      </select>
-      <label>Select start location</label>
-    </div> --}}
 
     <div class='input-field col s12'>
-      <i class="material-icons md-15 prefix">location_searching</i>
       <input class='validate' type='text' name='start' id='start' />
       <label for='start'>Enter start location</label>
     </div>
-
 
     <h5>Requests Received:</h5>
     <i>(Ctrl+Click or Cmd+Click for multiple selection)</i> <br />
     <div class="input-field col s12">
       <select multiple id="waypoints" class="browser-default" style=" height:10vh">
-        {{!-- <option value="Belmont Forum">Belmont Forum</option> --}}
+
       </select>
     </div>
 
@@ -52,7 +40,7 @@
         <option value="Morley Primary School">Morley Primary School</option>
       </select>
     </div>
-    <hr>
+
     <center>
       <input value="Check Route" type="submit" id="submit" class="btn" />
       <hr>
@@ -62,51 +50,49 @@
   <div id="directions-panel" style=" height:35vh"></div>
 </div>
 <script>
+  let reqIdObj;
 
-  let reqSelectedData;
   $('select').formSelect(); // initialize form selection
   document
     .getElementById("accept")
     .addEventListener("click", function () {
-      acceptBooking(reqSelectedData)
+      acceptBooking(reqIdObj)
     });
   //Get requests from database
-  let requestTrips = [];
+
   $.get("/api/requests").then(function (data) {
     console.log("Requests", data);
     data.forEach((request) => {
-      requestTrips.push({
-        tripId: request.reqId,
-        tripRequestor: request.bookedBy,
-        tripStart: request.requiredPickupLocnId,
-        tripEnd: request.requiredDropoffLocnId,
-      });
-      console.log(requestTrips)
-
-      var newOption = $("<option>");
-      newOption.html(
-        "<option>" + request.requiredPickupLocnId + "</option>"
-      );
-      //newOption.data =  { reqId: request.reqId, booked: request.booked, bookedBy: request.bookedBy }; // contains email
-  
-      newOption.data('id', 555); // contains id
+      let newOption = $("<option>");
+      if (!request.booked) {
+        newOption.html(
+          request.requiredPickupLocnId
+        );
+        newOption.data("reqId", request.reqId); // contains id
+        console.log(newOption);
+      } else {
+        newOption.html(
+          "(No pending requests)"
+        );
+        return
+      }
       $("#waypoints").append(newOption);
-      console.log(newOption);
     });
+
+
   });
-
   // Update a given request with status booked and update database
+  function acceptBooking(reqIdObj) {
+    console.log("Accept button pressed", reqIdObj)
 
-
-  function acceptBooking(reqSelectedObj) {
-    console.log("Accept button pressed", reqSelectedObj)
     $.ajax({
       method: "PUT",
       url: "/api/requests",
-      data: reqSelectedObj
+      data: reqIdObj
     })
       .then(function () {
-        window.location.href = "/members";
+        alert("GREAT! BOOKING CONFIRMATION EMAIL HAS BEEN SENT TO THE REQUESTOR.")
+        location.reload();
       });
   }
   function initMap() {
@@ -128,10 +114,12 @@
   function calculateAndDisplayRoute(directionsService, directionsRenderer) {
     var waypts = [];
     var checkboxArray = document.getElementById("waypoints");
+
     for (var i = 0; i < checkboxArray.length; i++) {
       if (checkboxArray.options[i].selected) {
-        console.log(checkboxArray.options[i].data('id'));
-       reqSelectedData = checkboxArray.options[i].data('id');
+        console.log($(checkboxArray.options[i]).data('reqId'));
+        reqIdObj = { reqId: $(checkboxArray.options[i]).data('reqId') };
+        console.log(reqIdObj);
         waypts.push({
           location: checkboxArray[i].value,
           stopover: true,
@@ -171,7 +159,7 @@
   }
 </script>
 <script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=YOUR-API-KEY&callback=initMap">
+  src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
   </script>
 
 <footer class="page-footer center" style="position:fixed;bottom:0;left:0;width:100%;">

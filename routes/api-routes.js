@@ -19,6 +19,7 @@ const transporter = nodemailer.createTransport({
     user: "guy.lynch@ethereal.email",
     pass: "m6uvuqX1d1hb86wQNt",
   },
+  // goto www.ethereal.email and log in with above to see received email as seen by REQUESTOR
 });
 
 // Routes
@@ -193,87 +194,7 @@ module.exports = function (app) {
       .catch(function (err) {
         res.status(401).json(err);
       });
-
-    // db.member.findOne({
-    //   include: [
-    //     {
-    //     model: db.driver,
-    //     where: {
-    //       expiryDate: { [Op.gt]: req.body.requiredDate },
-    //       workingWithChildren: true
-    //     }
-    //     },
-    //     {
-    //       model: db.vehicle,
-    //       where: {
-    //         spareSpots: { [Op.gte]: 1 }, // sparespots should be atleast 1
-    //         spareChildSeats : req.body.carSeatsRequired,
-    //         spareBoosters : req.body.boostersRequired,
-    //         addedRouteTime : req.body.addedRouteTime,
-    //         boostersRequired : req.body.boostersRequired,
-    //         carSeatsRequired : req.body.carSeatsRequired,
-    //       }
-    //     },
-    //     {
-    //       model: db.route,
-    //       where: {
-    //         routstartLocnId: req.body.requiredPickupLocnId,
-    //         endLocnId: req.body.requiredDropoffLocnId,
-    //       }
-    //     }
-    //   ]
-
-    // ----- OR -----
-    // where: {
-
-    //   // compare request FROM and TO Locations with Drivers default route FROM and TO Locations
-    //   // required location services API
-
-    //   // From Driver Table
-    //   "$Driver.expiryDate$": { [Op.gt]: req.body.requiredDate }, //  should be greater than the req.body.requiredDate
-    //   "$Driver.workingWithChildren$": true,
-
-    //   // From Associated Vehicle Table
-    //   "$Vehicle.spareSpots$": { [Op.gte]: 1 }, // sparespots should be atleast 1
-    //   "$Vehicle.spareChildSeats$" : req.body.carSeatsRequired,
-    //   "$Vehicle.spareBoosters$" : req.body.boostersRequired,
-    //   "$Vehicle.addedRouteTime$" : req.body.addedRouteTime,
-    //   "$Vehicle.boostersRequired$" : req.body.boostersRequired,
-    //   "$Vehicle.carSeatsRequired$" : req.body.carSeatsRequired,
-
-    //   // From Associated Route Table
-    //   "$Route.routstartLocnId$": req.body.requiredPickupLocnId,
-    //   "$Route.endLocnId$": req.body.requiredDropoffLocnId,
-    //   // routeName:"" // May not be required if google api resolves addresses into geocoded places
-
-    // },
-    // include: [db.Driver, db.Vehicle, db.Route]
-    // }).then(function(dbmember) {
-    //   res.json(dbmember);
-    //   emailDriver(dBmember) // use member.email details to send email
-    //   // This is where we can consider updating status field in request for "requesting > pending > acccepted > cancelled > driving > arriving > ended"
-    // });
   });
-
-  function emailDriver(driverObj) {
-    // require nodemailer
-    console.log("Calling emailDriver function");
-    console.log(driverObj);
-    var mailOptions = {
-      from: "guy.lynch@ethereal.email",
-      to: driverObj.email, // use test email guy.lynch@ethereal.email
-      subject: "You have received a new booking request",
-      text: "Please log into schoolpoolperth.com to accept booking",
-    };
-
-    transporter.sendMail(mailOptions, function (error, info) {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log("Email sent: " + info.response);
-      }
-    });
-  }
 
   app.get("/api/requests", isAuthenticated, function (req, res) {
     console.log("Req User", req.user);
@@ -303,17 +224,17 @@ module.exports = function (app) {
         }
       )
       .then(function (updatedRequest) {
+        console.log("Database updated with request status 'boooked'",updatedRequest)
         res.json(updatedRequest); // return updated request
         //get requestor email
-        db.member
+        db.request
           .findOne({
             where: {
-              requestId: updatedRequest.reqId, // where Member.requestId = request.reqId
-            },
-            include: [db.request],
+              reqId: req.body.reqId, // where Member.requestId = request.reqId
+            }
           })
-          .then(function (dbmember) {
-            emailRequestor(dbmember);
+          .then(function (dbrequest) {
+            emailRequestor(dbrequest);
           });
       });
   });
@@ -331,13 +252,13 @@ module.exports = function (app) {
       });
   });
 
-  function emailRequestor(memberObj) {
+  function emailRequestor(dbrequest) {
     // require nodemailer
     console.log("Calling emailDriver function");
-    console.log(memberObj);
+    console.log(dbrequest);
     var mailOptions = {
       from: "guy.lynch@ethereal.email",
-      to: memberObj.email, // use test email guy.lynch@ethereal.email
+      to: dbrequest.bookedBy, // use test email guy.lynch@ethereal.email
       subject: "Your booking request has been confirmed",
       text: "Please log into schoolpoolperth.com to view details",
     };
@@ -350,8 +271,6 @@ module.exports = function (app) {
       }
     });
   }
-
-  // ----- GET Routes -----------------------
 
   // GET route for getting all location addresses
   app.get("/api/locations", function (req, res) {
@@ -370,91 +289,26 @@ module.exports = function (app) {
     });
   });
 
-  // Get route for retrieving a single post
-  app.get("/api/posts/:id", function (req, res) {
-    var query = {};
-    // Here we add an "include" property to our options in our findOne query
-    // We set the value to an array of the models we want to include in a left outer join
-    // In this case, just db.Author
-    db.location
-      .findOne({
-        where: {
-          locId: req.params.id,
-        },
-        include: [db.location],
-      })
-      .then(function (dblocation) {
-        res.json(dblocation);
-      });
-  });
+    // ----- FUTURE DEV -----------------------
 
-  // POST route for saving a new post
-  app.post("/api/posts", function (req, res) {
-    db.Post.create(req.body).then(function (dbPost) {
-      res.json(dbPost);
-    });
-  });
+  // function emailDriver(driverObj) {
+  //   // require nodemailer
+  //   console.log("Calling emailDriver function");
+  //   console.log(driverObj);
+  //   var mailOptions = {
+  //     from: "guy.lynch@ethereal.email",
+  //     to: driverObj.email, // use test email guy.lynch@ethereal.email
+  //     subject: "You have received a new booking request",
+  //     text: "Please log into schoolpoolperth.com to accept booking",
+  //   };
 
-  // DELETE route for deleting posts
-  app.delete("/api/posts/:id", function (req, res) {
-    db.Post.destroy({
-      where: {
-        id: req.params.id,
-      },
-    }).then(function (dbPost) {
-      res.json(dbPost);
-    });
-  });
+  //   transporter.sendMail(mailOptions, function (error, info) {
+  //     if (error) {
+  //       console.log(error);
+  //     } else {
+  //       console.log("Email sent: " + info.response);
+  //     }
+  //   });
+  // }
 
-  // PUT route for updating posts
-  app.put("/api/posts", function (req, res) {
-    db.Post.update(req.body, {
-      where: {
-        id: req.body.id,
-      },
-    }).then(function (dbPost) {
-      res.json(dbPost);
-    });
-  });
-
-  app.get("/api/authors", function (req, res) {
-    // Here we add an "include" property to our options in our findAll query
-    // We set the value to an array of the models we want to include in a left outer join
-    // In this case, just db.Post
-    db.Author.findAll({
-      include: [db.Post],
-    }).then(function (dbAuthor) {
-      res.json(dbAuthor);
-    });
-  });
-
-  app.get("/api/authors/:id", function (req, res) {
-    // Here we add an "include" property to our options in our findOne query
-    // We set the value to an array of the models we want to include in a left outer join
-    // In this case, just db.Post
-    db.Author.findOne({
-      where: {
-        id: req.params.id,
-      },
-      include: [db.Post],
-    }).then(function (dbAuthor) {
-      res.json(dbAuthor);
-    });
-  });
-
-  app.post("/api/authors", function (req, res) {
-    db.Author.create(req.body).then(function (dbAuthor) {
-      res.json(dbAuthor);
-    });
-
-    app.delete("/api/authors/:id", function (req, res) {
-      db.Author.destroy({
-        where: {
-          id: req.params.id,
-        },
-      }).then(function (dbAuthor) {
-        res.json(dbAuthor);
-      });
-    });
-  });
 };
