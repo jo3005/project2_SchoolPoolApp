@@ -153,7 +153,7 @@ module.exports = function (app) {
         freeSpots: req.body.freeSpots,
         defaultRoute: req.body.defaultRoute,
         homeAddress: req.body.homeAddress,
-        memberMemId: req.body.memberMemId,
+        memId: req.body.memId,
       })
       .then(function (dbDriver) {
         console.log("Driver profile has been created", dbDriver);
@@ -185,7 +185,7 @@ module.exports = function (app) {
         creditsOffered: req.body.creditsOffered,
         booked: req.body.booked,
         bookedBy: req.body.bookedBy,
-        memberMemId: req.body.memberMemId,
+        memId: req.body.memId,
       })
       .then(function (dbRequest) {
         console.log("Request has been created");
@@ -284,7 +284,7 @@ module.exports = function (app) {
     // In this case, just db.Driver
     db.request
       .findAll({
-        where: { memberMemId: req.user.memId }, // return requests that haven't been confirmed / booked
+        where: { memId: req.user.memId }, // return requests that haven't been confirmed / booked
         // requiredDate: { [Op.gte]: new Date() } // only requests for today or the future
       })
       .then(function (requestsList) {
@@ -357,8 +357,8 @@ module.exports = function (app) {
   // GET route for getting all location addresses
   app.get("/api/locations", function (req, res) {
     var query = {};
-    if (req.query.memberMemId) {
-      query.MemberMemId = req.query.memberMemId;
+    if (req.query.memId) {
+      query.memId = req.query.memId;
     }
     // Here we add an "include" property to our options in our findAll query
     // We set the value to an array of the models we want to include in a left outer join
