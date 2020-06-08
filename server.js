@@ -58,5 +58,6 @@ db.sequelize.sync({ force: false }).then(function () {
       PORT,
       PORT
     );
+
   });
 });

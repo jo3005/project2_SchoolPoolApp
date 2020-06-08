@@ -212,7 +212,7 @@ module.exports = function (app) {
   });
 
   // UPDATE route for Drivers to update/confirm booking requests
-  app.put("/api/requests", function (req, res) {
+  app.put("/api/requests", isAuthenticated, function (req, res) {
     console.log("Updating booking...",req.body)
     db.request
       .update(
@@ -224,7 +224,7 @@ module.exports = function (app) {
         }
       )
       .then(function (updatedRequest) {
-        console.log("Database updated with request status 'boooked'",updatedRequest)
+        console.log("Database updated with request status 'booked'",updatedRequest)
         res.json(updatedRequest); // return updated request
         //get requestor email
         db.request
@@ -257,8 +257,8 @@ module.exports = function (app) {
     console.log("Calling emailDriver function");
     console.log(dbrequest);
     var mailOptions = {
-      from: "guy.lynch@ethereal.email",
-      to: dbrequest.bookedBy, // use test email guy.lynch@ethereal.email
+      from: "guy.lynch@ethereal.email", // use test email guy.lynch@ethereal.email as driver otherwise req.user.email 
+      to: dbrequest.bookedBy, 
       subject: "Your booking request has been confirmed",
       text: "Please log into schoolpoolperth.com to view details",
     };
