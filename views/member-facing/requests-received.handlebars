@@ -35,10 +35,9 @@
     </div>
 
     <h5>Common Destination:</h5>
-    <div class="input-field col s12">
-      <select id="end" class="browser-default">
-        <option value="Morley Primary School">Morley Primary School</option>
-      </select>
+    <div class='input-field col s12'>
+      <input class='validate' type='text' name='end' id='end'/>
+      <label for='end'>Enter destination</label>
     </div>
 
     <center>
@@ -59,28 +58,24 @@
       acceptBooking(reqIdObj)
     });
   //Get requests from database
-
+  let newOption;
   $.get("/api/requests").then(function (data) {
     console.log("Requests", data);
     data.forEach((request) => {
-      let newOption = $("<option>");
+      newOption = $("<option>");
       if (!request.booked) {
         newOption.html(
           request.requiredPickupLocnId
         );
         newOption.data("reqId", request.reqId); // contains id
         console.log(newOption);
-      } else {
-        newOption.html(
-          "(No pending requests)"
-        );
-        return
+        $("#waypoints").append(newOption);
       }
-      $("#waypoints").append(newOption);
     });
-
-
   });
+
+
+
   // Update a given request with status booked and update database
   function acceptBooking(reqIdObj) {
     console.log("Accept button pressed", reqIdObj)
@@ -159,7 +154,7 @@
   }
 </script>
 <script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCeQIMEVblnURRAPTV3aivNkIKRF1YrXFw&callback=initMap">
   </script>
 
 <footer class="page-footer center" style="position:fixed;bottom:0;left:0;width:100%;">
