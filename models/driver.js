@@ -56,6 +56,11 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false,
             type: 'TIMESTAMP',
             defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
+        },
+        
+        memId:{
+            type: DataTypes.INTEGER,
+            allowNull:false
         }
 
 
@@ -65,12 +70,14 @@ module.exports = function(sequelize, DataTypes) {
     driver.associate = function(models) {
         // Associating Drive with member, vehicles, routes
     
-        driver.belongsTo(models.member);
+        driver.belongsTo(models.member,{foreignKey:{name:"memId"}});
         driver.hasMany(models.vehicle, {
-            onDelete: "cascade"
+            onDelete: "cascade",
+            foreignKey: {name:"driverId"}
           });
         driver.hasMany(models.route, {
-            onDelete: "cascade"
+            onDelete: "cascade",
+            foreignKey:{name:"routeId"}
           });
           
       };

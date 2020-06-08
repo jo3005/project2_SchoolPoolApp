@@ -118,7 +118,8 @@ module.exports = function (app) {
 
   app.post("/api/location", function (req, res) {
     console.log("posting the create location data");
-    db.Location.create({
+    console.log(req.body.memId);
+    db.location.create({
       streetNumber: req.body.streetnumber,
       streetName: req.body.streetname,
       suburb: req.body.suburb,
@@ -127,15 +128,16 @@ module.exports = function (app) {
       country: req.body.country,
       locGps: req.body.gps,
       locationName: req.body.name,
-      memberMemID: req.user.id, //need to get the current userid that is logged in
+      memId: req.body.memId //need to get the current userid that is logged in
     })
       .then(function (dbLocation) {
         res.json(dbLocation);
         console.log(res.json(dbLocation));
-        // res.redirect(307, "/api/login");
+        res.redirect(307, "/api/location");
       })
       .catch(function (err) {
-        res.status(401).json(err);
+        res.status(401).json("401 - location page insert")
+        console.log(err);
       });
   });
 
@@ -152,7 +154,7 @@ module.exports = function (app) {
         freeSpots: req.body.freeSpots,
         defaultRoute: req.body.defaultRoute,
         homeAddress: req.body.homeAddress,
-        memberMemId: req.body.memberMemId,
+        memId: req.body.memId
       })
       .then(function (dbDriver) {
         console.log("Driver profile has been created", dbDriver);
@@ -184,7 +186,7 @@ module.exports = function (app) {
         creditsOffered: req.body.creditsOffered,
         booked: req.body.booked,
         bookedBy: req.body.bookedBy,
-        memberMemId: req.body.memberMemId,
+        memId: req.body.memId,
       })
       .then(function (dbRequest) {
         console.log("Request has been created");
@@ -203,7 +205,7 @@ module.exports = function (app) {
     // In this case, just db.Driver
     db.request
       .findAll({
-        where: { memberMemId: req.user.memId }, // return requests that haven't been confirmed / booked
+        where: { memId: req.user.memId }, // return requests that haven't been confirmed / booked
         // requiredDate: { [Op.gte]: new Date() } // only requests for today or the future
       })
       .then(function (requestsList) {
@@ -275,8 +277,8 @@ module.exports = function (app) {
   // GET route for getting all location addresses
   app.get("/api/locations", function (req, res) {
     var query = {};
-    if (req.query.memberMemId) {
-      query.MemberMemId = req.query.memberMemId;
+    if (req.query.memId) {
+      query.memId = req.query.memId;
     }
     // Here we add an "include" property to our options in our findAll query
     // We set the value to an array of the models we want to include in a left outer join

@@ -33,7 +33,7 @@ $(document).ready(function () {
       creditsOffered: 0,
       booked: false,
       bookedBy: userEmail,
-      memberMemId: userId, // made available for back end
+      memId: userId, // made available for back end
     };
     console.log(newRequest);
     createRequest(newRequest);
