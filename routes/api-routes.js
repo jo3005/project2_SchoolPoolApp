@@ -153,7 +153,7 @@ module.exports = function (app) {
         freeSpots: req.body.freeSpots,
         defaultRoute: req.body.defaultRoute,
         homeAddress: req.body.homeAddress,
-        memId: req.body.memId,
+        memId: req.body.memId
       })
       .then(function (dbDriver) {
         console.log("Driver profile has been created", dbDriver);

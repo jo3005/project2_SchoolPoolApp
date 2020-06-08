@@ -16,7 +16,7 @@ $(document).ready(function () {
       freeSpots: $("#freeSpots").val().trim(),
       defaultRoute: $("#defaultRoute").val().trim(),
       homeAddress: $("#homeAddress").val().trim(), // can be calculated
-      memberMemId: userId, // made available for back end
+      memId: userId // made available for back end
     };
     console.log(newDriver);
     registerDriver(newDriver);
