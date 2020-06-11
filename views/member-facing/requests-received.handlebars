@@ -36,7 +36,7 @@
 
     <h5>Common Destination:</h5>
     <div class='input-field col s12'>
-      <input class='validate' type='text' name='end' id='end'/>
+      <input class='validate' type='text' name='end' id='end' />
       <label for='end'>Enter destination</label>
     </div>
 
@@ -49,6 +49,7 @@
   <div id="directions-panel" style=" height:35vh"></div>
 </div>
 <script>
+require("dotenv").config();
   let reqIdObj;
 
   $('select').formSelect(); // initialize form selection
@@ -154,8 +155,8 @@
   }
 </script>
 <script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCeQIMEVblnURRAPTV3aivNkIKRF1YrXFw&callback=initMap">
-  </script>
+  src='https://maps.googleapis.com/maps/api/js?key=<%GOOGLE_MAPS_API_KEY%>&callback=initMap'
+    type = "text/javascript" ></script>
 
 <footer class="page-footer center" style="position:fixed;bottom:0;left:0;width:100%;">
   <div class="col s12 m6 l6">

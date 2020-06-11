@@ -47,6 +47,7 @@ $(document).ready(function () {
       url: "/api/requests/" + id,
     }).then(function () {
       console.log("Deleted request");
+      window.location.href = "/requests-made";
     });
   }
 
@@ -122,8 +123,9 @@ $(document).ready(function () {
 
   // This function figures out which post we want to delete and then calls deletePost
   function handlePostDelete() {
-    console.log($(this));
+    console.log('this: ',$(this));
     var currentPost = $(this).parent().parent().data("request");
+    console.log('current post: ',currentPost);
     deletePost(currentPost.reqId);
   }
 
