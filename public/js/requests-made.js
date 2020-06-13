@@ -71,19 +71,20 @@ $(document).ready(function () {
     var newPostCardHeading = $("<div>");
     newPostCardHeading.addClass("card-title-text");
     var deleteBtn = $("<button>");
-    deleteBtn.text("DELETE");
+    deleteBtn.html(
+    "<i class='material-icons prefix'>delete</i><span>DELETE</span>");
     deleteBtn.addClass("delete btn waves-effect red");
     var editBtn = $("<button>");
-    editBtn.text("EDIT");
+    editBtn.html("<i class='material-icons prefix'>create</i><span>EDIT</span>");
     editBtn.addClass("edit btn btn waves-effect lime");
     var newPostTitle = $("<h5>");
     var newPostDate = $("<small>");
     var newPostAuthor = $("<h6>");
     newPostAuthor.text("Requested by: " + post.bookedBy);
     newPostAuthor.css({
-      float: "right",
+      
       color: "blue",
-      "margin-top": "-10px",
+     
     });
     var newPostCardBody = $("<div>");
     newPostCardBody.addClass("card-content");
@@ -92,8 +93,7 @@ $(document).ready(function () {
       "<b><i class='material-icons md-18 prefix'>location_searching</i>From: </b>" +
         post.requiredPickupLocnId + "<br>" +
         "<b><i class='material-icons md-18 prefix'>location_on</i>To: </b>" +
-        post.requiredDropoffLocnId +
-        " "
+        post.requiredDropoffLocnId + "<hr>"
     );
     newPostBody.html(
       "<p>Car Seats Required: " +
@@ -113,12 +113,12 @@ $(document).ready(function () {
     newPostTitle.append(newPostDate);
     newPostCardHeading.append(newPostTitle);
     newPostCardHeading.append(newPostAuthor);
+    newPostCardHeading.append(deleteBtn);
+    newPostCardHeading.append(editBtn);
     newPostCardBody.append(newPostBody);
     newPostCard.append(newPostCardHeading);
     newPostCard.append(newPostCardBody);
     newPostCard.data("request", post);
-    newPostCardHeading.append(deleteBtn);
-    newPostCardHeading.append(editBtn);
     return newPostCard;
   }
 

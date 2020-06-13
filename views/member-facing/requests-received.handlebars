@@ -6,10 +6,8 @@
     <a href="#" class="brand-logo center hide-on-small-and-down"><img class="responsive-img" id="logo"
         src="./img/school_pool_logo_white.png" /></a>
     <ul id="nav-mobile" class="left">
-
-      <li><a href="/search-ride">New Request</a></li>
       <li><a href="/members">Menu</a></li>
-
+      <li><a href="/search-ride">New Request</a></li>
       <li><a href="/manage-driver">Driver Details</a></li>
     </ul>
   </div>
@@ -29,7 +27,7 @@
     <h5>Requests Received:</h5>
     <i>(Ctrl+Click or Cmd+Click for multiple selection)</i> <br />
     <div class="input-field col s12">
-      <select multiple id="waypoints" class="browser-default" style=" height:10vh">
+      <select multiple id="waypoints" class="browser-default" style=" height:10rem">
 
       </select>
     </div>
@@ -148,14 +146,17 @@
               route.legs[i].distance.text + "<br><br>";
           }
         } else {
-          window.alert("Directions request failed due to " + status);
+          let errMsg = "Directions request failed due to " + status;
+                  M.toast({html:
+        "<i class='material-icons prefix'>email</i><span>" + errMsg + "</span><button class='btn-flat toast-action'>OK</button>"
+        });
         }
       }
     );
   }
 </script>
 <script async defer
-  src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCb5A0r0RMzX9hEutVhbXn1bOG4VGQyxIA&callback=initMap'
+  src='https://maps.googleapis.com/maps/api/js?key=AIzaSyBuCMNz2bEQ7mcSuZ9rYgd2p8mrzMyJ-iY&callback=initMap'
     type = "text/javascript" ></script>
 
 <footer class="page-footer center" style="position:fixed;bottom:0;left:0;width:100%;">
