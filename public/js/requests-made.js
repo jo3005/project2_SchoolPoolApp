@@ -3,31 +3,28 @@ $(document).ready(function () {
 
   // requestContainer holds all of our ride requests
   var requestContainer = $(".request-container");
-  var statusSelect = $("#booked");
+
   // Click events for the edit and delete buttons
   $(document).on("click", "button.delete", handlePostDelete);
   $(document).on("click", "button.edit", handlePostEdit);
-  // Variable to hold our posts
+  // Variable to hold our request posts
   var posts;
-  let userId, userEmail;
+  let userId;
   $.get("/api/user_data").then(function (data) {
     console.log(data);
     userId = data.id;
     userEmail = data.email;
   });
-  // The code below handles the case where we want to get blog posts for a specific user
-  // Looks for a query param in the url for user_id
-  var url = window.location.search;
 
   if (userId) {
     getPosts(userId);
   }
-  // If there's no userId we just get all posts as usual
+  // If there's no userId we just get all ride request posts as usual
   else {
     getPosts();
   }
 
-  // This function grabs posts from the database and updates the view
+  // This function grabs ride request posts from the database and updates the view
   function getPosts(user) {
     $.get("/api/requests", function (data) {
       console.log("Requests", data);
@@ -40,13 +37,17 @@ $(document).ready(function () {
     });
   }
 
-  // This function does an API call to delete posts
+  // This function does an API call to delete ride request posts
   function deletePost(id) {
     $.ajax({
       method: "DELETE",
       url: "/api/requests/" + id,
     }).then(function () {
       console.log("Deleted request");
+      M.toast({
+        html:
+          "<i class='material-icons prefix'>delete</i><span>Request has been deleted!</span><button class='btn-flat toast-action'>OK</button>",
+      });
       window.location.href = "/requests-made";
     });
   }
@@ -70,41 +71,41 @@ $(document).ready(function () {
     var newPostCardHeading = $("<div>");
     newPostCardHeading.addClass("card-title-text");
     var deleteBtn = $("<button>");
-    deleteBtn.text("DELETE");
+    deleteBtn.html(
+    "<i class='material-icons prefix'>delete</i><span>DELETE</span>");
     deleteBtn.addClass("delete btn waves-effect red");
     var editBtn = $("<button>");
-    editBtn.text("EDIT");
+    editBtn.html("<i class='material-icons prefix'>create</i><span>EDIT</span>");
     editBtn.addClass("edit btn btn waves-effect lime");
     var newPostTitle = $("<h5>");
     var newPostDate = $("<small>");
     var newPostAuthor = $("<h6>");
     newPostAuthor.text("Requested by: " + post.bookedBy);
     newPostAuthor.css({
-      float: "right",
+      
       color: "blue",
-      "margin-top": "-10px",
+     
     });
     var newPostCardBody = $("<div>");
     newPostCardBody.addClass("card-content");
     var newPostBody = $("<p>");
-    newPostTitle.text(
-      "From: " +
-        post.requiredPickupLocnId +
-        " To: " +
-        post.requiredDropoffLocnId +
-        " "
+    newPostTitle.html(
+      "<b><i class='material-icons md-18 prefix'>location_searching</i>From: </b>" +
+        post.requiredPickupLocnId + "<br>" +
+        "<b><i class='material-icons md-18 prefix'>location_on</i>To: </b>" +
+        post.requiredDropoffLocnId + "<hr>"
     );
     newPostBody.html(
-      "<br> <p>Car Seats Required: " +
+      "<p>Car Seats Required: " +
         post.carSeatsRequired +
         "</p>" +
-        "<br> <p>Date Required: " +
+        "<p>Date Required: " +
         post.requiredDate +
         "</p>" +
-        "<br> <p>Pick up Time: " +
+        "<p>Pick up Time: " +
         post.requiredDropOffTimeStart +
         "</p>" +
-        "<br> <p>Credits offered: " +
+        "<p>Credits offered: " +
         post.creditsOffered +
         "</p>"
     );
@@ -112,30 +113,31 @@ $(document).ready(function () {
     newPostTitle.append(newPostDate);
     newPostCardHeading.append(newPostTitle);
     newPostCardHeading.append(newPostAuthor);
+    newPostCardHeading.append(deleteBtn);
+    newPostCardHeading.append(editBtn);
     newPostCardBody.append(newPostBody);
     newPostCard.append(newPostCardHeading);
     newPostCard.append(newPostCardBody);
     newPostCard.data("request", post);
-    newPostCardHeading.append(deleteBtn);
-    newPostCardHeading.append(editBtn);
     return newPostCard;
   }
 
   // This function figures out which post we want to delete and then calls deletePost
   function handlePostDelete() {
-    console.log('this: ',$(this));
+    console.log("this: ", $(this));
     var currentPost = $(this).parent().parent().data("request");
-    console.log('current post: ',currentPost);
+    console.log("current post: ", currentPost);
     deletePost(currentPost.reqId);
   }
 
   // This function figures out which post we want to edit and takes it to the appropriate url
   function handlePostEdit() {
+    // FUTURE DEV FEATURE
     //   var currentPost = $(this)
     //     .parent()
     //     .parent()
     //     .data("post");
-    //   window.location.href = "/cms?post_id=" + currentPost.id;
+    //   window.location.href = "/search-ride?post_id=" + currentPost.id;
     window.location.href = "/search-ride";
   }
 
