@@ -136,7 +136,6 @@ module.exports = function (app) {
         res.redirect(307, "/api/location");
       })
       .catch(function (err) {
-        res.status(401).json("401 - location page insert")
         console.log(err);
       });
   });
@@ -245,8 +244,8 @@ module.exports = function (app) {
     db.request
       .destroy({
         where: {
-          reqId: req.params.id,
-        },
+          reqId: req.params.id
+        }
       })
       .then(function (dbrequest) {
         // res.json(dbrequest);

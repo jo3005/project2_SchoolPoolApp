@@ -18,7 +18,7 @@ $(document).ready(function () {
   // When the signup button is clicked, we validate the email and password are not blank
   $("#btn_search").on("click", function (event) {
     event.preventDefault();
-    console.log("search button pressed");
+    console.log("submit a request pressed");
     let newRequest = {
       requestDate: moment().format("DD-MMM-YYYY"), // date can be retrived from date created.
       requiredDate: $("#pickupDate").val().trim(),
