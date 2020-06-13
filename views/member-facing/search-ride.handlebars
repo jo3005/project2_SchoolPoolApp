@@ -1,21 +1,21 @@
 <link rel="stylesheet" href="css/search-ride.css">
 
-<nav class="transparent z-depth-0">
-  <div class="nav-wrapper">
-    <a href="#" class="brand-logo center hide-on-small-and-down"><img class="responsive-img" id="logo"
-        src="./img/school_pool_logo_white.png" /></a>
-    <ul id="nav-mobile" class="left">
-      <li><a href="/members">Menu</a></a></li>
-    </ul>
-  </div>
-</nav>
-
-<center class="spacer">
-  <div id="map" class="col l6 m9 s12 center"></div>
+{{!-- <center class="spacer">
+  
 </center>
-<br>
+<br> --}}
+
 <center>
-  <div class="container">
+  <div class="container" id="header-strip">
+    <center>
+      <div class="row map_contents">
+        <div class="col s12 map" id="map"></div>
+      </div>
+    </center>
+    <div class="row">
+        <h4 class="pleaseLogIn">Enter the pickup request details</h4>
+        
+    </div>
     <div class="row">
 
       <form class="col s12 m12 signup" id="signupFrm" method="post">
@@ -72,7 +72,7 @@
         <center>
           <div class='row'>
             <button type='submit' name='btn_search' class='col s12 btn btn-large waves-effect indigo' id='btn_search'><i
-                class="material-icons prefix bottom"> search</i> Search Rides</button>
+                class="material-icons prefix bottom"> search</i>Submit a Ride Request</button>
           </div>
         </center>
       </form>
@@ -80,11 +80,11 @@
   </div>
 </center>
 
-<footer class="page-footer center" style="position:fixed;bottom:0;left:0;width:100%;">
+{{!-- <footer class="page-footer center" style="position:fixed;bottom:0;left:0;width:100%;">
   <div class="col s12 m6 l6">
     <h6 class="white-text">School Pool Perth - Copyright 2020 © </h6>
   </div>
-</footer>
+</footer> --}}
 <script>
   // Note: This example requires that you consent to location sharing when
   // prompted by your browser. If you see the error "The Geolocation service

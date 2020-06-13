@@ -5,8 +5,8 @@ $(document).ready(function () {
   var requestContainer = $(".request-container");
   var statusSelect = $("#booked");
   // Click events for the edit and delete buttons
-  $(document).on("click", "button.delete", handlePostDelete);
-  $(document).on("click", "button.edit", handlePostEdit);
+  $(document).on("click", ".delete_btn", handlePostDelete);
+  $(document).on("click", ".edit_btn", handlePostEdit);
   // Variable to hold our posts
   var posts;
   let userId, userEmail;
@@ -52,6 +52,7 @@ $(document).ready(function () {
 
   // InitializeRows handles appending all of our constructed post HTML inside blogContainer
   function initializeRows() {
+    
     requestContainer.empty();
     var postsToAdd = [];
     for (var i = 0; i < posts.length; i++) {
@@ -62,61 +63,152 @@ $(document).ready(function () {
 
   // This function constructs a post's HTML
   function createNewRow(post) {
+
     var formattedDate = new Date(post.createdAt);
-    formattedDate = moment(formattedDate).format("MMMM Do YYYY, h:mm:ss a");
+    formattedDate = moment(formattedDate).format("MMMM Do YYYY, h:mm a");
+
     var newPostCard = $("<div>");
     newPostCard.addClass("card");
+
     var newPostCardHeading = $("<div>");
     newPostCardHeading.addClass("card-title-text");
+
     var deleteBtn = $("<button>");
     deleteBtn.text("DELETE");
-    deleteBtn.addClass("delete btn waves-effect red");
+    deleteBtn.addClass("delete_btn btn waves-effect red");
+
     var editBtn = $("<button>");
     editBtn.text("EDIT");
-    editBtn.addClass("edit btn btn waves-effect lime");
-    var newPostTitle = $("<h5>");
-    var newPostDate = $("<small>");
-    var newPostAuthor = $("<h6>");
-    newPostAuthor.text("Requested by: " + post.bookedBy);
-    newPostAuthor.css({
-      float: "right",
-      color: "blue",
-      "margin-top": "-10px",
-    });
+    editBtn.addClass("edit_btn btn waves-effect lime");
+
+    
+    
     var newPostCardBody = $("<div>");
-    newPostCardBody.addClass("card-content");
-    var newPostBody = $("<p>");
-    newPostTitle.text(
-      "From: " +
-        post.requiredPickupLocnId +
-        " To: " +
-        post.requiredDropoffLocnId +
-        " "
-    );
-    newPostBody.html(
-      "<br> <p>Car Seats Required: " +
-        post.carSeatsRequired +
-        "</p>" +
-        "<br> <p>Date Required: " +
-        post.requiredDate +
-        "</p>" +
-        "<br> <p>Pick up Time: " +
-        post.requiredDropOffTimeStart +
-        "</p>" +
-        "<br> <p>Credits offered: " +
-        post.creditsOffered +
-        "</p>"
-    );
+    newPostCardBody.attr("class","card-content");
+
+    var newPostCardBodyTable = $("<table>");
+    newPostCardBodyTable.attr("class","requestContent");
+    newPostCardBodyTable.attr("id","requestContentTable")
+    newPostCardBody.append(newPostCardBodyTable);
+
+    var newRow=$("<tr>");
+    newRow.attr("class","imptRow noborder");
+    newPostCardBodyTable.append(newRow);
+    
+    var newDataLabel=$("<td>");
+    newDataLabel.attr("class","datalabel");
+    newDataLabel.text("Pickup from: ");
+    newRow.append(newDataLabel);
+    
+    var newPostTitleFrom=$("<td>");
+    newPostTitleFrom.addClass("requestDetailsHdr");
+    newPostTitleFrom.attr("class","data");
+    newPostTitleFrom.text(post.requiredPickupLocnId);
+    newRow.append(newPostTitleFrom);
+
+    var newRow=$("<tr>");
+    newRow.attr("class","imptRow noborder");
+    newPostCardBodyTable.append(newRow);
+
+    var newDataLabel=$("<td>");
+    newDataLabel.attr("class","datalabel");
+    newDataLabel.text("Dropoff to: ");
+    newRow.append(newDataLabel);
+
+    var newPostTitleTo = $("<td>");
+    newPostTitleTo.addClass("requestDetailsHdr")
+    newPostTitleTo.attr("class","data");
+    newPostTitleTo.text(post.requiredDropoffLocnId);
+    newRow.append(newPostTitleTo);
+
+    var newRow=$("<tr>");
+    newRow.attr("class","imptRow noborder");
+    newPostCardBodyTable.append(newRow);
+    
+    var newDataLabel=$("<td>");
+    newDataLabel.attr("class","datalabel");
+    newDataLabel.text("Requested by: ");
+    newRow.append(newDataLabel);
+    
+    var newPostAuthor = $("<td>");
+    newPostAuthor.addClass("requestDetailsHdr")
+    newPostAuthor.attr("class","data");
+    newPostAuthor.text(post.bookedBy);
+    newRow.append(newPostAuthor);              
+
+    var newRow=$("<tr>");
+    newRow.attr("class","imptRow noborder");
+    newPostCardBodyTable.append(newRow);
+    
+    var newDataLabel=$("<td>");
+    newDataLabel.attr("class","datalabel");
+    newDataLabel.text("Requested at: ");
+    newRow.append(newDataLabel);
+
+    var newPostDate = $("<td>");
+    newPostDate.attr("class","requestDetailsHdr")
+    newPostDate.attr("class","data");
     newPostDate.text(formattedDate);
-    newPostTitle.append(newPostDate);
-    newPostCardHeading.append(newPostTitle);
-    newPostCardHeading.append(newPostAuthor);
-    newPostCardBody.append(newPostBody);
-    newPostCard.append(newPostCardHeading);
+    newRow.append(newPostDate);
+    
+    var newRow=$("<tr>");
+    newRow.attr("class","imptRow noborder");
+    newPostCardBodyTable.append(newRow);
+    
+    var newDataLabel=$("<td>");
+    newDataLabel.attr("class","datalabel");
+    newDataLabel.text("Date required: ");
+    newRow.append(newDataLabel);
+
+    var newReqdDate = $("<td>");
+    newReqdDate.attr("class","requestDetailsHdr")
+    newReqdDate.attr("class","data");
+    newReqdDate.text(moment(post.requiredDate).format("MMMM Do YYYY"));
+    newRow.append(newReqdDate);
+    
+    var newRow=$("<tr>");
+    newRow.attr("class","imptRow noborder");
+    newPostCardBodyTable.append(newRow);
+    
+    var newDataLabel=$("<td>");
+    newDataLabel.attr("class","datalabel");
+    newDataLabel.text("Dropoff by: ");
+    newRow.append(newDataLabel);
+
+    var newReqdTime = $("<td>");
+    newReqdTime.attr("class","requestDetailsHdr")
+    newReqdTime.attr("class","data");
+    newReqdTime.text(post.requiredDropOffTimeStart);
+    newRow.append(newReqdTime);
+
+    var newRow=$("<tr>");
+    newRow.attr("class","imptRow noborder");
+    newPostCardBodyTable.append(newRow);
+    
+    var newDataLabel=$("<td>");
+    newDataLabel.attr("class","datalabel");
+    newDataLabel.text("Seats required: ");
+    newRow.append(newDataLabel);
+
+    var newReqdTime = $("<td>");
+    newReqdTime.attr("class","requestDetailsHdr")
+    newReqdTime.attr("class","data");
+    newReqdTime.text(post.carSeatsRequired);
+    newRow.append(newReqdTime);
+
+   
+    var newRow=$("<tr>");
+    newRow.attr("class","imptRow noborder");
+    newPostCardBodyTable.append(newRow);
+    
+    var newPostBody = $("<div>");
     newPostCard.append(newPostCardBody);
+    
+    newPostCardBody.append(deleteBtn);
+    newPostCardBody.append(editBtn);  
+    
     newPostCard.data("request", post);
-    newPostCardHeading.append(deleteBtn);
-    newPostCardHeading.append(editBtn);
+    
     return newPostCard;
   }
 
@@ -129,6 +221,9 @@ $(document).ready(function () {
 
   // This function figures out which post we want to edit and takes it to the appropriate url
   function handlePostEdit() {
+
+    //TODO: Go to search-ride and fill in with data for get post using current id 
+
     //   var currentPost = $(this)
     //     .parent()
     //     .parent()
@@ -148,9 +243,9 @@ $(document).ready(function () {
     var messageH2 = $("<h2>");
     messageH2.css({ "text-align": "center", "margin-top": "50px" });
     messageH2.html(
-      "No ride bookings made yet" +
+      "No ride bookings made yet. <br> " +
         partial +
-        ", navigate <a href='/search-ride" +
+        " Navigate <a href='/search-ride" +
         query +
         "'>here</a> in order to get started."
     );
