@@ -49,7 +49,7 @@
   <div id="directions-panel" style=" height:35vh"></div>
 </div>
 <script>
-require("dotenv").config();
+
   let reqIdObj;
 
   $('select').formSelect(); // initialize form selection
@@ -155,7 +155,7 @@ require("dotenv").config();
   }
 </script>
 <script async defer
-  src='https://maps.googleapis.com/maps/api/js?key=<%GOOGLE_MAPS_API_KEY%>&callback=initMap'
+  src='https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_API_KEY&callback=initMap'
     type = "text/javascript" ></script>
 
 <footer class="page-footer center" style="position:fixed;bottom:0;left:0;width:100%;">
