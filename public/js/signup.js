@@ -23,7 +23,7 @@ $(document).ready(function () {
       M.toast({ html: toastHTML });
       return;
     } else if (userData.password !== userData.passwordrpt) {
-      //not working
+     
       const toastHTML =
         "<span>Oops!Your passwords don't match!</span><button class='btn-flat toast-action'>OK</button>";
       M.toast({ html: toastHTML });
