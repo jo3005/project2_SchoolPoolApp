@@ -64,7 +64,7 @@
     console.log("Requests", data);
     data.forEach((request) => {
       newOption = $("<option>");
-      if (!request.booked) {
+      if (!request.booked) {  
         newOption.html(
           request.requiredPickupLocnId
         );
@@ -74,8 +74,6 @@
       }
     });
   });
-
-
 
   // Update a given request with status booked and update database
   function acceptBooking(reqIdObj) {
@@ -87,7 +85,9 @@
       data: reqIdObj
     })
       .then(function () {
-        alert("GREAT! BOOKING CONFIRMATION EMAIL HAS BEEN SENT TO THE REQUESTOR.")
+        M.toast({html:
+        "<i class='material-icons prefix'>email</i><span>Great! A Booking confirmation email has been sent to notify the requestor.</span><button class='btn-flat toast-action'>OK</button>"
+        });
         location.reload();
       });
   }
@@ -155,7 +155,7 @@
   }
 </script>
 <script async defer
-  src='https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_API_KEY&callback=initMap'
+  src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCb5A0r0RMzX9hEutVhbXn1bOG4VGQyxIA&callback=initMap'
     type = "text/javascript" ></script>
 
 <footer class="page-footer center" style="position:fixed;bottom:0;left:0;width:100%;">
