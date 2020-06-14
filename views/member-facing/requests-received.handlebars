@@ -21,7 +21,7 @@
 
 
   <div class="row">
-    <div  class="col s12"> 
+    <div class="col s12">
       <div id="right-panel">
         <div>
           <h5>Start Location:</h5>
@@ -30,41 +30,30 @@
             <input class='validate' type='text' name='start' id='start' />
             <label for='start'>Enter start location</label>
           </div>
-    <h5>Requests Received:</h5>
-    <i>(Ctrl+Click or Cmd+Click for multiple selection)</i> <br />
-    <div class="input-field col s12">
-      <select multiple id="waypoints" class="browser-default" style=" height:10rem">
-
           <h5>Requests Received:</h5>
           <i>(Ctrl+Click or Cmd+Click for multiple selection)</i> <br />
           <div class="input-field col s12">
-            <select multiple id="waypoints" class="browser-default" style=" height:10vh">
+            <select multiple id="waypoints" class="browser-default" style=" height:10rem">
 
             </select>
           </div>
-    <h5>Common Destination:</h5>
-    <div class='input-field col s12'>
-      <input class='validate' type='text' name='end' id='end' />
-      <label for='end'>Enter destination</label>
-    </div>
-
           <h5>Common Destination:</h5>
           <div class='input-field col s12'>
-            <input class='validate' type='text' name='end' id='end'/>
+            <input class='validate' type='text' name='end' id='end' />
             <label for='end'>Enter destination</label>
           </div>
 
           <center>
             <input value="Check Route" type="submit" id="submit" class="btn" />
-            
+
             <input value="Accept Request" type="submit" id="accept" class="btn red" />
           </center>
-        {{!-- </div>
+        </div>
         <div id="directions-panel" style=" height:35vh" class="hidden"></div>
-       </div> --}}
       </div>
+    </div>
   </div>
-  
+
 </div>
 <script>
 
@@ -82,7 +71,7 @@
     console.log("Requests", data);
     data.forEach((request) => {
       newOption = $("<option>");
-      if (!request.booked) {  
+      if (!request.booked) {
         newOption.html(
           request.requiredPickupLocnId
         );
@@ -103,8 +92,9 @@
       data: reqIdObj
     })
       .then(function () {
-        M.toast({html:
-        "<i class='material-icons prefix'>email</i><span>Great! A Booking confirmation email has been sent to notify the requestor.</span><button class='btn-flat toast-action'>OK</button>"
+        M.toast({
+          html:
+            "<i class='material-icons prefix'>email</i><span>Great! A Booking confirmation email has been sent to notify the requestor.</span><button class='btn-flat toast-action'>OK</button>"
         });
         location.reload();
       });
@@ -167,9 +157,10 @@
           }
         } else {
           let errMsg = "Directions request failed due to " + status;
-                  M.toast({html:
-        "<i class='material-icons prefix'>email</i><span>" + errMsg + "</span><button class='btn-flat toast-action'>OK</button>"
-        });
+          M.toast({
+            html:
+              "<i class='material-icons prefix'>email</i><span>" + errMsg + "</span><button class='btn-flat toast-action'>OK</button>"
+          });
         }
       }
     );
@@ -181,5 +172,6 @@
     <h6 class="white-text">School Pool Perth - Copyright 2020 © </h6>
   </div>
 </footer>
-    <script src="/js/autocomplete.js" ></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCb5A0r0RMzX9hEutVhbXn1bOG4VGQyxIA&callback=initMap"></script>
+<script src="/js/autocomplete.js"></script>
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuCMNz2bEQ7mcSuZ9rYgd2p8mrzMyJ-iY&callback=initMap"></script>
