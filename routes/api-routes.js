@@ -204,7 +204,7 @@ module.exports = function (app) {
     // In this case, just db.Driver
     db.request
       .findAll({
-        where: { memId: req.user.memId }, // return requests that haven't been confirmed / booked
+        where: { booked: false }, // return requests that haven't been confirmed / booked
         // requiredDate: { [Op.gte]: new Date() } // only requests for today or the future
       })
       .then(function (requestsList) {
@@ -248,8 +248,9 @@ module.exports = function (app) {
         }
       })
       .then(function (dbrequest) {
-        // res.json(dbrequest);
-        res.redirect("/member-facing/requests-made");
+        res.json(dbrequest);
+        console.log("Request deleted...")
+     
       });
   });
 
@@ -275,7 +276,8 @@ module.exports = function (app) {
 
   // GET route for getting all location addresses
   app.get("/api/locations", function (req, res) {
-    var query = {};
+
+    var query = { memId: req.user.memId };
     if (req.query.memId) {
       query.memId = req.query.memId;
     }

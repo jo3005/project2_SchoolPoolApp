@@ -3,31 +3,28 @@ $(document).ready(function () {
 
   // requestContainer holds all of our ride requests
   var requestContainer = $(".request-container");
-  var statusSelect = $("#booked");
+
   // Click events for the edit and delete buttons
   $(document).on("click", ".delete_btn", handlePostDelete);
   $(document).on("click", ".edit_btn", handlePostEdit);
   // Variable to hold our posts
   var posts;
-  let userId, userEmail;
+  let userId;
   $.get("/api/user_data").then(function (data) {
     console.log(data);
     userId = data.id;
     userEmail = data.email;
   });
-  // The code below handles the case where we want to get blog posts for a specific user
-  // Looks for a query param in the url for user_id
-  var url = window.location.search;
 
   if (userId) {
     getPosts(userId);
   }
-  // If there's no userId we just get all posts as usual
+  // If there's no userId we just get all ride request posts as usual
   else {
     getPosts();
   }
 
-  // This function grabs posts from the database and updates the view
+  // This function grabs ride request posts from the database and updates the view
   function getPosts(user) {
     $.get("/api/requests", function (data) {
       console.log("Requests", data);
@@ -40,13 +37,18 @@ $(document).ready(function () {
     });
   }
 
-  // This function does an API call to delete posts
+  // This function does an API call to delete ride request posts
   function deletePost(id) {
     $.ajax({
       method: "DELETE",
       url: "/api/requests/" + id,
     }).then(function () {
       console.log("Deleted request");
+      M.toast({
+        html:
+          "<i class='material-icons prefix'>delete</i><span>Request has been deleted!</span><button class='btn-flat toast-action'>OK</button>",
+      });
+      window.location.href = "/requests-made";
     });
   }
 
@@ -214,8 +216,9 @@ $(document).ready(function () {
 
   // This function figures out which post we want to delete and then calls deletePost
   function handlePostDelete() {
-    console.log($(this));
+    console.log("this: ", $(this));
     var currentPost = $(this).parent().parent().data("request");
+    console.log("current post: ", currentPost);
     deletePost(currentPost.reqId);
   }
 
@@ -228,7 +231,7 @@ $(document).ready(function () {
     //     .parent()
     //     .parent()
     //     .data("post");
-    //   window.location.href = "/cms?post_id=" + currentPost.id;
+    //   window.location.href = "/search-ride?post_id=" + currentPost.id;
     window.location.href = "/search-ride";
   }
 

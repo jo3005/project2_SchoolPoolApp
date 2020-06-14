@@ -7,10 +7,8 @@
     <a href="#" class="brand-logo center hide-on-small-and-down"><img class="responsive-img" id="logo"
         src="./img/school_pool_logo_white.png" /></a>
     <ul id="nav-mobile" class="left">
-
-      <li><a href="/search-ride">New Request</a></li>
       <li><a href="/members">Menu</a></li>
-
+      <li><a href="/search-ride">New Request</a></li>
       <li><a href="/manage-driver">Driver Details</a></li>
     </ul>
   </div>
@@ -32,6 +30,10 @@
             <input class='validate' type='text' name='start' id='start' />
             <label for='start'>Enter start location</label>
           </div>
+    <h5>Requests Received:</h5>
+    <i>(Ctrl+Click or Cmd+Click for multiple selection)</i> <br />
+    <div class="input-field col s12">
+      <select multiple id="waypoints" class="browser-default" style=" height:10rem">
 
           <h5>Requests Received:</h5>
           <i>(Ctrl+Click or Cmd+Click for multiple selection)</i> <br />
@@ -40,6 +42,11 @@
 
             </select>
           </div>
+    <h5>Common Destination:</h5>
+    <div class='input-field col s12'>
+      <input class='validate' type='text' name='end' id='end' />
+      <label for='end'>Enter destination</label>
+    </div>
 
           <h5>Common Destination:</h5>
           <div class='input-field col s12'>
@@ -59,9 +66,120 @@
   </div>
   
 </div>
+<script>
 
+  let reqIdObj;
 
+  $('select').formSelect(); // initialize form selection
+  document
+    .getElementById("accept")
+    .addEventListener("click", function () {
+      acceptBooking(reqIdObj)
+    });
+  //Get requests from database
+  let newOption;
+  $.get("/api/requests").then(function (data) {
+    console.log("Requests", data);
+    data.forEach((request) => {
+      newOption = $("<option>");
+      if (!request.booked) {  
+        newOption.html(
+          request.requiredPickupLocnId
+        );
+        newOption.data("reqId", request.reqId); // contains id
+        console.log(newOption);
+        $("#waypoints").append(newOption);
+      }
+    });
+  });
 
+  // Update a given request with status booked and update database
+  function acceptBooking(reqIdObj) {
+    console.log("Accept button pressed", reqIdObj)
 
+    $.ajax({
+      method: "PUT",
+      url: "/api/requests",
+      data: reqIdObj
+    })
+      .then(function () {
+        M.toast({html:
+        "<i class='material-icons prefix'>email</i><span>Great! A Booking confirmation email has been sent to notify the requestor.</span><button class='btn-flat toast-action'>OK</button>"
+        });
+        location.reload();
+      });
+  }
+  function initMap() {
+    var directionsService = new google.maps.DirectionsService();
+    var directionsRenderer = new google.maps.DirectionsRenderer();
+    var map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 12,
+      center: { lat: -31.95, lng: 115.85 }, // Perth lat, lng
+    });
+    directionsRenderer.setMap(map);
+
+    document
+      .getElementById("submit")
+      .addEventListener("click", function () {
+        calculateAndDisplayRoute(directionsService, directionsRenderer);
+      });
+  }
+
+  function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+    var waypts = [];
+    var checkboxArray = document.getElementById("waypoints");
+
+    for (var i = 0; i < checkboxArray.length; i++) {
+      if (checkboxArray.options[i].selected) {
+        console.log($(checkboxArray.options[i]).data('reqId'));
+        reqIdObj = { reqId: $(checkboxArray.options[i]).data('reqId') };
+        console.log(reqIdObj);
+        waypts.push({
+          location: checkboxArray[i].value,
+          stopover: true,
+        });
+      }
+    }
+
+    directionsService.route(
+      {
+        origin: document.getElementById("start").value,
+        destination: document.getElementById("end").value,
+        waypoints: waypts,
+        optimizeWaypoints: true,
+        travelMode: "DRIVING",
+      },
+      function (response, status) {
+        if (status === "OK") {
+          directionsRenderer.setDirections(response);
+          var route = response.routes[0];
+          var summaryPanel = document.getElementById("directions-panel");
+          summaryPanel.innerHTML = "<h5>Route Information</h5>";
+          // For each route, display summary information.
+          for (var i = 0; i < route.legs.length; i++) {
+            var routeSegment = i + 1;
+            summaryPanel.innerHTML +=
+              "<b>Route Segment: " + routeSegment + "</b><br>";
+            summaryPanel.innerHTML += route.legs[i].start_address + " to ";
+            summaryPanel.innerHTML += route.legs[i].end_address + "<br>";
+            summaryPanel.innerHTML +=
+              route.legs[i].distance.text + "<br><br>";
+          }
+        } else {
+          let errMsg = "Directions request failed due to " + status;
+                  M.toast({html:
+        "<i class='material-icons prefix'>email</i><span>" + errMsg + "</span><button class='btn-flat toast-action'>OK</button>"
+        });
+        }
+      }
+    );
+  }
+</script>
+
+<footer class="page-footer center" style="position:fixed;bottom:0;left:0;width:100%;">
+  <div class="col s12 m6 l6">
+    <h6 class="white-text">School Pool Perth - Copyright 2020 © </h6>
+  </div>
+</footer>
     <script src="/js/autocomplete.js" ></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCb5A0r0RMzX9hEutVhbXn1bOG4VGQyxIA&callback=initMap"></script>
