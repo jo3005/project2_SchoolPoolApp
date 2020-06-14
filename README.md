@@ -9,6 +9,9 @@ This repo contains code for Project 2 completed for the Full Stack Bootcamp.  It
 Github repo url: https://github.com/georgiellis/project2
 Deployed url: https://schoolpool-app.herokuapp.com/
 
+## Screenshot
+![App Screenshot](https://github.com/georgiellis/project2/blob/master/public/img/app_screenshot.JPG?raw=true "App Screenshot")
+
 ##Table of Contents
 * [Installation](#installation)
 * [Usage](#usage)
@@ -72,8 +75,6 @@ I want to be able to accept rides on my mobile phone or desktop computer.
 * Must use Handlebars.js
 
 ##Current Issues  <a name="issues"></a>
-* Accept a request page not complete
-* After deleting a request the page does not automatically refresh
 * Edit ride-request post not implemented
 * Enter Passenger details not implemented
 * Attach passenger details to a ride request not implemented
