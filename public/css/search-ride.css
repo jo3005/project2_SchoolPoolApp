@@ -124,3 +124,10 @@ row.map_contents{
   border-radius: 15px;
   
 }
+
+#directions-panel {
+  margin-top: 10px;
+  padding: 10px;
+  overflow: scroll;
+  height: 10vh;
+}
