@@ -10,7 +10,7 @@ Github repo url: https://github.com/georgiellis/project2
 Deployed url: https://schoolpool-app.herokuapp.com/
 
 ## Screenshot
-![App Screenshot](https://github.com/georgiellis/project2/blob/master/public/img/app_screenshot.JPG?raw=true "App Screenshot")
+![App Screenshot](https://github.com/georgiellis/project2/blob/master/assets/img/app_screenshot.JPG?raw=true)
 
 ## Table of Contents
 * [Installation](#installation)
