@@ -6,6 +6,7 @@
 // =============================================================
 const express = require("express");
 const session = require("express-session");
+var compression = require('compression')
 
 // Requiring passport as we've configured it
 const passport = require("./config/passport");
@@ -18,6 +19,7 @@ require("dotenv").config();
 const PORT = process.env.PORT || 8080;
 const app = express();
 
+app.use(compression());
 const exphbs = require("express-handlebars");
 
 // Requiring our models for syncing
